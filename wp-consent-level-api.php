@@ -31,8 +31,8 @@ defined('ABSPATH') or die("you do not have access to this page!");
 
 
 /**
- * Checks if the plugin can safely be activated, at least php 5.6 and wp 4.6
- * @since 2.1.5
+ * Checks if the plugin can safely be activated, at least php 5.6 and wp 5.0
+ * @since 1.0.0
  */
 if (!function_exists('clapi_activation_check')) {
     function clapi_activation_check()
@@ -43,9 +43,9 @@ if (!function_exists('clapi_activation_check')) {
         }
 
         global $wp_version;
-        if (version_compare($wp_version, '5.2', '<')) {
+        if (version_compare($wp_version, '5.0', '<')) {
             deactivate_plugins(plugin_basename(__FILE__));
-            wp_die(__('This plugin requires WordPress 5.2 or higher', 'wp-consent-level-api'));
+            wp_die(__('This plugin requires WordPress 5.0 or higher', 'wp-consent-level-api'));
         }
     }
 }
@@ -102,7 +102,7 @@ if (!class_exists('WP_CL_API')) {
 
         private function hooks()
         {
-            add_action('init', 'clapi_init_cookie_blocker');
+
         }
     }
 }
@@ -130,14 +130,3 @@ if (!function_exists('clapi_load_translation')) {
     }
 }
 
-/**
- * Enqueue scripts for the api for front-end
- * @param $hook
- */
-
-function clapi_enqueue_assets($hook)
-{
-    $minified = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? '' : '.min';
-    wp_enqueue_script('wp-consent-level-api', CLAPI_URL . "assets/js/wp-consent-level-api$minified.js", array('jquery'), CLAPI_VERSION, true);
-}
-add_action('wp_enqueue_scripts', 'clapi_enqueue_assets');
