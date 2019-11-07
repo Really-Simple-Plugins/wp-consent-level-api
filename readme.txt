@@ -1,7 +1,7 @@
 === WP Consent Level API ===
 Contributors: RogierLankhorst
 Tags: consent, privacy
-Requires at least: 5.3
+Requires at least: 5.0
 License: GPL2
 Tested up to: 5.3
 Requires PHP: 5.6
