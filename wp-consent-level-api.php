@@ -72,7 +72,7 @@ if (!class_exists('WP_CL_API')) {
                 self::$instance->setup_constants();
                 self::$instance->includes();
 
-                self::$instance->API = new CLAPI_API();
+                self::$instance->config = new CLAPI_CONFIG();
 
                 self::$instance->hooks();
             }
@@ -96,6 +96,7 @@ if (!class_exists('WP_CL_API')) {
         private function includes()
         {
 
+            require_once(CLAPI_PATH . 'config.php');
             require_once(CLAPI_PATH . 'API.php');
         }
 
@@ -106,7 +107,7 @@ if (!class_exists('WP_CL_API')) {
     }
 }
 
-if (!function_exists('COMPLIANZ')) {
+if (!function_exists('WP_CL_API')) {
     function WP_CL_API() {
         return WP_CL_API::instance();
     }
