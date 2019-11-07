@@ -6,8 +6,8 @@
  * Version: 1.0.0
  * Text Domain: wp-consent-level-api
  * Domain Path: /languages
- * Author: RogierLankhorst
- * Author URI: https://www.really-simple-plugins.com
+ * Author: WP privacy team
+ * Author URI: 
  */
 
 /*
