@@ -7,11 +7,10 @@
  * Text Domain: wp-consent-level-api
  * Domain Path: /languages
  * Author: WP privacy team
- * Author URI: 
+ * Author URI:
  */
 
 /*
-    Copyright 2018  Rogier Lankhorst  (email : rogier@really-simple-plugins.com)
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License, version 2, as
