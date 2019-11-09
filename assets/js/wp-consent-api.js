@@ -10,39 +10,18 @@ jQuery(document).ready(function ($) {
         consent_type: window.wp_consent_type,
     });
 
-    /**
-     * cookie placing plugin can listen to consent change
-     */
-
-    // $(document).on("wp_listen_for_consent_change", myScriptHandler);
-    // function myScriptHandler(consentCategories) {
-    //     if (consentCategories('marketing')==='allow'){
-    //         //do something with category marketing
-    //     }
-    // }
-
-
-    /**
-     * cookiebanner should trigger event when consent category changes
-     * @type {string}
-     */
-    // consentCategories["marketing"] ="allow";
-    // $.event.trigger({
-    //     type: "wp_apply_consent_change",
-    //     consentCategories: consentCategories,
-    // });
 
     /**
      *    processing changes on the hook fired by the cookie banner wpApplyConsentChange
      *    and firing hooks for other plugins to hook into
      */
 
-    function wp_process_consent_change(consentCategories) {
-        console.log(consentCategories);
+    function wp_process_consent_change(data) {
         //foreach consent categories, set the value in a cookie
+        var consentCategories = data.consentCategories;
         for (var key in consentCategories) {
             if (consentCategories.hasOwnProperty(key)) {
-                cl_api_setcookie('wp_consent_'+key, consentCategories[key][0], cookie_expiry);
+                cl_api_setcookie('wp_consent_'+key, consentCategories[key]);
             }
         }
 
@@ -56,11 +35,55 @@ jQuery(document).ready(function ($) {
     $(document).on("wp_apply_consent_change", wp_process_consent_change);
 
     /**
+     * cookiebanner should trigger event when consent category changes
+     * @type {string}
+     */
+    var consentCategories = [];
+    consentCategories["marketing"] ="allow";
+    $.event.trigger({
+        type: "wp_apply_consent_change",
+        consentCategories: consentCategories,
+    });
+
+
+    /**
+     * cookie placing plugin can listen to consent change
+     */
+
+    // $(document).on("wp_listen_for_consent_change", myScriptHandler);
+    // function myScriptHandler(consentCategories) {
+    //     if (consentCategories('marketing')==='allow'){
+    //         //do something with category marketing
+    //     }
+    // }
+
+
+
+    /**
      * to retrieve consent directly
      */
 
     function wpHasConsent(category){
+        var consent_type = window.wp_consent_type;
+        var has_consent_level = false;
+        var cookie_value = cl_api_get_cookie(category);
 
+        if (!consent_type) {
+            //if consent_type is not set, there's no consent management, we should return true to activate all cookies
+            has_consent_level = true;
+
+        } else if (consent_type.indexOf('optout')!==-1 && cookie_value === '') {
+            //if it's opt out and no cookie is set we should also return true
+            has_consent_level = true;
+
+        } else if (cookie_value ==='allow'){
+            //all other situations, return only true if value is allow
+            has_consent_level = true;
+        } else {
+            has_consent_level = false;
+        }
+
+        return has_consent_level;
     }
 
 

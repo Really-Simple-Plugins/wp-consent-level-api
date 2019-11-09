@@ -4,7 +4,7 @@ defined( 'ABSPATH' ) or die( "you do not have acces to this page!" );
 
 /**
  * Enqueue scripts for the api for front-end
- *
+ * @todo Cookie banner scripts should enqueue after this one, plugin scripts before this script. Figure out how we can do this.
  * @param $hook
  */
 
