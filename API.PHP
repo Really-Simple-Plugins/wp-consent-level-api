@@ -9,7 +9,7 @@ defined( 'ABSPATH' ) or die( "you do not have acces to this page!" );
  * 2) this script
  * 3) consent management script
  *
- * This way we can ensure that plugins can use the jquery triggers
+ * This way we can ensure that plugins can use the javascript hooks
  * Consent management plugin should declare dependency on api js
  * API js should load as last, so we give a very high priority
  *
@@ -18,9 +18,12 @@ defined( 'ABSPATH' ) or die( "you do not have acces to this page!" );
 
 function consent_api_enqueue_assets( $hook ) {
 	$minified = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-	wp_enqueue_script( 'exapmle-plugin', CONSENT_API_URL . "assets/js/plugin-example.js", array( 'jquery' ), CONSENT_API_VERSION, true );
-	wp_enqueue_script( 'wp-consent-api', CONSENT_API_URL . "assets/js/wp-consent-api$minified.js", array( 'jquery' ), CONSENT_API_VERSION, true );
-	wp_enqueue_script( 'example-banner', CONSENT_API_URL . "assets/js/consent-management-example.js", array( 'jquery' ), CONSENT_API_VERSION, true );
+	//for testing
+	//wp_enqueue_script( 'example-plugin', CONSENT_API_URL . "assets/js/plugin-example.js",array('jquery'), CONSENT_API_VERSION, true );
+	wp_enqueue_script( 'wp-consent-api', CONSENT_API_URL . "assets/js/wp-consent-api$minified.js", array('jquery'), CONSENT_API_VERSION, true );
+
+	//for testing
+	//wp_enqueue_script( 'example-banner', CONSENT_API_URL . "assets/js/consent-management-example.js", array('jquery'), CONSENT_API_VERSION, true );
 	$consent_type = wp_get_consent_type();
 	$expiration = wp_consent_api_cookie_expiration();
 	wp_localize_script(

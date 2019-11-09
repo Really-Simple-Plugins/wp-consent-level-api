@@ -36,11 +36,17 @@ more sophisticated code, all of which should in my opinion not be part of WordPr
 There are two indicators that together tell if consent is given for a certain consent category, e.g. "marketing": the consent_type, which
 can be opt-in, opt-out, our other possible consent_types, and the user's choice, not set, allow or deny.
 
-The consent_type is function that wraps a filter, "wp_get_consent_type". If there's no consent management plugin to set it, it will return false.
+The consent_type is a function that wraps a filter, "wp_get_consent_type". If there's no consent management plugin to set it, it will return false.
 
 This will cause all consent categories to return true, allowing cookies to be set on all categories.
 
-If opt-in is set, a category will only return true if the value is "allow", if the consent_type is opt-out, it will return true if not set or allow.
+If opt-in is set using this filter, a category will only return true if the value is "allow", if the consent_type is opt-out, it will return true if not set or allow.
+
+Clientside, a consent management plugin can dynamically manipulate the consent type, and set the several cookie categories.
+
+A plugin can use a hook to listen for changes, or check the value of a given category.
+
+Categories, and most other stuff can be extended with a filter.
 
 Any code suggestions? We're on [GitHub](https://github.com/rlankhorst/wp-consent-level-api) as well!
 
