@@ -1,4 +1,4 @@
-=== WP Consent Level API ===
+=== WP Consent API ===
 Contributors: RogierLankhorst
 Tags: consent, privacy
 Requires at least: 5.0
@@ -7,10 +7,10 @@ Tested up to: 5.3
 Requires PHP: 5.6
 Stable tag: 1.0.0
 
-Simple Consent Level API to read and register the current consent level
+Simple Consent API to read and register the current consent category
 
 == Description ==
-Simple Consent Level API to read and register the current consent level
+Simple Consent API to read and register the current consent category
 
 = What problem does this plugin solve? =
 Currently it is possibly to block third party services like Facebook, Google Maps, Twitter, etc. But if a WordPress plugin places a PHP cookie,
@@ -37,9 +37,9 @@ can be opt-in, opt-out, our other possible consent_types, and the user's choice,
 
 The consent_type is function that wraps a filter, "wp_get_consent_type". If there's no cookie banner plugin to set it, it will return false.
 
-This will cause all consent categories to return true, allowing cookies to be set on all levels.
+This will cause all consent categories to return true, allowing cookies to be set on all categories.
 
-If opt-in is set, a level will only return true if the value is "allow", if the consent_type is opt-out, it will return true if not set or allow.
+If opt-in is set, a category will only return true if the value is "allow", if the consent_type is opt-out, it will return true if not set or allow.
 
 Any code suggestions? We're on [GitHub](https://github.com/rlankhorst/wp-consent-level-api) as well!
 
