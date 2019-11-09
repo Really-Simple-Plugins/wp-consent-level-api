@@ -8,115 +8,128 @@ defined( 'ABSPATH' ) or die( "you do not have acces to this page!" );
  * @param $hook
  */
 
-function clapi_enqueue_assets( $hook ) {
+function cl_api_enqueue_assets( $hook ) {
 	$minified = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-	wp_enqueue_script( 'wp-consent-level-api', CLAPI_URL . "assets/js/wp-consent-level-api$minified.js", array( 'jquery' ), CLAPI_VERSION, true );
+	wp_enqueue_script( 'wp-consent-api', CL_API_URL . "assets/js/wp-consent-api$minified.js", array( 'jquery' ), CL_API_VERSION, true );
+	$consent_type = wp_get_consent_type();
+	$expiration = wp_cl_api_cookie_expiration();
+	wp_localize_script(
+		'wp-consent-api',
+		'cl_api',
+		array(
+			'consent_type' => $consent_type,
+			'cookie_expiration' => $expiration,
+		)
+	);
 }
 
-add_action( 'wp_enqueue_scripts', 'clapi_enqueue_assets' );
+add_action( 'wp_enqueue_scripts', 'cl_api_enqueue_assets' );
 
 
 /**
- * set cookie wp_consenttype, filterable to allow for geo ip tools, optin, optout
- * @param string $consenttype
- */
-
-function wp_set_consenttype($consenttype) {
-	$expiration = WP_CL_API()->config->expiration();
-	$consenttype = apply_filters('wp_set_consenttype', wp_validate_consenttype($consenttype));
-	setcookie('wp_consenttype', $consenttype, time() + $expiration, '/');
-}
-
-/**
- * Validate consenttype
- * @param $consenttype
+ * Validate consent_type
+ * @param $consent_type
  *
- * @return bool|string $consenttype
+ * @return bool|string $consent_type
  */
 
-function wp_validate_consenttype($consenttype){
-	if (in_array($consenttype, WP_CL_API()->config->consenttypes() )){
-		return $consenttype;
+function wp_validate_consent_type($consent_type){
+	if (in_array($consent_type, WP_CL_API()->config->consent_types() )){
+		return $consent_type;
 	}
 	return false;
 }
 
 /**
- * Validate consentvalue
- * @param $consentvalue
+ * Validate consent_value
+ * @param $consent_value
  *
- * @return bool|string $consentvalue
+ * @return bool|string $consent_value
  */
 
-function wp_validate_consentvalue($consentvalue){
-	if (in_array($consentvalue, WP_CL_API()->config->consentvalues() )){
-		return $consentvalue;
+function wp_validate_consent_value($consent_value){
+	if (in_array($consent_value, WP_CL_API()->config->consent_values() )){
+		return $consent_value;
 	}
 	return false;
 }
 
 /**
- * Validate consentlevel
- * @param $consentlevel
+ * Validate consent_category
+ * @param $consent_category
  *
- * @return bool|string $consentlevel
+ * @return bool|string $consent_category
  */
 
-function wp_validate_consentlevel($consentlevel){
-	if (in_array($consentlevel, WP_CL_API()->config->consentlevels() )){
-		return $consentlevel;
+function wp_validate_consent_category($consent_category){
+	if (in_array($consent_category, WP_CL_API()->config->consent_categorys() )){
+		return $consent_category;
 	}
 	return false;
 }
 
 /**
- * Get active consenttype
- * return value of wp_consenttype cookie
- * @return string $consenttype
+ * Get active consent_type
+ * @return string $consent_type
  */
-function wp_get_consenttype() {
-	if (isset($_COOKIE['wp_consenttype'])){
-		$consenttype = wp_validate_consenttype($_COOKIE['wp_consenttype']);
-	} else {
-		$consenttype = false;
-	}
+function wp_get_consent_type() {
 
-	return apply_filters('wp_get_consenttype', $consenttype);
+	return apply_filters('wp_get_consent_type', FALSE);
 }
 
 /**
- * filterable, to allow for use in combination with consenttype
+ * filterable, to allow for use in combination with consent_type
  * return value of wp_consent$level cookie (false, deny or allow)
  *
- * @param $consentlevel
- * @return bool $has_consent_level
+ * @param $consent_category
+ * @return bool $has_consent
  */
 
-function wp_has_consent_level( $consentlevel ) {
-	$consentlevel =  wp_validate_consentlevel($consentlevel);
+function wp_has_consent( $consent_category ) {
+	$consent_type = wp_get_consent_type();
+	$consent_category = wp_validate_consent_category($consent_category);
 
-	if (isset($_COOKIE["wp_consent_$consentlevel"]) && $_COOKIE["wp_consent_$consentlevel"] ==='allow'){
+	if (!$consent_type) {
+		//if consent_type is not set, there's no consent management, we should return true to activate all cookies
+		$has_consent_level = true;
+
+	} else if (strpos($consent_type, 'optout')!==FALSE && !isset($_COOKIE["wp_consent_$consent_category"]) || !$_COOKIE["wp_consent_$consent_category"]) {
+		//if it's opt out and no cookie is set or it's false, we should also return true
+		$has_consent_level = true;
+
+	}else if (isset($_COOKIE["wp_consent_$consent_category"]) && $_COOKIE["wp_consent_$consent_category"] ==='allow'){
+		//all other situations, return only true if value is allow
 		$has_consent_level = true;
 	} else {
 		$has_consent_level = false;
 	}
-	return apply_filters('wp_has_consent_level', $has_consent_level);
+
+	return apply_filters('wp_has_consent', $has_consent_level, $consent_category);
 }
 
 /**
- * set accepted consentlevel
+ * Get cookie expiration
+ * @return int expiration in seconds
+ */
+
+function wp_cl_api_cookie_expiration(){
+	return apply_filters('wp_cl_api_cookie_expiration', WP_CL_API()->config->cookie_expiration_days());
+}
+
+/**
+ * set accepted consent category
  *
- * @param string $consentlevel
+ * @param string $consent_category
  * @param string $value (allow|deny)
  */
 
-function wp_set_consent_level( $consentlevel, $value ) {
-	$consentlevel = apply_filters('wp_set_consentlevel_type', $consentlevel);
-	$value = apply_filters('wp_set_consentlevel_value', $value);
+function wp_set_consent( $consent_category, $value ) {
+	$consent_category = apply_filters('wp_set_consent_type', $consent_category);
+	$value = apply_filters('wp_set_consent_value', $value);
 
-	$expiration = WP_CL_API()->config->expiration();
-	$consentlevel =  wp_validate_consentlevel($consentlevel);
-	$value =  wp_validate_consentvalue($value);
+	$expiration = wp_cl_api_cookie_expiration() * DAY_IN_SECONDS;
+	$consent_category =  wp_validate_consent_category($consent_category);
+	$value =  wp_validate_consent_value($value);
 
-	setcookie("wp_consent_$consentlevel", $value, time() + $expiration, '/');
+	setcookie("wp_consent_$consent_category", $value, time() + $expiration, '/');
 }

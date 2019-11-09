@@ -1,10 +1,10 @@
 <?php
 /**
  * Plugin Name: WP Consent Level API
- * Plugin URI: https://www.wordpress.org/plugins/wp-consent-level-api
+ * Plugin URI: https://www.wordpress.org/plugins/wp-consent-api
  * Description: Simple Consent Level API to read and register the current consent level
  * Version: 1.0.0
- * Text Domain: wp-consent-level-api
+ * Text Domain: wp-consent-api
  * Domain Path: /languages
  * Author: WP privacy team
  * Author URI:
@@ -34,22 +34,22 @@ defined('ABSPATH') or die("you do not have access to this page!");
  * Checks if the plugin can safely be activated, at least php 5.6 and wp 5.0
  * @since 1.0.0
  */
-if (!function_exists('clapi_activation_check')) {
-    function clapi_activation_check()
+if (!function_exists('cl_api_activation_check')) {
+    function cl_api_activation_check()
     {
         if (version_compare(PHP_VERSION, '5.6', '<')) {
             deactivate_plugins(plugin_basename(__FILE__));
-            wp_die(__('This plugin requires PHP 5.6 or higher', 'wp-consent-level-api'));
+            wp_die(__('This plugin requires PHP 5.6 or higher', 'wp-consent-api'));
         }
 
         global $wp_version;
         if (version_compare($wp_version, '5.0', '<')) {
             deactivate_plugins(plugin_basename(__FILE__));
-            wp_die(__('This plugin requires WordPress 5.0 or higher', 'wp-consent-level-api'));
+            wp_die(__('This plugin requires WordPress 5.0 or higher', 'wp-consent-api'));
         }
     }
 }
-register_activation_hook( __FILE__, 'clapi_activation_check' );
+register_activation_hook( __FILE__, 'cl_api_activation_check' );
 
 
 if (!class_exists('WP_CL_API')) {
@@ -72,7 +72,7 @@ if (!class_exists('WP_CL_API')) {
                 self::$instance->setup_constants();
                 self::$instance->includes();
 
-                self::$instance->config = new CLAPI_CONFIG();
+                self::$instance->config = new CL_API_CONFIG();
 
                 self::$instance->hooks();
             }
@@ -85,19 +85,19 @@ if (!class_exists('WP_CL_API')) {
             require_once(ABSPATH . 'wp-admin/includes/plugin.php');
             $plugin_data = get_plugin_data(__FILE__);
 
-            define('CLAPI_URL', plugin_dir_url(__FILE__));
-            define('CLAPI_PATH', plugin_dir_path(__FILE__));
-            define('CLAPI_PLUGIN', plugin_basename(__FILE__));
+            define('CL_API_URL', plugin_dir_url(__FILE__));
+            define('CL_API_PATH', plugin_dir_path(__FILE__));
+            define('CL_API_PLUGIN', plugin_basename(__FILE__));
             $debug = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? time() : '';
-            define('CLAPI_VERSION', $plugin_data['Version'] . $debug);
-            define('CLAPI_PLUGIN_FILE', __FILE__);
+            define('CL_API_VERSION', $plugin_data['Version'] . $debug);
+            define('CL_API_PLUGIN_FILE', __FILE__);
         }
 
         private function includes()
         {
 
-            require_once(CLAPI_PATH . 'config.php');
-            require_once(CLAPI_PATH . 'API.php');
+            require_once(CL_API_PATH . 'config.php');
+            require_once(CL_API_PATH . 'API.php');
         }
 
         private function hooks()
@@ -122,11 +122,11 @@ if (!function_exists('WP_CL_API')) {
  *
  */
 
-if (!function_exists('clapi_load_translation')) {
-    add_action('init', 'clapi_load_translation', 20);
-    function clapi_load_translation()
+if (!function_exists('cl_api_load_translation')) {
+    add_action('init', 'cl_api_load_translation', 20);
+    function cl_api_load_translation()
     {
-        load_plugin_textdomain('wp-consent-level-api', FALSE, CLAPI_PATH . '/config/languages/');
+        load_plugin_textdomain('wp-consent-api', FALSE, CL_API_PATH . '/config/languages/');
     }
 }
 

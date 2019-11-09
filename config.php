@@ -1,10 +1,11 @@
 <?php
 defined('ABSPATH') or die("you do not have acces to this page!");
 
-if (!class_exists("CLAPI_CONFIG")) {
-	class CLAPI_CONFIG
+if (!class_exists("CL_API_CONFIG")) {
+	class CL_API_CONFIG
 	{
 		private static $_this;
+
 
 
 		function __construct()
@@ -23,60 +24,60 @@ if (!class_exists("CLAPI_CONFIG")) {
 		}
 
 		/**
-		 * Get list if active consenttypes
-		 * @return array() $consenttypes
+		 * Get list if active consent_types
+		 * @return array() $consent_types
 		 */
 
-		public function consenttypes()
+		public function consent_types()
 		{
-			$consenttypes = array(
+			$consent_types = array(
 				'optin',
 				'optout',
 			);
 
-			return apply_filters('wp_consenttypes', $consenttypes);
+			return apply_filters('wp_consent_types', $consent_types);
 		}
 
 
 		/**
-		 * Get list if active consenttypes
-		 * @return array() $consenttypes
+		 * Get list if active consent_categories
+		 * @return array() $consent_categories
 		 */
 
-		public function consentlevels()
+		public function consent_categories()
 		{
-			$consenttypes = array(
+			return apply_filters('wp_consent_categories',
+				array(
 				'functional',
 				'statistics',
-				'anonymous',
-			    'statistics',
+				'statistics-anonymous',
+				'statistics',
 				'marketing',
-
+				)
 			);
-
-			return apply_filters('wp_consentlevels', $consenttypes);
 		}
 
 
 		/**
-		 * Get list of possible consentvalues
-		 * @return array() $consentvalues
+		 * Get list of possible consent_values
+		 * @return array() $consent_values
 		 */
 
-		public function consentvalues()
+		public function consent_values()
 		{
-			$consentvalues = array(
+			$consent_values = array(
 				'allow',
 				'deny',
 			);
 
-			return apply_filters('wp_consentvalues', $consentvalues);
+			return apply_filters('wp_consent_values', $consent_values);
 		}
 
 
-		public function expiration(){
-			return apply_filters('wp_consent_expiration', DAY_IN_SECONDS * 30);
+		public function cookie_expiration_days(){
+			return apply_filters('wp_cookie_expiration', 30);
 		}
+
 
 
 	}
