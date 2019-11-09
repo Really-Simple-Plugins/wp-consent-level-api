@@ -1,8 +1,8 @@
 <?php
 defined('ABSPATH') or die("you do not have acces to this page!");
 
-if (!class_exists("CL_API_CONFIG")) {
-	class CL_API_CONFIG
+if (!class_exists("CONSENT_API_CONFIG")) {
+	class CONSENT_API_CONFIG
 	{
 		private static $_this;
 

@@ -34,8 +34,8 @@ defined('ABSPATH') or die("you do not have access to this page!");
  * Checks if the plugin can safely be activated, at least php 5.6 and wp 5.0
  * @since 1.0.0
  */
-if (!function_exists('cl_api_activation_check')) {
-    function cl_api_activation_check()
+if (!function_exists('consent_api_activation_check')) {
+    function consent_api_activation_check()
     {
         if (version_compare(PHP_VERSION, '5.6', '<')) {
             deactivate_plugins(plugin_basename(__FILE__));
@@ -49,11 +49,11 @@ if (!function_exists('cl_api_activation_check')) {
         }
     }
 }
-register_activation_hook( __FILE__, 'cl_api_activation_check' );
+register_activation_hook( __FILE__, 'consent_api_activation_check' );
 
 
-if (!class_exists('WP_CL_API')) {
-    class WP_CL_API
+if (!class_exists('WP_CONSENT_API')) {
+    class WP_CONSENT_API
     {
 
         private static $instance;
@@ -66,13 +66,13 @@ if (!class_exists('WP_CL_API')) {
         public static function instance()
         {
 
-            if (!isset(self::$instance) && !(self::$instance instanceof WP_CL_API)) {
-                self::$instance = new WP_CL_API;
+            if (!isset(self::$instance) && !(self::$instance instanceof WP_CONSENT_API)) {
+                self::$instance = new WP_CONSENT_API;
 
                 self::$instance->setup_constants();
                 self::$instance->includes();
 
-                self::$instance->config = new CL_API_CONFIG();
+                self::$instance->config = new CONSENT_API_CONFIG();
 
                 self::$instance->hooks();
             }
@@ -85,19 +85,19 @@ if (!class_exists('WP_CL_API')) {
             require_once(ABSPATH . 'wp-admin/includes/plugin.php');
             $plugin_data = get_plugin_data(__FILE__);
 
-            define('CL_API_URL', plugin_dir_url(__FILE__));
-            define('CL_API_PATH', plugin_dir_path(__FILE__));
-            define('CL_API_PLUGIN', plugin_basename(__FILE__));
+            define('CONSENT_API_URL', plugin_dir_url(__FILE__));
+            define('CONSENT_API_PATH', plugin_dir_path(__FILE__));
+            define('CONSENT_API_PLUGIN', plugin_basename(__FILE__));
             $debug = (defined('SCRIPT_DEBUG') && SCRIPT_DEBUG) ? time() : '';
-            define('CL_API_VERSION', $plugin_data['Version'] . $debug);
-            define('CL_API_PLUGIN_FILE', __FILE__);
+            define('CONSENT_API_VERSION', $plugin_data['Version'] . $debug);
+            define('CONSENT_API_PLUGIN_FILE', __FILE__);
         }
 
         private function includes()
         {
 
-            require_once(CL_API_PATH . 'config.php');
-            require_once(CL_API_PATH . 'API.php');
+            require_once(CONSENT_API_PATH . 'config.php');
+            require_once(CONSENT_API_PATH . 'API.php');
         }
 
         private function hooks()
@@ -107,12 +107,12 @@ if (!class_exists('WP_CL_API')) {
     }
 }
 
-if (!function_exists('WP_CL_API')) {
-    function WP_CL_API() {
-        return WP_CL_API::instance();
+if (!function_exists('WP_CONSENT_API')) {
+    function WP_CONSENT_API() {
+        return WP_CONSENT_API::instance();
     }
 
-    add_action( 'plugins_loaded', 'WP_CL_API', 9 );
+    add_action( 'plugins_loaded', 'WP_CONSENT_API', 9 );
 }
 
 
@@ -122,11 +122,11 @@ if (!function_exists('WP_CL_API')) {
  *
  */
 
-if (!function_exists('cl_api_load_translation')) {
-    add_action('init', 'cl_api_load_translation', 20);
-    function cl_api_load_translation()
+if (!function_exists('consent_api_load_translation')) {
+    add_action('init', 'consent_api_load_translation', 20);
+    function consent_api_load_translation()
     {
-        load_plugin_textdomain('wp-consent-api', FALSE, CL_API_PATH . '/config/languages/');
+        load_plugin_textdomain('wp-consent-api', FALSE, CONSENT_API_PATH . '/config/languages/');
     }
 }
 

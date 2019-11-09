@@ -4,18 +4,28 @@ defined( 'ABSPATH' ) or die( "you do not have acces to this page!" );
 
 /**
  * Enqueue scripts for the api for front-end
- * @todo Cookie banner scripts should enqueue after this one, plugin scripts before this script. Figure out how we can do this.
+ * We need to ensure this script fires in correct order:
+ * 1) all plugins, themes, etc
+ * 2) this script
+ * 3) consent management script
+ *
+ * This way we can ensure that plugins can use the jquery triggers
+ * Consent management plugin should declare dependency on api js
+ * API js should load as last, so we give a very high priority
+ *
  * @param $hook
  */
 
-function cl_api_enqueue_assets( $hook ) {
+function consent_api_enqueue_assets( $hook ) {
 	$minified = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-	wp_enqueue_script( 'wp-consent-api', CL_API_URL . "assets/js/wp-consent-api$minified.js", array( 'jquery' ), CL_API_VERSION, true );
+	wp_enqueue_script( 'exapmle-plugin', CONSENT_API_URL . "assets/js/plugin-example.js", array( 'jquery' ), CONSENT_API_VERSION, true );
+	wp_enqueue_script( 'wp-consent-api', CONSENT_API_URL . "assets/js/wp-consent-api$minified.js", array( 'jquery' ), CONSENT_API_VERSION, true );
+	wp_enqueue_script( 'example-banner', CONSENT_API_URL . "assets/js/consent-management-example.js", array( 'jquery' ), CONSENT_API_VERSION, true );
 	$consent_type = wp_get_consent_type();
-	$expiration = wp_cl_api_cookie_expiration();
+	$expiration = wp_consent_api_cookie_expiration();
 	wp_localize_script(
 		'wp-consent-api',
-		'cl_api',
+		'consent_api',
 		array(
 			'consent_type' => $consent_type,
 			'cookie_expiration' => $expiration,
@@ -23,7 +33,7 @@ function cl_api_enqueue_assets( $hook ) {
 	);
 }
 
-add_action( 'wp_enqueue_scripts', 'cl_api_enqueue_assets' );
+add_action( 'wp_enqueue_scripts', 'consent_api_enqueue_assets' , 9999);
 
 
 /**
@@ -34,7 +44,7 @@ add_action( 'wp_enqueue_scripts', 'cl_api_enqueue_assets' );
  */
 
 function wp_validate_consent_type($consent_type){
-	if (in_array($consent_type, WP_CL_API()->config->consent_types() )){
+	if (in_array($consent_type, WP_CONSENT_API()->config->consent_types() )){
 		return $consent_type;
 	}
 	return false;
@@ -48,7 +58,7 @@ function wp_validate_consent_type($consent_type){
  */
 
 function wp_validate_consent_value($consent_value){
-	if (in_array($consent_value, WP_CL_API()->config->consent_values() )){
+	if (in_array($consent_value, WP_CONSENT_API()->config->consent_values() )){
 		return $consent_value;
 	}
 	return false;
@@ -62,7 +72,7 @@ function wp_validate_consent_value($consent_value){
  */
 
 function wp_validate_consent_category($consent_category){
-	if (in_array($consent_category, WP_CL_API()->config->consent_categorys() )){
+	if (in_array($consent_category, WP_CONSENT_API()->config->consent_categorys() )){
 		return $consent_category;
 	}
 	return false;
@@ -112,8 +122,8 @@ function wp_has_consent( $consent_category ) {
  * @return int expiration in seconds
  */
 
-function wp_cl_api_cookie_expiration(){
-	return apply_filters('wp_cl_api_cookie_expiration', WP_CL_API()->config->cookie_expiration_days());
+function wp_consent_api_cookie_expiration(){
+	return apply_filters('wp_consent_api_cookie_expiration', WP_CONSENT_API()->config->cookie_expiration_days());
 }
 
 /**
@@ -127,7 +137,7 @@ function wp_set_consent( $consent_category, $value ) {
 	$consent_category = apply_filters('wp_set_consent_type', $consent_category);
 	$value = apply_filters('wp_set_consent_value', $value);
 
-	$expiration = wp_cl_api_cookie_expiration() * DAY_IN_SECONDS;
+	$expiration = wp_consent_api_cookie_expiration() * DAY_IN_SECONDS;
 	$consent_category =  wp_validate_consent_category($consent_category);
 	$value =  wp_validate_consent_value($value);
 
