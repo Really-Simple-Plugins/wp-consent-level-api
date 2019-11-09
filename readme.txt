@@ -53,7 +53,7 @@ To install this plugin:
 == Frequently asked questions ==
 = Does this plugin block cookies from being placed? =
 No, this plugin provides a framework through which plugins can know if they are allowed to place cookies.
-The plugin requires both a cookie banner plugin, setting consent, and a plugin that follows the consent level as can be read from this API.
+The plugin requires both a cookie banner plugin for consent management, and a plugin that follows the consent level as can be read from this API.
 == Changelog ==
 = 1.0.0 =
 
