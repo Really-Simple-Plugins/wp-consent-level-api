@@ -19,7 +19,7 @@ defined( 'ABSPATH' ) or die( "you do not have acces to this page!" );
 function consent_api_enqueue_assets( $hook ) {
 	$minified = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 	//for testing
-	//wp_enqueue_script( 'example-plugin', CONSENT_API_URL . "assets/js/plugin-example.js",array('jquery'), CONSENT_API_VERSION, true );
+	wp_enqueue_script( 'example-plugin', CONSENT_API_URL . "assets/js/plugin-example.js",array('jquery'), CONSENT_API_VERSION, true );
 	wp_enqueue_script( 'wp-consent-api', CONSENT_API_URL . "assets/js/wp-consent-api$minified.js", array('jquery'), CONSENT_API_VERSION, true );
 
 	//for testing

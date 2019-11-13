@@ -2,24 +2,17 @@
 /**
  * Set consent_type as passed by localize_script, and trigger a hook so geo ip scripts can alter it as needed.
  * It's set on document ready, so the consent management plugin can first add an event listener.
+ *
+ *
+ * Edit: chronologically it seems difficult to create a sort of filter for the consent type.
+ * Let's change it so cookiebanners are just required to set it, it it's not available, we use a default, as defined here.
+ *
+ * This way, if a consent management plugin does not define a consenttype, the one passed here will be used, and it will still work.
+ *
+ *
  */
-jQuery(document).ready(function ($) {
-    'use strict';
-    var event;
-    window.wp_consent_type = consent_api.consent_type;
-    try {
-        // For modern browsers except IE:
-        event = new CustomEvent('wp_set_consent_type', {detail: consent_api.consent_type});
-    } catch (err) {
-        // If IE 11 (or 10 or 9...?)
-        event = document.createEvent('Event');
-        event.initEvent('wp_set_consent_type', true, true);
-        event.detail = consent_api.consent_type;
 
-    }
-    // Dispatch/Trigger/Fire the event
-    document.dispatchEvent(event);
-});
+window.wp_fallback_consent_type = consent_api.consent_type;
 
 
 /**
@@ -27,7 +20,13 @@ jQuery(document).ready(function ($) {
  */
 
 function wp_has_consent(category) {
-    var consent_type = window.wp_consent_type;
+    var consent_type;
+    if (typeof (window.wp_consent_type) !== "undefined"){
+        consent_type = window.wp_consent_type;
+    }  else {
+        consent_type = window.wp_fallback_consent_type
+    }
+
     var has_consent_level = false;
     var cookie_value = consent_api_get_cookie(category);
 
