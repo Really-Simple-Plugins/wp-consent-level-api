@@ -1,35 +1,56 @@
-
 /**
  * cookie placing plugin can listen to consent change
  *
  */
+
 console.log("load plugin example");
 document.addEventListener("wp_listen_for_consent_change", function (e) {
-    console.log("plugin script handler");
     var changedConsentCategory = e.detail;
     for (var key in changedConsentCategory) {
         if (changedConsentCategory.hasOwnProperty(key)) {
             if (key === 'marketing' && changedConsentCategory[key] === 'allow') {
-                console.log("set marketing cookie")
+                console.log("just given consent, set marketing cookie")
             }
         }
     }
 });
 
 /**
- * Or do stuff as soon as the consenttype is defined
+ * Do stuff based on existing consent
  */
 
-jQuery(document).ready(function($) {
-    $(document).on("wp_consent_type_defined", myScriptHandler);
+/**
+ * Or do stuff as soon as the consenttype is defined
+ */
+$(document).on("wp_consent_type_defined", activateMyCookies);
 
-    function myScriptHandler(consentData) {
-        //your code here
-        if (wp_has_consent('marketing')) {
-            console.log("do marketing cookie stuff");
-        } else {
-            console.log("no marketing cookies please");
-        }
+function activateMyCookies(consentData) {
+    //your code here
+    if (wp_has_consent('marketing')) {
+        console.log("do marketing cookie stuff");
+    } else {
+        console.log("no marketing cookies please");
     }
-});
+}
 
+//check if we need to wait for the consenttype to be set
+if (!window.waitfor_consent_hook) {
+    console.log("we don't have to wait for the consent type, we can check the consent level right away!");
+    if (wp_has_consent('marketing')) {
+        console.log("set marketing stuff now!");
+    } else {
+        console.log("No marketing stuff please!");
+    }
+}
+
+/**
+ * Do stuff that normally would do stuff like tracking personal user data etc.
+ */
+
+function activateMarketing() {
+    console.log("fire marketing");
+    $('#example-plugin-content .functional-content').hide();
+    $('#example-plugin-content .marketing-content').show();
+}
+})
+;

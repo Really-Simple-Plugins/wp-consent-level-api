@@ -97,7 +97,7 @@ if (!class_exists('WP_CONSENT_API')) {
         {
 
             require_once(CONSENT_API_PATH . 'config.php');
-            require_once(CONSENT_API_PATH . 'API.php');
+            require_once(CONSENT_API_PATH . 'api.php');
         }
 
         private function hooks()

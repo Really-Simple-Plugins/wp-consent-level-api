@@ -13,7 +13,7 @@
  */
 
 window.wp_fallback_consent_type = consent_api.consent_type;
-
+window.waitfor_consent_hook = consent_api.waitfor_consent_hook;
 
 /**
  * to retrieve consent directly
@@ -88,8 +88,6 @@ function wp_set_consent(category, value) {
     consent_api_setcookie('wp_consent_' + category, value);
     var changedConsentCategory = [];
     changedConsentCategory[category] = value;
-    //trigger a hook for plugins to hook into
-    console.log("trigger hook");
     try {
         // For modern browsers except IE:
         event = new CustomEvent('wp_listen_for_consent_change', {detail: changedConsentCategory});

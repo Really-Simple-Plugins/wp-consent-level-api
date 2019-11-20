@@ -18,19 +18,22 @@ defined( 'ABSPATH' ) or die( "you do not have acces to this page!" );
 
 function consent_api_enqueue_assets( $hook ) {
 	$minified = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-	//for testing
-	wp_enqueue_script( 'example-plugin', CONSENT_API_URL . "assets/js/plugin-example.js",array('jquery'), CONSENT_API_VERSION, true );
 	wp_enqueue_script( 'wp-consent-api', CONSENT_API_URL . "assets/js/wp-consent-api$minified.js", array('jquery'), CONSENT_API_VERSION, true );
 
-	//for testing
-	//wp_enqueue_script( 'example-banner', CONSENT_API_URL . "assets/js/consent-management-example.js", array('jquery'), CONSENT_API_VERSION, true );
+	//we can pass a default or static consent type to the javascript
 	$consent_type = wp_get_consent_type();
+
+	//when the consenttype (optin or optout) can be set dynamically, we can tell plugins to wait in the javascript until the consenttype has been determined
+	$waitfor_consent_hook = apply_filters('wp_consent_api_waitfor_consent_hook', false);
+
+	//the cookie expiration for the front-end consent cookies
 	$expiration = wp_consent_api_cookie_expiration();
 	wp_localize_script(
 		'wp-consent-api',
 		'consent_api',
 		array(
 			'consent_type' => $consent_type,
+			'waitfor_consent_hook' => $waitfor_consent_hook,
 			'cookie_expiration' => $expiration,
 		)
 	);
