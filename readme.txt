@@ -13,6 +13,9 @@ Simple Consent API to read and register the current consent category
 Simple Consent API to read and register the current consent category, allowing consent management plugins and other plugins to work together,
 improving compliancy.
 
+A demo where a consent management plugin and a user tracking plugin communicate throught the Consent API can be seen here:
+http://relieved-snake.w5.wpsandbox.pro/
+
 = What problem does this plugin solve? =
 Currently it is possibly to block third party services like Facebook, Google Maps, Twitter, etc. But if a WordPress plugin places a PHP cookie,
 a consent management plugin cannot prevent this. Although the majority of cookies that are placed by first party tools, some are not.
