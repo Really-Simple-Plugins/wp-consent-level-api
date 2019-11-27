@@ -59,7 +59,7 @@ window.wp_consent_type = 'optin';
 wp_set_consent('marketing', 'allow');
 
 = javascript, tracking plugin =
-```
+
 //listen to consent change event
 document.addEventListener("wp_listen_for_consent_change", function (e) {
     var changedConsentCategory = e.detail;
@@ -79,13 +79,12 @@ if (wp_has_consent('marketing')){
 } else {
     console.log("No marketing stuff please!");
 }
-```
+
 = PHP =
-```
 if (wp_has_consent('marketing')){
   //do marketing stuff
 }
-```
+
 Any code suggestions? We're on [GitHub](https://github.com/rlankhorst/wp-consent-level-api) as well!
 
 == Installation ==
