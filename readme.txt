@@ -28,7 +28,7 @@ facilitate a webmaster in getting a site compliant.
 
 = Does usage of this API prevent third party cookies from being set? =
 Primary this API is aimed at compliant setting of first party cookies by WordPress plugins. If such a plugin triggers for example Facebook,
-usage of this API will be of help. If a user embeds a facebook iframe, a cookie blocker is need that initially disables the iframe and or scripts.
+usage of this API will be of help. If a user embeds a facebook iframe, a cookie blocker is needed that initially disables the iframe and or scripts.
 
 Third party scripts have to blocked by a cookie blocking functionality
 in a consent management plugin. To do this in core would be to intrusive, and is also not applicable to all users: only users with visitors in opt in regions
