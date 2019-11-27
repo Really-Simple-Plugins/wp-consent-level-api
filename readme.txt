@@ -51,6 +51,41 @@ A plugin can use a hook to listen for changes, or check the value of a given cat
 
 Categories, and most other stuff can be extended with a filter.
 
+= javascript, consent management plugin =
+//dynamically set consent type
+window.wp_consent_type = 'optin';
+
+//consent management plugin sets cookie when consent category value changes
+wp_set_consent('marketing', 'allow');
+
+= javascript, tracking plugin =
+```
+//listen to consent change event
+document.addEventListener("wp_listen_for_consent_change", function (e) {
+    var changedConsentCategory = e.detail;
+    for (var key in changedConsentCategory) {
+        if (changedConsentCategory.hasOwnProperty(key)) {
+            if (key === 'marketing' && changedConsentCategory[key] === 'allow') {
+                console.log("just given consent, set marketing cookie")
+            }
+        }
+    }
+});
+
+//basic implementation of consent check:
+if (wp_has_consent('marketing')){
+    activateMarketing();
+    console.log("set marketing stuff now!");
+} else {
+    console.log("No marketing stuff please!");
+}
+```
+= PHP =
+```
+if (wp_has_consent('marketing')){
+  //do marketing stuff
+}
+```
 Any code suggestions? We're on [GitHub](https://github.com/rlankhorst/wp-consent-level-api) as well!
 
 == Installation ==
