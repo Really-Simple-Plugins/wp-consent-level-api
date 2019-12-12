@@ -98,6 +98,8 @@ if (!class_exists('WP_CONSENT_API')) {
 
             require_once(CONSENT_API_PATH . 'config.php');
             require_once(CONSENT_API_PATH . 'api.php');
+
+            require_once(CONSENT_API_PATH . 'wordpress-comments.php');
         }
 
         private function hooks()
