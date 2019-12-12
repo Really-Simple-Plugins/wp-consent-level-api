@@ -73,6 +73,7 @@ if (!class_exists('WP_CONSENT_API')) {
                 self::$instance->includes();
 
                 self::$instance->config = new CONSENT_API_CONFIG();
+                self::$instance->site_health = new CONSENT_API_SITE_HEALTH();
 
                 self::$instance->hooks();
             }
@@ -98,6 +99,7 @@ if (!class_exists('WP_CONSENT_API')) {
 
             require_once(CONSENT_API_PATH . 'config.php');
             require_once(CONSENT_API_PATH . 'api.php');
+            require_once(CONSENT_API_PATH . 'class-site-health.php');
 
             require_once(CONSENT_API_PATH . 'wordpress-comments.php');
         }

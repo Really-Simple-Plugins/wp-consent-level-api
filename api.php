@@ -149,3 +149,14 @@ function wp_set_consent( $consent_category, $value ) {
 
 	setcookie("wp_consent_$consent_category", $value, time() + $expiration, '/');
 }
+
+/**
+ * Check if a plugin is registered for the consent API
+ * @param string $plugin
+ *
+ * @return bool $registered
+ */
+
+function consent_api_registered($plugin){
+	return apply_filters("wp_consent_api_registered_$plugin", false);
+}

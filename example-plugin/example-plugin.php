@@ -10,6 +10,14 @@
  * Author URI:
  */
 
+
+/**
+ * Tell the consent API we're following the api guidelines
+ */
+$plugin = plugin_basename(__FILE__);
+add_filter("wp_consent_api_registered_$plugin", function(){return true;});
+
+
 add_action( 'wp_enqueue_scripts', 'example_plugin_enqueue_assets' );
 function example_plugin_enqueue_assets( $hook ) {
 	wp_enqueue_script( 'example-plugin', plugin_dir_url(__FILE__) . "main.js", array('jquery'), CONSENT_API_VERSION, true );
