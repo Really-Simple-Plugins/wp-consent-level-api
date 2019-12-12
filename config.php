@@ -49,6 +49,7 @@ if (!class_exists("CONSENT_API_CONFIG")) {
 			return apply_filters('wp_consent_categories',
 				array(
 				'functional',
+				'preferences',
 				'statistics',
 				'statistics-anonymous',
 				'statistics',
