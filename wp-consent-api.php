@@ -1,4 +1,4 @@
-<?php // phpcs:ignore -- Ignore the missing class- prefix from file.
+<?php // phpcs:ignore -- Ignore the missing class- prefix from file & "\r\n" notice for some machines.
 
 /**
  * Plugin Name: WP Consent Level API
