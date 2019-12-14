@@ -51,7 +51,7 @@ add_action( 'wp_enqueue_scripts', 'consent_api_enqueue_assets', 9999 );
  * @return bool|string $consent_type
  */
 function wp_validate_consent_type( $consent_type ) {
-	if ( in_array( $consent_type, WP_CONSENT_API()->config->consent_types() ) ) {
+	if ( in_array( $consent_type, WP_CONSENT_API()->config->consent_types(), true ) ) {
 		return $consent_type;
 	}
 
@@ -66,7 +66,7 @@ function wp_validate_consent_type( $consent_type ) {
  * @return bool|string $consent_value
  */
 function wp_validate_consent_value( $consent_value ) {
-	if ( in_array( $consent_value, WP_CONSENT_API()->config->consent_values() ) ) {
+	if ( in_array( $consent_value, WP_CONSENT_API()->config->consent_values(), true ) ) {
 		return $consent_value;
 	}
 	return false;
@@ -80,7 +80,7 @@ function wp_validate_consent_value( $consent_value ) {
  * @return bool|string $consent_category
  */
 function wp_validate_consent_category( $consent_category ) {
-	if ( in_array( $consent_category, WP_CONSENT_API()->config->consent_categorys() ) ) {
+	if ( in_array( $consent_category, WP_CONSENT_API()->config->consent_categorys(), true ) ) {
 		return $consent_category;
 	}
 
