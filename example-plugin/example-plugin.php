@@ -1,4 +1,5 @@
-<?php
+<?php // phpcs:ignore -- Ignore the "\r\n" notice for some machines.
+
 /**
  * Plugin Name: Example plugin for the WP Consent Level API
  * Plugin URI: https://www.wordpress.org/plugins/wp-consent-api
@@ -10,30 +11,33 @@
  * Author URI:
  */
 
-
 /**
  * Tell the consent API we're following the api guidelines
  */
-$plugin = plugin_basename(__FILE__);
-add_filter("wp_consent_api_registered_$plugin", function(){return true;});
+$plugin = plugin_basename( __FILE__ );
 
+add_filter(
+	"wp_consent_api_registered_$plugin",
+	function() {
+		return true;
+	}
+);
 
 add_action( 'wp_enqueue_scripts', 'example_plugin_enqueue_assets' );
 function example_plugin_enqueue_assets( $hook ) {
-	wp_enqueue_script( 'example-plugin', plugin_dir_url(__FILE__) . "main.js", array('jquery'), CONSENT_API_VERSION, true );
+	wp_enqueue_script( 'example-plugin', plugin_dir_url( __FILE__ ) . 'main.js', array( 'jquery' ), CONSENT_API_VERSION, true );
 }
 
-add_shortcode('example-plugin-shortcode', 'example_plugin_load_document');
+add_shortcode( 'example-plugin-shortcode', 'example_plugin_load_document' );
 
-function example_plugin_load_document($atts = [], $content = null, $tag = '')
-{
-	$atts = array_change_key_case((array)$atts, CASE_LOWER);
+function example_plugin_load_document( $atts = array(), $content = null, $tag = '' ) {
+	$atts = array_change_key_case( (array) $atts, CASE_LOWER );
 	ob_start();
 
 	// override default attributes with user attributes
-	$atts = shortcode_atts(['type' => false,], $atts, $tag);
-
+	$atts = shortcode_atts( array( 'type' => false ), $atts, $tag );
 	?>
+
 	<div id="example-plugin-content">
 		<div class="functional-content">
 			<h1>No consent has been given yet. </h1>
@@ -41,7 +45,6 @@ function example_plugin_load_document($atts = [], $content = null, $tag = '')
 		<div class="marketing-content" style="display:none">
 			<h1>Woohoo! let's start tracking you :)</h1>
 		</div>
-
 	</div>
 
 	<?php
