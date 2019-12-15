@@ -14,13 +14,12 @@
 /**
  * Tell the consent API we're following the api guidelines
  */
+
 $plugin = plugin_basename( __FILE__ );
 
 add_filter(
 	"wp_consent_api_registered_$plugin",
-	function() {
-		return true;
-	}
+	'__return_true'
 );
 
 add_action( 'wp_enqueue_scripts', 'example_plugin_enqueue_assets' );
