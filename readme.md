@@ -111,9 +111,23 @@ if (wp_has_consent('marketing')){
 $plugin = plugin_basename( __FILE__ );
 add_filter( "wp_consent_api_registered_{$plugin}", '__return_true' );
 
-//check if user has given marketing consent
+//check if user has given marketing consent. Possible consent categories/purposes:
+//functional, preferences', statistics', statistics-anonymous', statistics', marketing',
 if (wp_has_consent('marketing')){
   //do marketing stuff
+}
+
+//set the consent type (optin, optout, default false)
+add_filter( 'wp_get_consent_type', 'my_set_consenttype' , 10, 1 );
+function my_set_consenttype($consenttype){
+  return 'optin';
+}
+
+//filter consent categories types, example: remove the preferences category
+add_filter( 'wp_consent_categories', 'my_set_consentcategories' , 10, 1 );
+function my_set_consentcategories($consentcategories){
+  unset($consentcategories['preferences']);
+  return $consentcategories;
 }
 ```
 

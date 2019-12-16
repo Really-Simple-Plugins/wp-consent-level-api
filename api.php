@@ -96,6 +96,7 @@ function wp_get_consent_type() {
 	return apply_filters( 'wp_get_consent_type', false );
 }
 
+
 /**
  * Filterable, to allow for use in combination with consent_type
  * return value of wp_consent$level cookie (false, deny or allow)
