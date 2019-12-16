@@ -31,9 +31,11 @@ facilitate a webmaster in getting a site compliant.
 
 Does usage of this API prevent third party cookies from being set?
 ------------------------------------------------------------------
-Primary this API is aimed at compliant setting of first party cookies by WordPress plugins. If such a plugin triggers for example Facebook, usage of this API will be of help. If a user embeds a facebook iframe, a cookie blocker is needed that initially disables the iframe and or scripts.
+Primary this API is aimed at compliant setting of first party cookies by WordPress plugins. If such a plugin triggers for example Facebook, usage of this API will be of help. If a user manually embeds a facebook iframe, a cookie blocker is needed that initially disables the iframe and or scripts.
 
 Third party scripts have to blocked by a cookie blocking functionality in a consent management plugin. To do this in core would be to intrusive, and is also not applicable to all users: only users with visitors from opt in regions such as the European Union require such a feature. Such a feature also has a risk of breaking things. Additionally, blocking these and showing a nice placeholder, requires even more sophisticated code, all of which should in my opinion not be part of WordPress core, for the same reasons.
+
+That said, the consent API can be used to decide if an iframe or script should be blocked. 
 
 How does it work?
 -----------------
@@ -57,12 +59,13 @@ Categories, and most other stuff can be extended with a filter.
 
 ## Existing integrations
 
-Complianz https://github.com/rlankhorst/complianz-gdpr/compare/consent-API-integration
-Example plugin shipped with this plugin. The plugin basically consists of a shortcode, with a div that shows 
+- Complianz https://github.com/rlankhorst/complianz-gdpr/compare/consent-API-integration
+- Example plugin shipped with this plugin. The plugin basically consists of a shortcode, with a div that shows 
 a tracking or not tracking message. No actual tracking is done :)
 
 ## Demo site
 http://relieved-snake.w5.wpsandbox.pro/
+
 plugins used to set this up:
 - Complianz
 - The example plugin shipped with this plugin
@@ -107,6 +110,8 @@ if (wp_has_consent('marketing')){
 //declare complianz with consent level API
 $plugin = plugin_basename( __FILE__ );
 add_filter( "wp_consent_api_registered_{$plugin}", '__return_true' );
+
+//check if user has given marketing consent
 if (wp_has_consent('marketing')){
   //do marketing stuff
 }
