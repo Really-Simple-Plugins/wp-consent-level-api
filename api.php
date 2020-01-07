@@ -101,11 +101,12 @@ function wp_get_consent_type() {
  * Filterable, to allow for use in combination with consent_type
  * return value of wp_consent$level cookie (false, deny or allow)
  *
- * @param $consent_category
+ * @param string $consent_category
+ * @param string|bool $requested_by plugin name e.g. complianz-gdpr/complianz-gdpr.php. This can be used to disable consent for a plugin specifically.
  *
  * @return bool $has_consent
  */
-function wp_has_consent( $consent_category ) {
+function wp_has_consent( $consent_category , $requested_by = false ) {
 	$consent_type     = wp_get_consent_type();
 	$consent_category = wp_validate_consent_category( $consent_category );
 
@@ -122,7 +123,11 @@ function wp_has_consent( $consent_category ) {
 		$has_consent_level = false;
 	}
 
-	return apply_filters( 'wp_has_consent', $has_consent_level, $consent_category );
+	/**
+	 * The requested by
+	 */
+
+	return apply_filters( 'wp_has_consent', $has_consent_level, $consent_category , $requested_by );
 }
 
 /**
