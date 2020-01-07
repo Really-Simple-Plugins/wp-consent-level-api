@@ -68,7 +68,7 @@ http://relieved-snake.w5.wpsandbox.pro/
 
 plugins used to set this up:
 - Complianz
-- The example plugin shipped with this plugin
+- The example plugin https://github.com/rlankhorst/consent-api-example-plugin
 
 Code Examples
 -------------

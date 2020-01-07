@@ -45,6 +45,18 @@ Clientside, a consent management plugin can dynamically manipulate the consent t
 A plugin can use a hook to listen for changes, or check the value of a given category.
 
 Categories, and most other stuff can be extended with a filter.
+= Existing integrations =
+- Complianz https://github.com/rlankhorst/complianz-gdpr/compare/consent-API-integration
+- Example plugin shipped with this plugin. The plugin basically consists of a shortcode, with a div that shows
+a tracking or not tracking message. No actual tracking is done :)
+
+## Demo site
+http://relieved-snake.w5.wpsandbox.pro/
+
+plugins used to set this up:
+- Complianz
+- The example plugin https://github.com/rlankhorst/consent-api-example-plugin
+
 
 = javascript, consent management plugin =
 //dynamically set consent type
