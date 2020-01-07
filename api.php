@@ -160,5 +160,9 @@ function wp_set_consent( $consent_category, $value ) {
  */
 
 function consent_api_registered( $plugin ) {
+
+	//we consider this plugin to comply ;)
+	if (strpos($plugin, 'wp-consent-api.php')!==FALSE) return true;
+
 	return apply_filters( "wp_consent_api_registered_$plugin", false );
 }

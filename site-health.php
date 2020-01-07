@@ -40,7 +40,7 @@ if ( ! class_exists( 'CONSENT_API_SITE_HEALTH' ) ) {
 			$plugins_without_registration = false;
 
 			foreach ( $plugins as $plugin ) {
-				if ( ! consent_api_registered( $plugin ) ) {
+				if (! consent_api_registered( $plugin ) ) {
 					$not_registered[]             = $plugin;
 					$plugins_without_registration = true;
 				}
