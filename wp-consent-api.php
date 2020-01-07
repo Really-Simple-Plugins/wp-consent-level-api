@@ -1,7 +1,7 @@
 <?php // phpcs:ignore -- Ignore the missing class- prefix from file & "\r\n" notice for some machines.
 
 /**
- * Plugin Name: WP Consent Level API
+ * Plugin Name: WP Consent API
  * Plugin URI:  https://www.wordpress.org/plugins/wp-consent-api
  * Description: Simple Consent Level API to read and register the current consent level
  * Version:     1.0.0
