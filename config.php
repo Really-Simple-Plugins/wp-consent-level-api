@@ -51,7 +51,6 @@ if ( ! class_exists( 'CONSENT_API_CONFIG' ) ) {
 					'preferences',
 					'statistics',
 					'statistics-anonymous',
-					'statistics',
 					'marketing',
 				)
 			);
