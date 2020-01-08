@@ -107,6 +107,8 @@ The plugin requires both a consent management plugin for consent management, and
 == Changelog ==
 = 1.0.0 =
 * changed consent_api_setcookie into consent_api_set_cookie for naming consistency with the getcookie method
+* added prefix in javascript set and get methods, to be compatible with PHP cookies, props @phpgeek
+* removed duplicate statistics category, props @phpgeek
 
 == Upgrade notice ==
 
