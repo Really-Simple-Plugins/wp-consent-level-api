@@ -46,8 +46,12 @@ function wp_has_consent(category) {
     return has_consent_level;
 }
 
+/**
+ * Set cookie by consent type
+ * @param name
+ */
 
-function consent_api_setcookie(name, value) {
+function consent_api_set_cookie(name, value) {
     var secure = ";secure";
     var days = consent_api.cookie_expiration;
     var date = new Date();
@@ -56,17 +60,20 @@ function consent_api_setcookie(name, value) {
 
     if (window.location.protocol !== "https:") secure = '';
 
-    document.cookie = name + "=" + value + secure + expires + ";path=/";
+    document.cookie = "wp_consent_" + name + "=" + value + secure + expires + ";path=/";
 }
 
-function consent_api_get_cookie(cname) {
-    var name = "wp_consent_" + cname + "="; //Create the cookie name variable with cookie name concatenate with = sign
-    var cArr = window.document.cookie.split(';'); //Create cookie array by split the cookie by ';'
+/**
+ * Get cookie by consent type
+ * @param name
+ */
 
-    //Loop through the cookies and return the cooki value if it find the cookie name
+function consent_api_get_cookie(name) {
+    name = "wp_consent_" + name + "=";
+    var cArr = window.document.cookie.split(';');
+
     for (var i = 0; i < cArr.length; i++) {
         var c = cArr[i].trim();
-        //If the name is the cookie string at position 0, we found the cookie and return the cookie value
         if (c.indexOf(name) == 0)
             return c.substring(name.length, c.length);
     }
@@ -85,7 +92,7 @@ function wp_set_consent(category, value) {
     var event;
     if (value !== 'allow' && value !== 'deny') return;
 
-    consent_api_setcookie('wp_consent_' + category, value);
+    consent_api_set_cookie('wp_consent_' + category, value);
     var changedConsentCategory = [];
     changedConsentCategory[category] = value;
     try {
