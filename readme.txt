@@ -106,6 +106,7 @@ No, this plugin provides a framework through which plugins can know if they are 
 The plugin requires both a consent management plugin for consent management, and a plugin that follows the consent level as can be read from this API.
 == Changelog ==
 = 1.0.0 =
+* changed consent_api_setcookie into consent_api_set_cookie for naming consistency with the getcookie method
 
 == Upgrade notice ==
 

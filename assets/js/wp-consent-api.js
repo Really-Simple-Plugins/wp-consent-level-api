@@ -47,7 +47,7 @@ function wp_has_consent(category) {
 }
 
 
-function consent_api_setcookie(name, value) {
+function consent_api_set_cookie(name, value) {
     var secure = ";secure";
     var days = consent_api.cookie_expiration;
     var date = new Date();
@@ -85,7 +85,7 @@ function wp_set_consent(category, value) {
     var event;
     if (value !== 'allow' && value !== 'deny') return;
 
-    consent_api_setcookie('wp_consent_' + category, value);
+    consent_api_set_cookie('wp_consent_' + category, value);
     var changedConsentCategory = [];
     changedConsentCategory[category] = value;
     try {
