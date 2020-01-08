@@ -10,7 +10,12 @@ Stable tag: 1.0.0
 Simple Consent API to read and register the current consent category
 
 == Description ==
-Simple Consent API to read and register the current consent category, allowing consent management plugins and other plugins to work together, improving compliancy.
+WP Consent API is a plugin which standardizes communication of accepted consent categories between plugins. It requires a cookie banner plugin and
+at least on other plugin that supports the WP Consent API.
+With this plugin, all supporting plugins can use the same set of methods to read and register the current consent category, allowing consent management plugins and other plugins to work together, improving compliancy.
+
+WARNING: the plugin itself is not handling consent. It will show you how many plugins you have without Consent API support, and will improve compliancy on your site by ensuring a smooth communication between cookie banner plugins
+and cookie placing plugins.
 
 = What problem does this plugin solve? =
 Currently it is possibly for a consent management plugin to block third party services like Facebook, Google Maps, Twitter, etc. But if a WordPress plugin places a PHP cookie, a consent management plugin cannot prevent this.
