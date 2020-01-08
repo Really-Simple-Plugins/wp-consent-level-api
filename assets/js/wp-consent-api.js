@@ -60,7 +60,7 @@ function consent_api_set_cookie(name, value) {
 }
 
 function consent_api_get_cookie(cname) {
-    var name = cname + "="; //Create the cookie name variable with cookie name concatenate with = sign
+    var name = "wp_consent_" + cname + "="; //Create the cookie name variable with cookie name concatenate with = sign
     var cArr = window.document.cookie.split(';'); //Create cookie array by split the cookie by ';'
 
     //Loop through the cookies and return the cooki value if it find the cookie name
