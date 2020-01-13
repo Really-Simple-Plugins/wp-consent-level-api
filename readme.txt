@@ -56,7 +56,7 @@ Categories, and most other stuff can be extended with a filter.
 a tracking or not tracking message. No actual tracking is done :)
 
 ## Demo site
-http://relieved-snake.w5.wpsandbox.pro/
+https://wpconsentapi.org/
 
 plugins used to set this up:
 - Complianz
