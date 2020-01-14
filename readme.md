@@ -42,14 +42,14 @@ How does it work?
 There are two indicators that together tell if consent is given for a certain consent category, e.g. "marketing":
 
 1) the region based `consent_type`, which
-can be `opt-in`, `opt-out`, or other possible `consent_types`;
+can be `optin`, `optout`, or other possible `consent_types`;
 2) and the visitor's choice: `not set`, `allow` or `deny`.
 
 The `consent_type` is a function that wraps a filter,`wp_get_consent_type`. If there's no consent management plugin to set it, it will return `false`. This will cause all consent categories to return `true`, allowing cookies to be set on all categories.
 
-If `opt-in` is set using this filter, a category will only return `true` if the value of the visitor's choice is `allow`.
+If `optin` is set using this filter, a category will only return `true` if the value of the visitor's choice is `allow`.
 
-If the region based `consent_type` is `opt-out`, it will return `true` if the visitor's choice is not set or is `allow`.
+If the region based `consent_type` is `optout`, it will return `true` if the visitor's choice is not set or is `allow`.
 
 Clientside, a consent management plugin can dynamically manipulate the consent type, and set the several cookie categories.
 
