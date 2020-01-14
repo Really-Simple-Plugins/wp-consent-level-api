@@ -92,7 +92,7 @@ function wp_set_consent(category, value) {
     var event;
     if (value !== 'allow' && value !== 'deny') return;
 
-    consent_api_set_cookie(category, value);
+    consent_api_set_cookie('wp_consent_' + category, value);
     var changedConsentCategory = [];
     changedConsentCategory[category] = value;
     try {
