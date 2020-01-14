@@ -1,5 +1,5 @@
 === WP Consent API ===
-Contributors: RogierLankhorst, xkon, aurooba, mujuonly, phpgeek
+Contributors: RogierLankhorst, xkon, aurooba, mujuonly, phpgeek, paapst
 Tags: consent, privacy
 Requires at least: 5.0
 License: GPL2
@@ -109,6 +109,31 @@ Go to “plugins” in your WordPress admin, then click activate.
 = Does this plugin block cookies from being placed? =
 No, this plugin provides a framework through which plugins can know if they are allowed to place cookies.
 The plugin requires both a consent management plugin for consent management, and a plugin that follows the consent level as can be read from this API.
+= How should I go about integrating my plugin? =
+For each action that places cookies, or requests data from another server that might process user data, you should consider what type of data processing takes place. There are 5 consent categories:
+functional, statistics-anonymous, statistics, preferences, marketing. These are explained below. Your code should check if consent has been given for the applicable category. If no cookie banner plugin is active,
+the Consent API will always return with consent (true).
+Please check out the example plugin, and the above code examples.
+= What is the difference between the consent categories? =
+
+statistics:
+Cookies or any other form of local storage that are used exclusively for statistical purposes (Analytics Cookies).
+
+statistics-anonymous:
+Cookies or any other form of local storage that are used exclusively for anonymous statistical purposes (Anonymous Analytics Cookies), that are placed on a first party domain, and that do not allow identification of particular individuals.
+
+marketing:
+Cookies or any other form of local storage required to create user profiles to send advertising or to track the user on a website or across websites for simular marketing purposes.
+
+functional:
+The cookie or any other form of local storage is used for the sole purpose of carrying out the transmission of a communication over an electronic communications network;
+
+OR
+
+The technical storage or access is strictly necessary for the legitimate purpose of enabling the use of a specific service explicitly requested by the subscriber or user. If cookies are disabled, the requested functionality will not be available. This makes them essential functional cookies.
+
+preferences:
+Cookies or any other form of local storage that can not be seen as statistics, statistics-anonymous, marketing or functional, and where the technical storage or access is necessary for the legitimate purpose of storing preferences.
 == Changelog ==
 = 1.0.0 =
 * changed consent_api_setcookie into consent_api_set_cookie for naming consistency with the getcookie method

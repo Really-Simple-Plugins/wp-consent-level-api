@@ -1,6 +1,6 @@
 WP Consent API
 ======================
-**Contributors**: RogierLankhorst, mrxkon, aurooba, xkon, aurooba, mujuonly, phpgeek
+**Contributors**: RogierLankhorst, mrxkon, aurooba, xkon, aurooba, mujuonly, phpgeek, paapst
 
 **Tags**: consent, privacy
 
@@ -16,7 +16,7 @@ WP Consent API
 
 Description
 -----------
-Simple Consent API to read and register the current consent category, allowing consent management plugins and other plugins to work together, improving compliancy.
+Consent API to read and register the current consent category, allowing consent management plugins and other plugins to work together, improving compliancy.
 
 What problem does this plugin solve?
 ------------------------------------
@@ -144,7 +144,11 @@ Frequently asked questions
 **Does this plugin block cookies from being placed?**
 No, this plugin provides a framework through which plugins can know if they are allowed to place cookies.
 The plugin requires both a consent management plugin for consent management, and a plugin that follows the consent level as can be read from this API. 
-
+**How should I go about integrating my plugin?**
+For each action that places cookies, or requests data from another server that might process user data, you should consider what type of data processing takes place. There are 5 consent categories:
+functional, statistics-anonymous, statistics, preferences, marketing. These are explained below. Your code should check if consent has been given for the applicable category. If no cookie banner plugin is active, 
+the Consent API will always return with consent (true). 
+Please check out the example plugin, and the above code examples.
 **What is the difference between the consent categories?**
 
 - statistics:
