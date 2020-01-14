@@ -80,7 +80,7 @@ function wp_validate_consent_value( $consent_value ) {
  * @return bool|string $consent_category
  */
 function wp_validate_consent_category( $consent_category ) {
-	if ( in_array( $consent_category, WP_CONSENT_API()->config->consent_categorys(), true ) ) {
+	if ( in_array( $consent_category, WP_CONSENT_API()->config->consent_categories(), true ) ) {
 		return $consent_category;
 	}
 
