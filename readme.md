@@ -1,6 +1,6 @@
 WP Consent API
 ======================
-**Contributors**: RogierLankhorst
+**Contributors**: RogierLankhorst, mrxkon, aurooba, xkon, aurooba, mujuonly, phpgeek, paapst
 
 **Tags**: consent, privacy
 
@@ -16,7 +16,7 @@ WP Consent API
 
 Description
 -----------
-Simple Consent API to read and register the current consent category, allowing consent management plugins and other plugins to work together, improving compliancy.
+Consent API to read and register the current consent category, allowing consent management plugins and other plugins to work together, improving compliancy.
 
 What problem does this plugin solve?
 ------------------------------------
@@ -31,23 +31,25 @@ facilitate a webmaster in getting a site compliant.
 
 Does usage of this API prevent third party cookies from being set?
 ------------------------------------------------------------------
-Primary this API is aimed at compliant setting of first party cookies by WordPress plugins. If such a plugin triggers for example Facebook, usage of this API will be of help. If a user embeds a facebook iframe, a cookie blocker is needed that initially disables the iframe and or scripts.
+Primary this API is aimed at compliant setting of first party cookies by WordPress plugins. If such a plugin triggers for example Facebook, usage of this API will be of help. If a user manually embeds a facebook iframe, a cookie blocker is needed that initially disables the iframe and or scripts.
 
 Third party scripts have to blocked by a cookie blocking functionality in a consent management plugin. To do this in core would be to intrusive, and is also not applicable to all users: only users with visitors from opt in regions such as the European Union require such a feature. Such a feature also has a risk of breaking things. Additionally, blocking these and showing a nice placeholder, requires even more sophisticated code, all of which should in my opinion not be part of WordPress core, for the same reasons.
+
+That said, the consent API can be used to decide if an iframe or script should be blocked. 
 
 How does it work?
 -----------------
 There are two indicators that together tell if consent is given for a certain consent category, e.g. "marketing":
 
 1) the region based `consent_type`, which
-can be `opt-in`, `opt-out`, or other possible `consent_types`;
+can be `optin`, `optout`, or other possible `consent_types`;
 2) and the visitor's choice: `not set`, `allow` or `deny`.
 
 The `consent_type` is a function that wraps a filter,`wp_get_consent_type`. If there's no consent management plugin to set it, it will return `false`. This will cause all consent categories to return `true`, allowing cookies to be set on all categories.
 
-If `opt-in` is set using this filter, a category will only return `true` if the value of the visitor's choice is `allow`.
+If `optin` is set using this filter, a category will only return `true` if the value of the visitor's choice is `allow`.
 
-If the region based `consent_type` is `opt-out`, it will return `true` if the visitor's choice is not set or is `allow`.
+If the region based `consent_type` is `optout`, it will return `true` if the visitor's choice is not set or is `allow`.
 
 Clientside, a consent management plugin can dynamically manipulate the consent type, and set the several cookie categories.
 
@@ -57,15 +59,16 @@ Categories, and most other stuff can be extended with a filter.
 
 ## Existing integrations
 
-Complianz https://github.com/rlankhorst/complianz-gdpr/compare/consent-API-integration
-Example plugin shipped with this plugin. The plugin basically consists of a shortcode, with a div that shows 
+- Complianz https://github.com/rlankhorst/complianz-gdpr/compare/consent-API-integration
+- Example plugin shipped with this plugin. The plugin basically consists of a shortcode, with a div that shows 
 a tracking or not tracking message. No actual tracking is done :)
 
 ## Demo site
-http://relieved-snake.w5.wpsandbox.pro/
+https://wpconsentapi.org/
+
 plugins used to set this up:
 - Complianz
-- The example plugin shipped with this plugin
+- The example plugin https://github.com/rlankhorst/consent-api-example-plugin
 
 Code Examples
 -------------
@@ -104,8 +107,27 @@ if (wp_has_consent('marketing')){
 ```
 ### PHP
 ```php
+//declare complianz with consent level API
+$plugin = plugin_basename( __FILE__ );
+add_filter( "wp_consent_api_registered_{$plugin}", '__return_true' );
+
+//check if user has given marketing consent. Possible consent categories/purposes:
+//functional, preferences', statistics', statistics-anonymous', statistics', marketing',
 if (wp_has_consent('marketing')){
   //do marketing stuff
+}
+
+//set the consent type (optin, optout, default false)
+add_filter( 'wp_get_consent_type', 'my_set_consenttype' , 10, 1 );
+function my_set_consenttype($consenttype){
+  return 'optin';
+}
+
+//filter consent categories types, example: remove the preferences category
+add_filter( 'wp_consent_categories', 'my_set_consentcategories' , 10, 1 );
+function my_set_consentcategories($consentcategories){
+  unset($consentcategories['preferences']);
+  return $consentcategories;
 }
 ```
 
@@ -120,8 +142,46 @@ To install this plugin:
 Frequently asked questions
 --------------------------
 **Does this plugin block cookies from being placed?**
+
 No, this plugin provides a framework through which plugins can know if they are allowed to place cookies.
-The plugin requires both a consent management plugin for consent management, and a plugin that follows the consent level as can be read from this API.
+The plugin requires both a consent management plugin for consent management, and a plugin that follows the consent level as can be read from this API. 
+
+**How should I go about integrating my plugin?**
+
+For each action that places cookies, or requests data from another server that might process user data, you should consider what type of data processing takes place. There are 5 consent categories:
+functional, statistics-anonymous, statistics, preferences, marketing. These are explained below. Your code should check if consent has been given for the applicable category. If no cookie banner plugin is active, 
+the Consent API will always return with consent (true). 
+Please check out the example plugin, and the above code examples.
+
+**What is the difference between the consent categories?**
+
+- statistics:
+
+Cookies or any other form of local storage that are used exclusively for statistical purposes (Analytics Cookies).
+
+- statistics-anonymous:
+
+Cookies or any other form of local storage that are used exclusively for anonymous statistical purposes (Anonymous Analytics Cookies), that are placed on a first party domain, and that do not allow identification of particular individuals.
+
+- marketing:
+
+Cookies or any other form of local storage required to create user profiles to send advertising or to track the user on a website or across websites for simular marketing purposes.
+
+- functional:
+
+The cookie or any other form of local storage is used for the sole purpose of carrying out the transmission of a
+communication over an electronic communications network;
+
+OR
+
+The technical storage or access is strictly necessary for the legitimate
+purpose of enabling the use of a specific service explicitly requested by the subscriber or
+user. If cookies are disabled, the requested functionality will not be available. This makes them essential functional cookies.
+
+- preferences:
+
+Cookies or any other form of local storage that can not be seen as statistics, statistics-anonymous, marketing or functional, and where the technical storage or access is necessary for the legitimate purpose of storing preferences. 
+
 
 Changelog
 ---------
