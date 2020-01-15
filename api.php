@@ -106,7 +106,7 @@ function wp_get_consent_type() {
  *
  * @return bool $has_consent
  */
-function wp_has_consent( $consent_category , $requested_by = false ) {
+function wp_has_consent( $consent_category, $requested_by = false ) {
 	$consent_type     = wp_get_consent_type();
 	$consent_category = wp_validate_consent_category( $consent_category );
 
@@ -127,7 +127,7 @@ function wp_has_consent( $consent_category , $requested_by = false ) {
 	 * The requested by
 	 */
 
-	return apply_filters( 'wp_has_consent', $has_consent_level, $consent_category , $requested_by );
+	return apply_filters( 'wp_has_consent', $has_consent_level, $consent_category, $requested_by );
 }
 
 /**
@@ -165,9 +165,10 @@ function wp_set_consent( $consent_category, $value ) {
  */
 
 function consent_api_registered( $plugin ) {
-
 	//we consider this plugin to comply ;)
-	if (strpos($plugin, 'wp-consent-api.php')!==FALSE) return true;
+	if ( strpos( $plugin, 'wp-consent-api.php' ) !== false ) {
+		return true;
+	}
 
 	return apply_filters( "wp_consent_api_registered_$plugin", false );
 }
