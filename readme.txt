@@ -15,22 +15,22 @@ at least on other plugin that supports the WP Consent API.
 With this plugin, all supporting plugins can use the same set of methods to read and register the current consent category, allowing consent management plugins and other plugins to work together, improving compliancy.
 
 WARNING: the plugin itself is not handling consent. It will show you how many plugins you have without Consent API support, and will improve compliancy on your site by ensuring a smooth communication between cookie banner plugins
-and cookie placing plugins.
+and plugins that track user data.
 
 = What problem does this plugin solve? =
 Currently it is possibly for a consent management plugin to block third party services like Facebook, Google Maps, Twitter, etc. But if a WordPress plugin places a PHP cookie, a consent management plugin cannot prevent this.
 
-Secondly, there are plugins that integrate the cookie placing code on the clientside in javascript files that, when blocked, break the site.
+Secondly, there are plugins that integrate the tracking code on the clientside in javascript files that, when blocked, break the site.
 Or, if such a plugin's javascript is minified, causing the URL to be unrecognizable, it won't get detected by an automatic blocking script.
 
-Lastly, the cookie blocking approach requires a list of all types of URL's that place cookies. A generic API where plugins adhere to can greatly
+Lastly, the blocking approach requires a list of all types of URL's that track user data. A generic API where plugins adhere to can greatly
 facilitate a webmaster in getting a site compliant.
 
-= Does usage of this API prevent third party cookies from being set? =
-Primary this API is aimed at compliant setting of first party cookies by WordPress plugins. If such a plugin triggers for example Facebook,
-usage of this API will be of help. If a user embeds a facebook iframe, a cookie blocker is needed that initially disables the iframe and or scripts.
+= Does usage of this API prevent third party services from tracking user data? =
+Primary this API is aimed at compliant first party user data tracking by WordPress plugins. If such a plugin triggers for example Facebook,
+usage of this API will be of help. If a user embeds a facebook iframe, a tracking blocker is needed that initially disables the iframe and or scripts.
 
-Third party scripts have to blocked by a cookie blocking functionality
+Third party scripts have to blocked by a tracking blocking functionality
 in a consent management plugin. To do this in core would be to intrusive, and is also not applicable to all users: only users with visitors from opt in regions such as the European Union require such a feature. Such a feature also has a risk of breaking things. Additionally, blocking these and showing a nice placeholder, requires even more sophisticated code, all of which should in my opinion not be part of WordPress core, for the same reasons.
 
 = How does it work? =
@@ -45,7 +45,7 @@ If opt-in is set using this filter, a category will only return true if the valu
 
 If the region based consent_type is opt-out, it will return true if the visitor's choice is not set or is "allow".
 
-Clientside, a consent management plugin can dynamically manipulate the consent type, and set the several cookie categories.
+Clientside, a consent management plugin can dynamically manipulate the consent type, and set the several tracking categories.
 
 A plugin can use a hook to listen for changes, or check the value of a given category.
 
@@ -78,7 +78,7 @@ var changedConsentCategory = e.detail;
 for (var key in changedConsentCategory) {
 if (changedConsentCategory.hasOwnProperty(key)) {
 if (key === 'marketing' && changedConsentCategory[key] === 'allow') {
-console.log("just given consent, set marketing cookie")
+console.log("just given consent, track user")
 }
 }
 }
@@ -106,11 +106,11 @@ Download the plugin
 Upload the plugin to the wp-content/plugins directory,
 Go to “plugins” in your WordPress admin, then click activate.
 == Frequently asked questions ==
-= Does this plugin block cookies from being placed? =
-No, this plugin provides a framework through which plugins can know if they are allowed to place cookies.
+= Does this plugin block third party services from tracking user data? =
+No, this plugin provides a framework through which plugins can know if they are allowed to track user data.
 The plugin requires both a consent management plugin for consent management, and a plugin that follows the consent level as can be read from this API.
 = How should I go about integrating my plugin? =
-For each action that places cookies, or requests data from another server that might process user data, you should consider what type of data processing takes place. There are 5 consent categories:
+For each action that tracks user data, you should consider what type of data processing takes place. There are 5 consent categories:
 functional, statistics-anonymous, statistics, preferences, marketing. These are explained below. Your code should check if consent has been given for the applicable category. If no cookie banner plugin is active,
 the Consent API will always return with consent (true).
 Please check out the example plugin, and the above code examples.
