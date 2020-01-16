@@ -22,16 +22,16 @@ What problem does this plugin solve?
 ------------------------------------
 Currently it is possibly for a consent management plugin to block third party services like Facebook, Google Maps, Twitter, etc. But if a WordPress plugin places a PHP cookie, a consent management plugin cannot prevent this.
 
-Secondly, there are plugins that integrate tracking code on the clientside in javascript files that, when blocked, break the site.
+Secondly, there are plugins that integrate data processing code on the clientside in javascript files that, when blocked, break the site.
 
 Or, if such a plugin's javascript is minified, causing the URL to be unrecognizable, it won't get detected by an automatic blocking script.
 
-Lastly, the blocking of tracking approach requires a list of all types of URL's that track user data. A generic API where plugins adhere to can greatly
+Lastly, the blocking of data processing approach requires a list of all types of URL's that track user data. A generic API where plugins adhere to can greatly
 facilitate a webmaster in getting a site compliant.
 
-Does usage of this API prevent third party services from tracking user data?
+Does usage of this API prevent third party services from processing user data?
 ------------------------------------------------------------------
-Primary this API is aimed at compliant first party user data tracking by WordPress plugins. If such a plugin triggers for example Facebook, usage of this API will be of help. If a user manually embeds a facebook iframe, a cookie blocker is needed that initially disables the iframe and or scripts.
+Primary this API is aimed at compliant first party user data processing by WordPress plugins. If such a plugin triggers for example Facebook, usage of this API will be of help. If a user manually embeds a facebook iframe, a cookie blocker is needed that initially disables the iframe and or scripts.
 
 Third party scripts have to blocked by a blocking functionality in a consent management plugin. To do this in core would be to intrusive, and is also not applicable to all users: only users with visitors from opt in regions such as the European Union require such a feature. Such a feature also has a risk of breaking things. Additionally, blocking these and showing a nice placeholder, requires even more sophisticated code, all of which should in my opinion not be part of WordPress core, for the same reasons.
 
@@ -45,13 +45,13 @@ There are two indicators that together tell if consent is given for a certain co
 can be `optin`, `optout`, or other possible `consent_types`;
 2) and the visitor's choice: `not set`, `allow` or `deny`.
 
-The `consent_type` is a function that wraps a filter,`wp_get_consent_type`. If there's no consent management plugin to set it, it will return `false`. This will cause all consent categories to return `true`, allowing tracking for all categories.
+The `consent_type` is a function that wraps a filter,`wp_get_consent_type`. If there's no consent management plugin to set it, it will return `false`. This will cause all consent categories to return `true`, allowing data processing for all categories.
 
 If `optin` is set using this filter, a category will only return `true` if the value of the visitor's choice is `allow`.
 
 If the region based `consent_type` is `optout`, it will return `true` if the visitor's choice is not set or is `allow`.
 
-Clientside, a consent management plugin can dynamically manipulate the consent type, and set the several tracking categories.
+Clientside, a consent management plugin can dynamically manipulate the consent type, and set the several data processing categories.
 
 A plugin can use a hook to listen for changes, or check the value of a given category.
 
@@ -141,7 +141,7 @@ To install this plugin:
 
 Frequently asked questions
 --------------------------
-**Does this plugin block thirs party services from tracking user data?**
+**Does this plugin block thirs party services from processing user data?**
 
 No, this plugin provides a framework through which plugins can know if they are allowed to track user data.
 The plugin requires both a consent management plugin for consent management, and a plugin that follows the consent level as can be read from this API. 
