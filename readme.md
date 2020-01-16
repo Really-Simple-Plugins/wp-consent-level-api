@@ -61,7 +61,7 @@ Categories, and most other stuff can be extended with a filter.
 
 - Complianz https://github.com/rlankhorst/complianz-gdpr/compare/consent-API-integration
 - Example plugin shipped with this plugin. The plugin basically consists of a shortcode, with a div that shows 
-a tracking or not tracking message. No actual tracking is done :)
+a tracking or not tracking message. No actual data processing is done :)
 
 ## Demo site
 https://wpconsentapi.org/
@@ -83,7 +83,7 @@ window.wp_consent_type = 'optin';
 wp_set_consent('marketing', 'allow');
 ```
 
-### javascript, tracking plugin
+### javascript, data processing plugin
 ```javascript
 //listen to consent change event
 document.addEventListener("wp_listen_for_consent_change", function (e) {
@@ -143,12 +143,12 @@ Frequently asked questions
 --------------------------
 **Does this plugin block thirs party services from processing user data?**
 
-No, this plugin provides a framework through which plugins can know if they are allowed to track user data.
+No, this plugin provides a framework through which plugins can know if they are allowed to process user data.
 The plugin requires both a consent management plugin for consent management, and a plugin that follows the consent level as can be read from this API. 
 
 **How should I go about integrating my plugin?**
 
-For each action that tracks user data, or requests data from another server that might process user data, you should consider what type of data processing takes place. There are 5 consent categories:
+For each action that processes user data, or requests data from another server that might process user data, you should consider what type of data processing takes place. There are 5 consent categories:
 functional, statistics-anonymous, statistics, preferences, marketing. These are explained below. Your code should check if consent has been given for the applicable category. If no cookie banner plugin is active, 
 the Consent API will always return with consent (true). 
 Please check out the example plugin, and the above code examples.
