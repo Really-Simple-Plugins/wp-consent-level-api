@@ -105,11 +105,11 @@ Download the plugin
 Upload the plugin to the wp-content/plugins directory,
 Go to “plugins” in your WordPress admin, then click activate.
 == Frequently asked questions ==
-= Does this plugin block third party services from tracking user data? =
+= Does this plugin block third party services from processing user data? =
 No, this plugin provides a framework through which plugins can know if they are allowed to process user data.
 The plugin requires both a consent management plugin for consent management, and a plugin that follows the consent level as can be read from this API.
 = How should I go about integrating my plugin? =
-For each action that tracks user data, you should consider what type of data processing takes place. There are 5 consent categories:
+For each action that processes user data, you should consider what type of data processing takes place. There are 5 consent categories:
 functional, statistics-anonymous, statistics, preferences, marketing. These are explained below. Your code should check if consent has been given for the applicable category. If no cookie banner plugin is active,
 the Consent API will always return with consent (true).
 Please check out the example plugin, and the above code examples.
