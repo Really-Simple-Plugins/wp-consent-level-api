@@ -34,16 +34,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 /**
  * Checks if the plugin can safely be activated, at least php 5.6 and wp 5.0
+ *
  * @since 1.0.0
  */
-if ( ! function_exists( 'consent_api_activation_check' ) ) {
-	function consent_api_activation_check() {
+if ( ! function_exists( 'wp_consent_api_activation_check' ) ) {
+	function wp_consent_api_activation_check() {
+		global $wp_version;
+
 		if ( version_compare( PHP_VERSION, '5.6', '<' ) ) {
 			deactivate_plugins( plugin_basename( __FILE__ ) );
 			wp_die( __( 'This plugin requires PHP 5.6 or higher', 'wp-consent-api' ) );
 		}
-
-		global $wp_version;
 
 		if ( version_compare( $wp_version, '5.0', '<' ) ) {
 			deactivate_plugins( plugin_basename( __FILE__ ) );
@@ -51,45 +52,91 @@ if ( ! function_exists( 'consent_api_activation_check' ) ) {
 		}
 	}
 }
-register_activation_hook( __FILE__, 'consent_api_activation_check' );
+register_activation_hook( __FILE__, 'wp_consent_api_activation_check' );
 
 
 if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 	class WP_CONSENT_API {
-
+		/**
+		 * Instance.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @var $instance
+		 */
 		private static $instance;
 
-		private function __construct() {
-		}
+		/**
+		 * Config.
+		 *
+		 * @var $config
+		 */
+		public static $config;
 
-		public static function instance() {
+
+		/**
+		 * Site Health Checks.
+		 *
+		 * @var $site_health
+		 */
+		public static $site_health;
+
+		/**
+		 * Instantiate the class.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return WP_CONSENT_API
+		 */
+		public static function get_instance() {
 			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof WP_CONSENT_API ) ) {
-				self::$instance = new WP_CONSENT_API;
-
-				self::$instance->setup_constants();
-				self::$instance->includes();
-
-				self::$instance->config      = new CONSENT_API_CONFIG();
-				self::$instance->site_health = new CONSENT_API_SITE_HEALTH();
-
-				self::$instance->hooks();
+				self::$instance = new self();
 			}
 
 			return self::$instance;
 		}
 
+		/**
+		 * Constructor.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return void
+		 */
+		private function __construct() {
+			$this->setup_constants();
+			$this->includes();
+			$this->load_translation();
+
+			self::$config      = new CONSENT_API_CONFIG();
+			self::$site_health = new CONSENT_API_SITE_HEALTH();
+		}
+
+		/**
+		 * Define Consent API related constants.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return void
+		 */
 		private function setup_constants() {
-			require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-			$plugin_data = get_plugin_data( __FILE__ );
+			$plugin_data = get_file_data( __FILE__, array( 'Version' => 'Version' ), false );
+			$debug       = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? time() : '';
 
 			define( 'CONSENT_API_URL', plugin_dir_url( __FILE__ ) );
 			define( 'CONSENT_API_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'CONSENT_API_PLUGIN', plugin_basename( __FILE__ ) );
-			$debug = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? time() : '';
 			define( 'CONSENT_API_VERSION', $plugin_data['Version'] . $debug );
 			define( 'CONSENT_API_PLUGIN_FILE', __FILE__ );
 		}
 
+		/**
+		 * Include the extra plugin files.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return void
+		 */
 		private function includes() {
 			require_once( CONSENT_API_PATH . 'config.php' );
 			require_once( CONSENT_API_PATH . 'api.php' );
@@ -97,25 +144,27 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 			require_once( CONSENT_API_PATH . 'wordpress-comments.php' );
 		}
 
-		private function hooks() {
+		/**
+		 * Load plugin translations.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return void
+		 */
+		private function load_translation() {
+			load_plugin_textdomain( 'wp-consent-api', false, CONSENT_API_PATH . '/config/languages/' );
 		}
 	}
-}
 
-if ( ! function_exists( 'WP_CONSENT_API' ) ) {
-	function WP_CONSENT_API() { // phpcs:ignore -- Ignore not snakecase name.
-		return WP_CONSENT_API::instance();
-	}
 
-	add_action( 'plugins_loaded', 'WP_CONSENT_API', 9 );
-}
-
-/**
- * Load the translation files
- */
-if ( ! function_exists( 'consent_api_load_translation' ) ) {
-	add_action( 'init', 'consent_api_load_translation', 20 );
-	function consent_api_load_translation() {
-		load_plugin_textdomain( 'wp-consent-api', false, CONSENT_API_PATH . '/config/languages/' );
-	}
+	/**
+	 * Load the plugins main class.
+	 */
+	add_action(
+		'plugins_loaded',
+		function() {
+			WP_CONSENT_API::get_instance();
+		},
+		9
+	);
 }
