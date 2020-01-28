@@ -181,9 +181,12 @@ function consent_api_registered( $plugin ) {
 function wp_cookie_information(){
 	$defaults = array(
 		array(
-			'title' => '',
-			'purpose' => '',
-			'retention' => '',
+			'title' => 'login_cookie',
+			'purpose' => 'functional',
+			'retention' => __('30 days'),
+			'function' => __('check if user is logged in'),
+			'isPersonalData' => false,
+			'collectedPersonalData' => '',
 		),
 	);
 
