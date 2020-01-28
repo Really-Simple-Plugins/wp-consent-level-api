@@ -110,6 +110,9 @@ if (wp_has_consent('marketing')){
 //declare complianz with consent level API
 $plugin = plugin_basename( __FILE__ );
 add_filter( "wp_consent_api_registered_{$plugin}", '__return_true' );
+//add cookie information
+add_filter( "wp_consent_api_registered_{$plugin}", '__return_true' );
+
 
 //check if user has given marketing consent. Possible consent categories/purposes:
 //functional, preferences', statistics', statistics-anonymous', statistics', marketing',

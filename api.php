@@ -172,3 +172,37 @@ function consent_api_registered( $plugin ) {
 
 	return apply_filters( "wp_consent_api_registered_$plugin", false );
 }
+
+/**
+ * Get list of cookies with info
+ * add info like this: $cookies[] = array('title'=>'cookie title');
+ * @return array $cookies
+ */
+function wp_cookie_information(){
+	$defaults = array(
+		array(
+			'title' => '',
+			'purpose' => '',
+			'retention' => '',
+		),
+	);
+
+	$cookies = $sanitized_cookies = array();
+
+	$plugins                      = get_option( 'active_plugins' );
+	foreach ( $plugins as $plugin ) {
+		$cookies = apply_filters("wp_cookie_information_$plugin", $cookies);
+	}
+
+	//sanitize
+	foreach($cookies as $key => $cookie){
+		$sanitized_cookie = array();
+		foreach ($cookie as $label => $value){
+			$sanitized_cookie[sanitize_title($label)] = sanitize_text_field($value);
+		}
+		$sanitized_cookies[$key] = $sanitized_cookie;
+	}
+
+	return $sanitized_cookies;
+}
+
