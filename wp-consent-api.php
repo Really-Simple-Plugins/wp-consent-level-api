@@ -54,7 +54,10 @@ if ( ! function_exists( 'wp_consent_api_activation_check' ) ) {
 }
 register_activation_hook( __FILE__, 'wp_consent_api_activation_check' );
 
-
+/**
+ * WP_CONSENT_API class.
+ *
+ */
 if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 	class WP_CONSENT_API {
 		/**
@@ -109,7 +112,7 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 			$this->load_translation();
 
 			self::$config      = new CONSENT_API_CONFIG();
-			self::$site_health = new CONSENT_API_SITE_HEALTH();
+			self::$site_health = new WP_CONSENT_API_SITE_HEALTH;
 		}
 
 		/**
