@@ -98,7 +98,7 @@ function wp_validate_consent_category( $consent_category ) {
  *
  * @since 1.0.0
  *
- * @return bool
+ * @return string|bool
  */
 function wp_get_consent_type() {
 	return apply_filters( 'wp_get_consent_type', false );
