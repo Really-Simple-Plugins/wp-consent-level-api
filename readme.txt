@@ -1,5 +1,5 @@
 === WP Consent API ===
-Contributors: RogierLankhorst, mrxkon, aurooba, mujuonly, phpgeek, paapst
+Contributors: RogierLankhorst, mrxkon, aurooba, mujuonly, phpgeek, paapst, aahulsebos
 Tags: consent, privacy
 Requires at least: 5.0
 License: GPL2
