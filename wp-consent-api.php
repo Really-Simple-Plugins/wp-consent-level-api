@@ -110,6 +110,8 @@ if ( ! function_exists( 'WP_CONSENT_API' ) ) {
 	add_action( 'plugins_loaded', 'WP_CONSENT_API', 9 );
 }
 
+
+
 /**
  * Load the translation files
  */
