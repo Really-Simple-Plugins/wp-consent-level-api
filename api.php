@@ -4,6 +4,11 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die( 'We\'re sorry, but you can not directly access this file.' );
 }
+/**
+ * To be enable other plugins to add cookie info dynamically, we declare a global variable here.
+ */
+
+global $wp_cookie_info;
 
 /**
  * Enqueue scripts for the api for front-end
@@ -174,38 +179,44 @@ function consent_api_registered( $plugin ) {
 }
 
 /**
- * Get list of cookies with info
- * add info like this: $cookies[] = array('title'=>'cookie title');
- * @return array $cookies
+ * Register a cookie with WordPress
+ * @param string $name
+ * @param string $category //functional, preferences, statistics-anonymous, statistics,  marketing
+ * @param string $expires  //time until the cookie expires
+ * @param string $function //what the cookie is meant to do. e.g. 'Store a unique User ID'
+ * @param bool $isPersonalData //if the cookie collects personal data
+ * @param string $collectedPersonalData //type of personal data that is collected
+ * @param bool $memberCookie //if a cookie is relevant for members of the site only
+ * @param bool $administratorCookie //if the cookie is relevant for administrators only
  */
-function wp_cookie_information(){
-	$defaults = array(
-		array(
-			'title' => 'login_cookie',
-			'purpose' => 'functional',
-			'retention' => __('30 days'),
-			'function' => __('check if user is logged in'),
-			'isPersonalData' => false,
-			'collectedPersonalData' => '',
-		),
+
+function wp_add_cookie_info($name, $category, $expires, $function, $isPersonalData ,$collectedPersonalData, $memberCookie, $administratorCookie) {
+	global $_wp_registered_cookies;
+
+	$_wp_registered_cookies[ $name ] = array(
+		'category'              => wp_validate_consent_category($category),
+		'expires'               => sanitize_text_field($expires),
+		'function'              => sanitize_text_field($function),
+		'isPersonalData'        => (bool) $isPersonalData,
+		'collectedPersonalData' => sanitize_text_field($collectedPersonalData),
+		'memberCookie'          => (bool) $memberCookie,
+		'administratorCookie'   => (bool) $administratorCookie,
 	);
-
-	$cookies = $sanitized_cookies = array();
-
-	$plugins                      = get_option( 'active_plugins' );
-	foreach ( $plugins as $plugin ) {
-		$cookies = apply_filters("wp_cookie_information_$plugin", $cookies);
-	}
-
-	//sanitize
-	foreach($cookies as $key => $cookie){
-		$sanitized_cookie = array();
-		foreach ($cookie as $label => $value){
-			$sanitized_cookie[sanitize_title($label)] = sanitize_text_field($value);
-		}
-		$sanitized_cookies[$key] = $sanitized_cookie;
-	}
-
-	return $sanitized_cookies;
 }
 
+/**
+ * Get cookie info for one specific cookie, or for all cookies registered.
+ * @param string|bool $name
+ *
+ * @return array
+ */
+
+function wp_get_cookie_info($name=false){
+	global $_wp_registered_cookies;
+
+	if ($name && isset($_wp_registered_cookies[$name])){
+		return $_wp_registered_cookies[$name];
+	}
+
+	return $_wp_registered_cookies;
+}
