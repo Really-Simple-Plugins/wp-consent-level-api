@@ -5,36 +5,63 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'We\'re sorry, but you can not directly access this file.' );
 }
 
-if ( ! class_exists( 'CONSENT_API_SITE_HEALTH' ) ) {
-	class CONSENT_API_SITE_HEALTH {
+/**
+ * WP_CONSENT_API class.
+ *
+ */
+if ( ! class_exists( 'WP_CONSENT_API_SITE_HEALTH' ) ) {
+	class WP_CONSENT_API_SITE_HEALTH {
+		/**
+		 * Instance.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @var $instance
+		 */
+		private static $instance;
 
-		private static $_this;
-
+		/**
+		 * Constructor.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return void
+		 */
 		function __construct() {
-			if ( isset( self::$_this ) ) {
+			if ( isset( self::$instance ) ) {
 				// translators: %s the name of the PHP Class used.
 				wp_die( sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'wp-consent-api' ), get_class( $this ) ) );
 			}
 
 			add_filter( 'site_status_tests', array( $this, 'consent_api_integration_check' ) );
 
-			self::$_this = $this;
+			self::$instance = $this;
 		}
 
-		static function this() {
-			return self::$_this;
-		}
-
+		/**
+		 * Attach the WP Consent API Site Health tests.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param array $tests The Site Health tests.
+		 */
 		public function consent_api_integration_check( $tests ) {
 			$tests['direct']['wp-consent-api'] = array(
 				'label' => __( 'WP Consent API test' ),
-				'test'  => array( $this, 'consent_api_test' ),
+				'test'  => array( $this, 'wp_consent_api_test' ),
 			);
 
 			return $tests;
 		}
 
-		public function consent_api_test() {
+		/**
+		 * Run the WP Consent API Site Health tests.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return array $result The WP Consent API Site Health tests results.
+		 */
+		public function wp_consent_api_test() {
 			$plugins                      = get_option( 'active_plugins' );
 			$not_registered               = array();
 			$plugins_without_registration = false;

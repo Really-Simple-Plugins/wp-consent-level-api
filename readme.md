@@ -154,14 +154,16 @@ To install this plugin:
 
 Frequently asked questions
 --------------------------
-**Does this plugin block thirs party services from tracking user data?**
+**Does this plugin block third party services from tracking user data?**
 
-No, this plugin provides a framework through which plugins can know if they are allowed to place cookies or user other means of tracking.
+No, this plugin provides a framework through which plugins can know if they are allowed to place cookies or use other means of tracking.
 The plugin requires both a consent management plugin for consent management, and a plugin that follows the consent level as can be read from this API. 
 
 **How should I go about integrating my plugin?**
 
-For each action that places cookies or use other means of tracking, or requests data from another server that might place cookies or track data, you should consider what the purpose of the action is. There are 5 consent categories:
+Cookies or any other form of local storage can have a function and a purpose. A function is the particular task a cookie has. So a function can be "store the IP adres". Purpose can be seen as the **Why** behind the function. So maybe the IP adres is stored because it is needed for Statistics; or it is stored because it is used for marketing/tracking purposes; or it is needed for functional purposes.
+
+For each function you should consider what the purpose of that function is. There are 5 purpose categories:
 functional, statistics-anonymous, statistics, preferences, marketing. These are explained below. Your code should check if consent has been given for the applicable category. If no cookie banner plugin is active, 
 the Consent API will always return with consent (true). 
 Please check out the example plugin, and the above code examples.
