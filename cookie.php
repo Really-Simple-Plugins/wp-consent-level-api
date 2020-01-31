@@ -5,9 +5,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'We\'re sorry, but you can not directly access this file.' );
 }
 
-if ( ! class_exists( 'WP_CONSENT_API_COOKIE' ) ) {
-	class WP_CONSENT_API_COOKIE {
-
+if ( ! class_exists( 'WP_CONSENT_API_COOKIES' ) ) {
+	class WP_CONSENT_API_COOKIES {
+		public $registered_cookies;
 		private static $_this;
 
 		function __construct() {
@@ -23,19 +23,22 @@ if ( ! class_exists( 'WP_CONSENT_API_COOKIE' ) ) {
 			return self::$_this;
 		}
 
-		/**
-		 * Get list if active consent_types
-		 *
-		 * @return array() $consent_types
-		 */
+		public function add_cookie_info($name, $plugin_or_service, $category, $expires, $function, $isPersonalData, $memberCookie, $administratorCookie, $collectedPersonalData='', $domain = false)  {
 
-		public function consent_types() {
-			$consent_types = array(
-				'optin',
-				'optout',
+			//if domain is not passed, we assume it's first party, from this domain.
+			if (!$domain) $domain = site_url();
+
+			$this->registered_cookies[ $name ] = array(
+				'plugin_or_service'     => sanitize_text_field($plugin_or_service),
+				'category'              => wp_validate_consent_category($category),
+				'expires'               => sanitize_text_field($expires),
+				'function'              => sanitize_text_field($function),
+				'isPersonalData'        => (bool) $isPersonalData,
+				'collectedPersonalData' => sanitize_text_field($collectedPersonalData),
+				'memberCookie'          => (bool) $memberCookie,
+				'administratorCookie'   => (bool) $administratorCookie,
+				'domain'                => esc_url_raw($domain),
 			);
-
-			return apply_filters( 'wp_consent_types', $consent_types );
 		}
 
 
