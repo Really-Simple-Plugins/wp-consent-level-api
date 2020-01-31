@@ -4,11 +4,6 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	die( 'We\'re sorry, but you can not directly access this file.' );
 }
-/**
- * To be enable other plugins to add cookie info dynamically, we declare a global variable here.
- */
-
-global $wp_cookie_info;
 
 /**
  * Enqueue scripts for the api for front-end
@@ -177,6 +172,12 @@ function consent_api_registered( $plugin ) {
 
 	return apply_filters( "wp_consent_api_registered_$plugin", false );
 }
+
+/**
+ * To be enable other plugins to add cookie info dynamically, we declare a global variable here.
+ */
+
+global $wp_cookie_info;
 
 /**
  * Register a cookie with WordPress
