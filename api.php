@@ -187,13 +187,7 @@ function consent_api_registered( $plugin ) {
 }
 
 /**
- * To be enable other plugins to add cookie info dynamically, we declare a global variable here.
- */
-
-global $wp_cookie_info;
-
-/**
- * Register a cookie with WordPress
+ * Wrapper function for the registration of a cookie with WordPress
  * @param string $name
  * @param string $plugin_or_service //plugin or service (e.g. Google Maps) that sets cookie e.g.
  * @param string $category //functional, preferences, statistics-anonymous, statistics,  marketing
@@ -207,37 +201,16 @@ global $wp_cookie_info;
  */
 
 function wp_add_cookie_info($name, $plugin_or_service, $category, $expires, $function, $isPersonalData, $memberCookie, $administratorCookie, $collectedPersonalData='', $domain = false) {
-	global $_wp_registered_cookies;
-
-	//if domain is not passed, we assume it's first party, from this domain.
-	if (!$domain) $domain = site_url();
-
-	$_wp_registered_cookies[ $name ] = array(
-		'plugin_or_service'     => sanitize_text_field($plugin_or_service),
-		'category'              => wp_validate_consent_category($category),
-		'expires'               => sanitize_text_field($expires),
-		'function'              => sanitize_text_field($function),
-		'isPersonalData'        => (bool) $isPersonalData,
-		'collectedPersonalData' => sanitize_text_field($collectedPersonalData),
-		'memberCookie'          => (bool) $memberCookie,
-		'administratorCookie'   => (bool) $administratorCookie,
-		'domain'                => esc_url_raw($domain),
-	);
+	WP_CONSENT_API::$cookie_info->add_cookie_info($name, $plugin_or_service, $category, $expires, $function, $isPersonalData, $memberCookie, $administratorCookie, $collectedPersonalData, $domain);
 }
 
 /**
- * Get cookie info for one specific cookie, or for all cookies registered.
+ * Wrapper function to get cookie info for one specific cookie, or for all cookies registered.
  * @param string|bool $name
  *
  * @return array
  */
 
 function wp_get_cookie_info($name=false){
-	global $_wp_registered_cookies;
-
-	if ($name && isset($_wp_registered_cookies[$name])){
-		return $_wp_registered_cookies[$name];
-	}
-
-	return $_wp_registered_cookies;
+	return WP_CONSENT_API::$cookie_info->get_cookie_info($name);
 }
