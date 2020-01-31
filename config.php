@@ -26,7 +26,7 @@ if ( ! class_exists( 'WP_CONSENT_API_CONFIG' ) ) {
 		function __construct() {
 			if ( isset( self::$instance ) ) {
 				// translators: %s the name of the PHP Class used.
-				wp_die( sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'complianz-gdpr' ), get_class( $this ) ) );
+				wp_die( sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'wp-consent-api' ), get_class( $this ) ) );
 			}
 
 			self::$instance = $this;
