@@ -1,6 +1,6 @@
 WP Consent API
 ======================
-**Contributors**: RogierLankhorst, mrxkon, aurooba, mujuonly, phpgeek, paapst
+**Contributors**: RogierLankhorst, xkon, aurooba, mujuonly, phpgeek, paapst, aahulsebos, mundschenk-at
 
 **Tags**: consent, privacy
 
