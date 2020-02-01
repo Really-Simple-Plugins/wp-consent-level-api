@@ -194,14 +194,15 @@ function consent_api_registered( $plugin ) {
  * @param string $expires  //time until the cookie expires
  * @param string $function //what the cookie is meant to do. e.g. 'Store a unique User ID'
  * @param bool $isPersonalData //if the cookie collects personal data
+ * @param string $collectedPersonalData //type of personal data that is collected. Only needs to be filled in if isPersonalData =true
  * @param bool $memberCookie //if a cookie is relevant for members of the site only
  * @param bool $administratorCookie //if the cookie is relevant for administrators only
- * @param string $collectedPersonalData //type of personal data that is collected. Only needs to be filled in if isPersonalData =true
+ * @param string $type //HTTP, LOCALSTORAGE, API
  * @param string|bool $domain //domain on which the cookie is set. should by default be the current domain
  */
 
-function wp_add_cookie_info($name, $plugin_or_service, $category, $expires, $function, $isPersonalData, $memberCookie, $administratorCookie, $collectedPersonalData='', $domain = false) {
-	WP_CONSENT_API::$cookie_info->add_cookie_info($name, $plugin_or_service, $category, $expires, $function, $isPersonalData, $memberCookie, $administratorCookie, $collectedPersonalData, $domain);
+function wp_add_cookie_info($name, $plugin_or_service, $category, $expires, $function, $isPersonalData, $collectedPersonalData='', $memberCookie = false, $administratorCookie = false, $type='HTTP', $domain = false) {
+	WP_CONSENT_API::$cookie_info->add_cookie_info($name, $plugin_or_service, $category, $expires, $function, $isPersonalData, $collectedPersonalData, $memberCookie, $administratorCookie, $type, $domain);
 }
 
 /**
