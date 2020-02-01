@@ -85,6 +85,13 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 		public static $site_health;
 
 		/**
+		 * Cookie info
+		 *
+		 * @var $cookie_info
+		 */
+		public static $cookie_info;
+
+		/**
 		 * Instantiate the class.
 		 *
 		 * @since 1.0.0
@@ -113,6 +120,7 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 
 			self::$config      = new WP_CONSENT_API_CONFIG;
 			self::$site_health = new WP_CONSENT_API_SITE_HEALTH;
+			self::$cookie_info = new WP_CONSENT_API_COOKIE_INFO;
 		}
 
 		/**
@@ -142,6 +150,7 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 		 */
 		private function includes() {
 			require_once( CONSENT_API_PATH . 'config.php' );
+			require_once( CONSENT_API_PATH . 'cookie-info.php' );
 			require_once( CONSENT_API_PATH . 'api.php' );
 			require_once( CONSENT_API_PATH . 'site-health.php' );
 			require_once( CONSENT_API_PATH . 'wordpress-comments.php' );
@@ -158,7 +167,6 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 			load_plugin_textdomain( 'wp-consent-api', false, CONSENT_API_PATH . '/config/languages/' );
 		}
 	}
-
 
 	/**
 	 * Load the plugins main class.

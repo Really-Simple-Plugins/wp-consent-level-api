@@ -1,5 +1,5 @@
 === WP Consent API ===
-Contributors: RogierLankhorst, mrxkon, aurooba, mujuonly, phpgeek, paapst
+Contributors: RogierLankhorst, xkon, aurooba, mujuonly, phpgeek, paapst, aahulsebos, mundschenk-at
 Tags: consent, privacy
 Requires at least: 5.0
 License: GPL2
@@ -93,6 +93,23 @@ console.log("No marketing stuff please!");
 }
 
 = PHP =
+//declare complianz with consent level API
+$plugin = plugin_basename( __FILE__ );
+add_filter( "wp_consent_api_registered_{$plugin}", '__return_true' );
+
+/**
+* Example how a plugin can register cookies with the consent API
+ * These cookies can then be shown on the front-end, to the user, with wp_get_cookie_info()
+ */
+
+function my_wordpress_register_cookies(){
+	if ( function_exists( 'wp_add_cookie_info' ) ) {
+		wp_add_cookie_info( 'AMP_token', 'AMP', 'marketing', __( 'Session' ), __( 'Store a unique User ID.' ), false, false, false );
+	}
+}
+add_action('plugins_loaded', 'my_wordpress_register_cookies');
+
+
 if (wp_has_consent('marketing')){
 //do marketing stuff
 }
