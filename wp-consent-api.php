@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name: WP Consent API
- * Plugin URI:  https://www.wordpress.org/plugins/wp-consent-api
+ * Plugin URI:  https://wordpress.org/plugins/wp-consent-api
  * Description: Consent Level API to read and register the current consent level
  * Version:     1.0.0
  * Text Domain: wp-consent-api
