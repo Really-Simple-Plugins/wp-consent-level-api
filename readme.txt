@@ -1,8 +1,9 @@
 === WP Consent API ===
 Contributors: RogierLankhorst, xkon, aurooba, mujuonly, phpgeekdk, paapst, aahulsebos, pputzer, markwolters
-Tags: consent, privacy
+Tags: consent, privacy, cookies, api, compliance
 Requires at least: 5.0
 License: GPL2
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tested up to: 5.3
 Requires PHP: 5.6
 Stable tag: 1.0.0
