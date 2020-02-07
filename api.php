@@ -41,7 +41,7 @@ function wp_consent_api_enqueue_assets( $hook ) {
 		)
 	);
 }
-add_action( 'wp_enqueue_scripts', 'wp_consent_api_enqueue_assets', PHP_INT_MAX );
+add_action( 'wp_enqueue_scripts', 'wp_consent_api_enqueue_assets', PHP_INT_MAX-100 );
 
 /**
  * Validate consent_type
