@@ -183,7 +183,7 @@ function consent_api_registered( $plugin ) {
 		return true;
 	}
 
-	return apply_filters( "wp_consent_api_registered_$plugin", false );
+	return apply_filters( "wp_consent_api_registered_{$plugin}", false );
 }
 
 /**
