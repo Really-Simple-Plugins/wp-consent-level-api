@@ -70,12 +70,12 @@ function consent_api_set_cookie(name, value) {
 
 function consent_api_get_cookie(name) {
     name = name + "=";
-    var cArr = window.document.cookie.split(';');
+    var cookies = window.document.cookie.split(';');
 
-    for (var i = 0; i < cArr.length; i++) {
-        var c = cArr[i].trim();
-        if (c.indexOf(name) == 0)
-            return c.substring(name.length, c.length);
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i].trim();
+        if (cookie.indexOf(name) == 0)
+            return cookie.substring(name.length, cookie.length);
     }
 
     //If we get to this point, that means the cookie wasn't found, we return an empty string.
