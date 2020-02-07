@@ -13,6 +13,7 @@
  */
 
 window.wp_fallback_consent_type = consent_api.consent_type;
+
 window.waitfor_consent_hook = consent_api.waitfor_consent_hook;
 
 /**
