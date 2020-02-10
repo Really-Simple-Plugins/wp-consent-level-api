@@ -54,6 +54,7 @@ Categories and most other stuff can be extended with a filter.
 
 = Existing integrations =
 - Complianz https://github.com/rlankhorst/complianz-gdpr/compare/consent-API-integration
+- [Cookiebot](https://wordpress.org/plugins/cookiebot) integrates the API.
 - Example plugin shipped with this plugin. The plugin basically consists of a shortcode, with a div that shows a tracking or not tracking message. No actual tracking is done :-)
 
 ## Demo site
