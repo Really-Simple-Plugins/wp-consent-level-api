@@ -53,8 +53,8 @@ A plugin can use a hook to listen for changes or check the value of a given cate
 Categories and most other stuff can be extended with a filter.
 
 = Existing integrations =
-- Complianz https://github.com/rlankhorst/complianz-gdpr/compare/consent-API-integration
-- Example plugin shipped with this plugin. The plugin basically consists of a shortcode, with a div that shows a tracking or not tracking message. No actual tracking is done :-)
+- [Complianz GDPR/CCPA](https://wordpress.org/plugins/complianz-gdpr/).
+- [Example plugin](https://github.com/rlankhorst/consent-api-example-plugin). The plugin basically consists of a shortcode, with a div that shows a tracking or not tracking message. No actual tracking is done :-)
 
 ## Demo site
 https://wpconsentapi.org/:
