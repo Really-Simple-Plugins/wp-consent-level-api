@@ -53,9 +53,9 @@ A plugin can use a hook to listen for changes or check the value of a given cate
 Categories and most other stuff can be extended with a filter.
 
 = Existing integrations =
-- Complianz https://github.com/rlankhorst/complianz-gdpr/compare/consent-API-integration
+- [Complianz GDPR/CCPA](https://wordpress.org/plugins/complianz-gdpr/).
 - [Cookiebot](https://wordpress.org/plugins/cookiebot) integrates the API.
-- Example plugin shipped with this plugin. The plugin basically consists of a shortcode, with a div that shows a tracking or not tracking message. No actual tracking is done :-)
+- [Example plugin](https://github.com/rlankhorst/consent-api-example-plugin). The plugin basically consists of a shortcode, with a div that shows a tracking or not tracking message. No actual tracking is done :-)
 
 ## Demo site
 https://wpconsentapi.org/:
@@ -76,22 +76,22 @@ wp_set_consent('marketing', 'allow');
 
 //listen to consent change event
 document.addEventListener("wp_listen_for_consent_change", function (e) {
-var changedConsentCategory = e.detail;
-for (var key in changedConsentCategory) {
-if (changedConsentCategory.hasOwnProperty(key)) {
-if (key === 'marketing' && changedConsentCategory[key] === 'allow') {
-console.log("just given consent, track user")
-}
-}
-}
+  var changedConsentCategory = e.detail;
+  for (var key in changedConsentCategory) {
+    if (changedConsentCategory.hasOwnProperty(key)) {
+      if (key === 'marketing' && changedConsentCategory[key] === 'allow') {
+        console.log("just given consent, track user")
+      }
+    }
+  }
 });
 
 //basic implementation of consent check:
 if (wp_has_consent('marketing')){
-activateMarketing();
-console.log("set marketing stuff now!");
+  activateMarketing();
+  console.log("set marketing stuff now!");
 } else {
-console.log("No marketing stuff please!");
+  console.log("No marketing stuff please!");
 }
 
 = PHP =
@@ -106,7 +106,7 @@ add_filter( "wp_consent_api_registered_{$plugin}", '__return_true' );
 
 function my_wordpress_register_cookies(){
 	if ( function_exists( 'wp_add_cookie_info' ) ) {
-		wp_add_cookie_info( 'AMP_token', 'AMP', 'marketing', __( 'Session' ), __( 'Store a unique User ID.' ), false, false, false );
+		wp_add_cookie_info( 'AMP_token', 'AMP', 'marketing', __( 'Session' ), __( 'Store a unique User ID.' ) );
 	}
 }
 add_action('plugins_loaded', 'my_wordpress_register_cookies');
