@@ -6,7 +6,7 @@ License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 
 Simple Consent API to read and register the current consent category.
 
@@ -76,14 +76,14 @@ wp_set_consent('marketing', 'allow');
 
 //listen to consent change event
 document.addEventListener("wp_listen_for_consent_change", function (e) {
-var changedConsentCategory = e.detail;
-for (var key in changedConsentCategory) {
-if (changedConsentCategory.hasOwnProperty(key)) {
-if (key === 'marketing' && changedConsentCategory[key] === 'allow') {
-console.log("just given consent, track user")
-}
-}
-}
+  var changedConsentCategory = e.detail;
+  for (var key in changedConsentCategory) {
+    if (changedConsentCategory.hasOwnProperty(key)) {
+      if (key === 'marketing' && changedConsentCategory[key] === 'allow') {
+        console.log("just given consent, track user")
+      }
+    }
+  }
 });
 
 //basic implementation of consent check:
@@ -156,6 +156,10 @@ Preferences:
 Cookies or any other form of local storage that can not be seen as statistics, statistics-anonymous, marketing or functional, and where the technical storage or access is necessary for the legitimate purpose of storing preferences.
 
 == Changelog ==
+= 1.0.1 =
+* Cookiebot added as existing integration
+* Some small improvements to comply with WordPress coding styles
+
 = 1.0.0 =
 * changed consent_api_setcookie into consent_api_set_cookie for naming consistency with the getcookie method
 * added prefix in javascript set and get methods, to be compatible with PHP cookies, props @phpgeek
