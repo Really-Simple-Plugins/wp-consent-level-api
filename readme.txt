@@ -75,22 +75,22 @@ wp_set_consent('marketing', 'allow');
 
 //listen to consent change event
 document.addEventListener("wp_listen_for_consent_change", function (e) {
-var changedConsentCategory = e.detail;
-for (var key in changedConsentCategory) {
-if (changedConsentCategory.hasOwnProperty(key)) {
-if (key === 'marketing' && changedConsentCategory[key] === 'allow') {
-console.log("just given consent, track user")
-}
-}
-}
+  var changedConsentCategory = e.detail;
+  for (var key in changedConsentCategory) {
+    if (changedConsentCategory.hasOwnProperty(key)) {
+      if (key === 'marketing' && changedConsentCategory[key] === 'allow') {
+        console.log("just given consent, track user")
+      }
+    }
+  }
 });
 
 //basic implementation of consent check:
 if (wp_has_consent('marketing')){
-activateMarketing();
-console.log("set marketing stuff now!");
+  activateMarketing();
+  console.log("set marketing stuff now!");
 } else {
-console.log("No marketing stuff please!");
+  console.log("No marketing stuff please!");
 }
 
 = PHP =
@@ -105,7 +105,7 @@ add_filter( "wp_consent_api_registered_{$plugin}", '__return_true' );
 
 function my_wordpress_register_cookies(){
 	if ( function_exists( 'wp_add_cookie_info' ) ) {
-		wp_add_cookie_info( 'AMP_token', 'AMP', 'marketing', __( 'Session' ), __( 'Store a unique User ID.' ), false, false, false );
+		wp_add_cookie_info( 'AMP_token', 'AMP', 'marketing', __( 'Session' ), __( 'Store a unique User ID.' ) );
 	}
 }
 add_action('plugins_loaded', 'my_wordpress_register_cookies');
