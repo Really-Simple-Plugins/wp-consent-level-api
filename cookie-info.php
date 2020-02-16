@@ -112,11 +112,9 @@ if ( ! class_exists( 'WP_CONSENT_API_COOKIE_INFO' ) ) {
 		 *
 		 * @return array
 		 */
-
-		public function get_cookie_info($name=false){
-
-			if ($name && isset($this->registered_cookies[$name])){
-				return $this->registered_cookies[$name];
+		public function get_cookie_info( $name = false ) {
+			if ( $name && isset( $this->registered_cookies[ $name ] ) ) {
+				return $this->registered_cookies[ $name ];
 			}
 
 			return $this->registered_cookies;

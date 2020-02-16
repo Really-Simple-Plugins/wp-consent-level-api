@@ -43,13 +43,14 @@ function wp_consent_api_enqueue_assets( $hook ) {
 	$minified = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 	wp_enqueue_script( 'wp-consent-api', WP_CONSENT_API_URL . "assets/js/wp-consent-api$minified.js", array( 'jquery' ), WP_CONSENT_API_VERSION, true );
 
-	//we can pass a default or static consent type to the javascript
+	// We can pass a default or static consent type to the javascript.
 	$consent_type = wp_get_consent_type();
 
-	//when the consenttype (optin or optout) can be set dynamically, we can tell plugins to wait in the javascript until the consenttype has been determined
+	// When the consenttype (optin or optout) can be set dynamically, we can tell
+	// plugins to wait in the javascript until the consenttype has been determined.
 	$waitfor_consent_hook = apply_filters( 'wp_consent_api_waitfor_consent_hook', false );
 
-	//the cookie expiration for the front-end consent cookies
+	// The cookie expiration for the front-end consent cookies.
 	$expiration = wp_consent_api_cookie_expiration();
 
 	wp_localize_script(
@@ -62,7 +63,7 @@ function wp_consent_api_enqueue_assets( $hook ) {
 		)
 	);
 }
-add_action( 'wp_enqueue_scripts', 'wp_consent_api_enqueue_assets', PHP_INT_MAX-100 );
+add_action( 'wp_enqueue_scripts', 'wp_consent_api_enqueue_assets', PHP_INT_MAX - 100 );
 
 /**
  * Validate consent_type
@@ -148,7 +149,7 @@ function wp_has_consent( $consent_category, $requested_by = false ) {
 		//if it's opt out and no cookie is set or it's false, we should also return true
 		$has_consent = true;
 	} elseif ( isset( $_COOKIE[ "wp_consent_$consent_category" ] ) && 'allow' === $_COOKIE[ "wp_consent_$consent_category" ] ) {
-		//all other situations, return only true if value is allow
+		// All other situations, return only true if value is allow.
 		$has_consent = true;
 	} else {
 		$has_consent = false;
@@ -176,7 +177,6 @@ function wp_consent_api_cookie_expiration() {
  *
  * @return void
  */
-
 function wp_set_consent( $consent_category, $value ) {
 	$consent_category = apply_filters( 'wp_set_consent_type', $consent_category );
 	$value            = apply_filters( 'wp_set_consent_value', $value );
@@ -197,9 +197,8 @@ function wp_set_consent( $consent_category, $value ) {
  *
  * @return bool $registered
  */
-
 function consent_api_registered( $plugin ) {
-	//we consider this plugin to comply ;)
+	// We consider this plugin to comply ;)
 	if ( strpos( $plugin, 'wp-consent-api.php' ) !== false ) {
 		return true;
 	}
@@ -228,11 +227,11 @@ function wp_add_cookie_info( $name, $plugin_or_service, $category, $expires, $fu
 
 /**
  * Wrapper function to get cookie info for one specific cookie, or for all cookies registered.
+ *
  * @param string|bool $name
  *
  * @return array
  */
-
-function wp_get_cookie_info($name=false){
-	return WP_CONSENT_API::$cookie_info->get_cookie_info($name);
+function wp_get_cookie_info( $name = false ) {
+	return WP_CONSENT_API::$cookie_info->get_cookie_info( $name );
 }
