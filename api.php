@@ -67,13 +67,13 @@ function wp_consent_api_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'wp_consent_api_enqueue_assets', PHP_INT_MAX - 100 );
 
 /**
- * Validate consent_type
+ * Validates consent type.
  *
  * @since 1.0.0
  *
- * @param $consent_type
+ * @param string $consent_type A consent type.
  *
- * @return bool|string $consent_type
+ * @return bool|string The validated consent type, or `false`.
  */
 function wp_validate_consent_type( $consent_type ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	if ( in_array( $consent_type, WP_CONSENT_API::$config->consent_types(), true ) ) {
@@ -84,40 +84,40 @@ function wp_validate_consent_type( $consent_type ) { // phpcs:ignore WordPress.N
 }
 
 /**
- * Validate consent_value
+ * Validates consent value.
  *
  * @since 1.0.0
  *
- * @param $consent_value
+ * @param string $value A consent value.
  *
- * @return bool|string $consent_value
+ * @return bool|string The validated consent type, or false.
  */
-function wp_validate_consent_value( $consent_value ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
-	if ( in_array( $consent_value, WP_CONSENT_API::$config->consent_values(), true ) ) {
-		return $consent_value;
+function wp_validate_consent_value( $value ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+	if ( in_array( $value, WP_CONSENT_API::$config->consent_values(), true ) ) {
+		return $value;
 	}
 	return false;
 }
 
 /**
- * Validate consent_category
+ * Validates consent category.
  *
  * @since 1.0.0
  *
- * @param $consent_category
+ * @param string $category A consent category.
  *
- * @return bool|string $consent_category
+ * @return bool|string The validated category, or false.
  */
-function wp_validate_consent_category( $consent_category ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
-	if ( in_array( $consent_category, WP_CONSENT_API::$config->consent_categories(), true ) ) {
-		return $consent_category;
+function wp_validate_consent_category( $category ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+	if ( in_array( $category, WP_CONSENT_API::$config->consent_categories(), true ) ) {
+		return $category;
 	}
 
 	return false;
 }
 
 /**
- * Get active consent_type.
+ * Retrieves active consent type.
  *
  * @since 1.0.0
  *
@@ -161,7 +161,7 @@ function wp_has_consent( $consent_category, $requested_by = false ) { // phpcs:i
 }
 
 /**
- * Get cookie expiration.
+ * Retrieves cookie expiration.
  *
  * @return int Expiration in seconds.
  */
@@ -174,20 +174,20 @@ function wp_consent_api_cookie_expiration() { // phpcs:ignore WordPress.NamingCo
  *
  * @since 1.0.0
  *
- * @param string $consent_category
- * @param string $value (allow|deny)
+ * @param string $category The consent category.
+ * @param string $value    The value (either 'allow' or 'deny').
  *
  * @return void
  */
-function wp_set_consent( $consent_category, $value ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
-	$consent_category = apply_filters( 'wp_set_consent_type', $consent_category );
-	$value            = apply_filters( 'wp_set_consent_value', $value );
+function wp_set_consent( $category, $value ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+	$category = apply_filters( 'wp_set_consent_type', $category ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
+	$value    = apply_filters( 'wp_set_consent_value', $value ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
 
-	$expiration       = wp_consent_api_cookie_expiration() * DAY_IN_SECONDS;
-	$consent_category = wp_validate_consent_category( $consent_category );
-	$value            = wp_validate_consent_value( $value );
+	$expiration = wp_consent_api_cookie_expiration() * DAY_IN_SECONDS;
+	$category   = wp_validate_consent_category( $category );
+	$value      = wp_validate_consent_value( $value );
 
-	setcookie( "wp_consent_$consent_category", $value, time() + $expiration, '/' );
+	setcookie( "wp_consent_{$category}", $value, time() + $expiration, '/' );
 }
 
 /**
@@ -195,7 +195,7 @@ function wp_set_consent( $consent_category, $value ) { // phpcs:ignore WordPress
  *
  * @since 1.0.0
  *
- * @param string $plugin
+ * @param string $plugin The plugin basename.
  *
  * @return bool $registered
  */
@@ -230,7 +230,7 @@ function wp_add_cookie_info( $name, $plugin_or_service, $category, $expires, $fu
 /**
  * Wrapper function to get cookie info for one specific cookie, or for all cookies registered.
  *
- * @param string|bool $name
+ * @param string|bool $name Optional. The cookie name. Default false, which returns all cookies.
  *
  * @return array
  */
