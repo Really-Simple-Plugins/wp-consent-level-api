@@ -65,7 +65,7 @@ if ( ! class_exists( 'WP_CONSENT_API_SITE_HEALTH' ) ) {
 		 */
 		public function consent_api_integration_check( $tests ) {
 			$tests['direct']['wp-consent-api'] = array(
-				'label' => __( 'WP Consent API test' ),
+				'label' => __( 'WP Consent API test', 'wp-consent-api' ),
 				'test'  => array( $this, 'wp_consent_api_test' ),
 			);
 
@@ -95,7 +95,7 @@ if ( ! class_exists( 'WP_CONSENT_API_SITE_HEALTH' ) ) {
 				'label'       => __( 'All plugins have declared to use the Consent API', 'wp-consent-api' ),
 				'status'      => 'good',
 				'badge'       => array(
-					'label' => __( 'Compliance' ),
+					'label' => __( 'Compliance', 'wp-consent-api' ),
 					'color' => 'blue',
 				),
 				'description' => sprintf(
