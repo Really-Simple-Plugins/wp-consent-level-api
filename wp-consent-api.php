@@ -1,4 +1,4 @@
-<?php // phpcs:ignore -- Ignore the missing class- prefix from file & "\r\n" notice for some machines.
+<?php
 
 /**
  * Plugin Name:       WP Consent API
@@ -136,11 +136,11 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 			$plugin_data = get_file_data( __FILE__, array( 'Version' => 'Version' ), false );
 			$debug       = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? time() : '';
 
-			define( 'CONSENT_API_URL', plugin_dir_url( __FILE__ ) );
-			define( 'CONSENT_API_PATH', plugin_dir_path( __FILE__ ) );
-			define( 'CONSENT_API_PLUGIN', plugin_basename( __FILE__ ) );
-			define( 'CONSENT_API_VERSION', $plugin_data['Version'] . $debug );
-			define( 'CONSENT_API_PLUGIN_FILE', __FILE__ );
+			define( 'WP_CONSENT_API_URL', plugin_dir_url( __FILE__ ) );
+			define( 'WP_CONSENT_API_PATH', plugin_dir_path( __FILE__ ) );
+			define( 'WP_CONSENT_API_PLUGIN', plugin_basename( __FILE__ ) );
+			define( 'WP_CONSENT_API_VERSION', $plugin_data['Version'] . $debug );
+			define( 'WP_CONSENT_API_PLUGIN_FILE', __FILE__ );
 		}
 
 		/**
@@ -151,11 +151,11 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 		 * @return void
 		 */
 		private function includes() {
-			require_once( CONSENT_API_PATH . 'config.php' );
-			require_once( CONSENT_API_PATH . 'cookie-info.php' );
-			require_once( CONSENT_API_PATH . 'api.php' );
-			require_once( CONSENT_API_PATH . 'site-health.php' );
-			require_once( CONSENT_API_PATH . 'wordpress-comments.php' );
+			require_once( WP_CONSENT_API_PATH . 'config.php' );
+			require_once( WP_CONSENT_API_PATH . 'cookie-info.php' );
+			require_once( WP_CONSENT_API_PATH . 'api.php' );
+			require_once( WP_CONSENT_API_PATH . 'site-health.php' );
+			require_once( WP_CONSENT_API_PATH . 'wordpress-comments.php' );
 		}
 
 		/**
@@ -166,7 +166,7 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 		 * @return void
 		 */
 		private function load_translation() {
-			load_plugin_textdomain( 'wp-consent-api', false, CONSENT_API_PATH . '/config/languages/' );
+			load_plugin_textdomain( 'wp-consent-api', false, WP_CONSENT_API_PATH . '/config/languages/' );
 		}
 	}
 
