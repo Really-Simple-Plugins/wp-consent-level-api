@@ -134,30 +134,31 @@ function wp_get_consent_type() { // phpcs:ignore WordPress.NamingConventions.Pre
  *
  * @since 1.0.0
  *
- * @param string $consent_category
- * @param string|bool $requested_by plugin name e.g. complianz-gdpr/complianz-gdpr.php. This can be used to disable consent for a plugin specifically.
+ * @param string      $category     The consent category.
+ * @param string|bool $requested_by Plugin name e.g. complianz-gdpr/complianz-gdpr.php. This can be used to disable consent for a plugin specifically.
  *
  * @return bool
  */
-function wp_has_consent( $consent_category, $requested_by = false ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+function wp_has_consent( $category, $requested_by = false ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	$consent_type     = wp_get_consent_type();
 	$consent_category = wp_validate_consent_category( $consent_category );
+	$cookie_name      = "wp_consent_{$category}";
 
 	if ( ! $consent_type ) {
 		// If consent_type is not set, there's no consent management, we should
 		// return true to activate all cookies.
 		$has_consent = true;
-	} elseif ( strpos( $consent_type, 'optout' ) !== false && ! isset( $_COOKIE[ "wp_consent_$consent_category" ] ) || ! $_COOKIE[ "wp_consent_$consent_category" ] ) {
+	} elseif ( strpos( $consent_type, 'optout' ) !== false && ! isset( $_COOKIE[ $cookie_name ] ) || ! $_COOKIE[ $cookie_name ] ) {
 		// If it's opt out and no cookie is set or it's false, we should also return true.
 		$has_consent = true;
-	} elseif ( isset( $_COOKIE[ "wp_consent_$consent_category" ] ) && 'allow' === $_COOKIE[ "wp_consent_$consent_category" ] ) {
+	} elseif ( isset( $_COOKIE[ $cookie_name ] ) && 'allow' === $_COOKIE[ $cookie_name ] ) {
 		// All other situations, return only true if value is allow.
 		$has_consent = true;
 	} else {
 		$has_consent = false;
 	}
 
-	return apply_filters( 'wp_has_consent', $has_consent, $consent_category, $requested_by ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
+	return apply_filters( 'wp_has_consent', $has_consent, $category, $requested_by ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
 }
 
 /**
