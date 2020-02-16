@@ -99,10 +99,7 @@ if ( ! class_exists( 'WP_CONSENT_API_CONFIG' ) ) {
 		 * @return int Cookie expiration in days.
 		 */
 		public function cookie_expiration_days() {
-			return apply_filters(
-				'wp_cookie_expiration',
-				30
-			);
+			return apply_filters( 'wp_cookie_expiration', 30 ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
 		}
 	}
 }

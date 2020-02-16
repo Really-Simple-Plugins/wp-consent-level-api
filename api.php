@@ -74,7 +74,7 @@ add_action( 'wp_enqueue_scripts', 'wp_consent_api_enqueue_assets', PHP_INT_MAX -
  *
  * @return bool|string $consent_type
  */
-function wp_validate_consent_type( $consent_type ) {
+function wp_validate_consent_type( $consent_type ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	if ( in_array( $consent_type, WP_CONSENT_API::$config->consent_types(), true ) ) {
 		return $consent_type;
 	}
@@ -91,7 +91,7 @@ function wp_validate_consent_type( $consent_type ) {
  *
  * @return bool|string $consent_value
  */
-function wp_validate_consent_value( $consent_value ) {
+function wp_validate_consent_value( $consent_value ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	if ( in_array( $consent_value, WP_CONSENT_API::$config->consent_values(), true ) ) {
 		return $consent_value;
 	}
@@ -107,7 +107,7 @@ function wp_validate_consent_value( $consent_value ) {
  *
  * @return bool|string $consent_category
  */
-function wp_validate_consent_category( $consent_category ) {
+function wp_validate_consent_category( $consent_category ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	if ( in_array( $consent_category, WP_CONSENT_API::$config->consent_categories(), true ) ) {
 		return $consent_category;
 	}
@@ -122,8 +122,8 @@ function wp_validate_consent_category( $consent_category ) {
  *
  * @return string|bool
  */
-function wp_get_consent_type() {
-	return apply_filters( 'wp_get_consent_type', false );
+function wp_get_consent_type() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+	return apply_filters( 'wp_get_consent_type', false ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
 }
 
 
@@ -138,7 +138,7 @@ function wp_get_consent_type() {
  *
  * @return bool
  */
-function wp_has_consent( $consent_category, $requested_by = false ) {
+function wp_has_consent( $consent_category, $requested_by = false ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	$consent_type     = wp_get_consent_type();
 	$consent_category = wp_validate_consent_category( $consent_category );
 
@@ -156,7 +156,7 @@ function wp_has_consent( $consent_category, $requested_by = false ) {
 		$has_consent = false;
 	}
 
-	return apply_filters( 'wp_has_consent', $has_consent, $consent_category, $requested_by );
+	return apply_filters( 'wp_has_consent', $has_consent, $consent_category, $requested_by ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
 }
 
 /**
@@ -164,7 +164,7 @@ function wp_has_consent( $consent_category, $requested_by = false ) {
  *
  * @return int Expiration in seconds.
  */
-function wp_consent_api_cookie_expiration() {
+function wp_consent_api_cookie_expiration() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	return apply_filters( 'wp_consent_api_cookie_expiration', WP_CONSENT_API::$config->cookie_expiration_days() );
 }
 
@@ -178,7 +178,7 @@ function wp_consent_api_cookie_expiration() {
  *
  * @return void
  */
-function wp_set_consent( $consent_category, $value ) {
+function wp_set_consent( $consent_category, $value ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	$consent_category = apply_filters( 'wp_set_consent_type', $consent_category );
 	$value            = apply_filters( 'wp_set_consent_value', $value );
 
@@ -198,7 +198,7 @@ function wp_set_consent( $consent_category, $value ) {
  *
  * @return bool $registered
  */
-function consent_api_registered( $plugin ) {
+function consent_api_registered( $plugin ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	// We consider this plugin to comply ;).
 	if ( strpos( $plugin, 'wp-consent-api.php' ) !== false ) {
 		return true;
@@ -222,7 +222,7 @@ function consent_api_registered( $plugin ) {
  * @param string $type                    One of 'HTTP', 'LOCALSTORAGE', or 'API'.
  * @param string $domain                  Optional. Domain on which the cookie is set. Defaults to the current site URL.
  */
-function wp_add_cookie_info( $name, $plugin_or_service, $category, $expires, $function, $is_personal_data, $collected_personal_data = '', $member_cookie = false, $administrator_cookie = false, $type = 'HTTP', $domain = false ) {
+function wp_add_cookie_info( $name, $plugin_or_service, $category, $expires, $function, $is_personal_data, $collected_personal_data = '', $member_cookie = false, $administrator_cookie = false, $type = 'HTTP', $domain = false ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	WP_CONSENT_API::$cookie_info->add_cookie_info( $name, $plugin_or_service, $category, $expires, $function, $is_personal_data, $collected_personal_data, $member_cookie, $administrator_cookie, $type, $domain );
 }
 
@@ -233,6 +233,6 @@ function wp_add_cookie_info( $name, $plugin_or_service, $category, $expires, $fu
  *
  * @return array
  */
-function wp_get_cookie_info( $name = false ) {
+function wp_get_cookie_info( $name = false ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	return WP_CONSENT_API::$cookie_info->get_cookie_info( $name );
 }
