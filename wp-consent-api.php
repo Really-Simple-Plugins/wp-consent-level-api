@@ -35,7 +35,7 @@
 
 // Check that the file is not accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
-	die( 'We\'re sorry, but you can not directly access this file.' );
+	die( 'We\'re sorry, but you cannot directly access this file.' );
 }
 
 
