@@ -177,11 +177,5 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 	/**
 	 * Load the plugins main class.
 	 */
-	add_action(
-		'plugins_loaded',
-		function() {
-			WP_CONSENT_API::get_instance();
-		},
-		9
-	);
+	add_action( 'plugins_loaded', array( WP_CONSENT_API::class, 'get_instance' ), 9 );
 }
