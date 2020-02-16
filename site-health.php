@@ -45,7 +45,7 @@ if ( ! class_exists( 'WP_CONSENT_API_SITE_HEALTH' ) ) {
 		 *
 		 * @since 1.0.0
 		 */
-		function __construct() {
+		public function __construct() {
 			if ( isset( self::$instance ) ) {
 				// translators: %s the name of the PHP Class used.
 				wp_die( esc_html( sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'wp-consent-api' ), get_class( $this ) ) ) );
