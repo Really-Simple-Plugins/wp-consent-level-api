@@ -1,19 +1,9 @@
-<?php
-
+<?php  // phpcs:ignore WordPress.Files.Filename.InvalidClassFileName
 /**
- * Plugin Name:       WP Consent API
- * Plugin URI:        https://wordpress.org/plugins/wp-consent-api
- * Description:       Consent Level API to read and register the current consent level for cookie management and improving compliance with privacy laws.
- * Version:           1.0.1
- * Author:            RogierLankhorst
- * Author URI:        https://github.com/rlankhorst/wp-consent-level-api
- * Requires at least: 4.9.6
- * Requires PHP:      5.6
- * License:           GPL2
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
- */
-
-/**
+ * This file is part of WP Consent API.
+ *
+ * Copyright 2020 Rogier Lankhorst and the WordPress Core Privacy team.
+ *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 2 of the License, or
@@ -26,6 +16,21 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see https://www.gnu.org/licenses/.
+ *
+ * @package wordpress/consent-api
+ * @license http://www.gnu.org/licenses/gpl-2.0.html
+ *
+ * @wordpress-plugin
+ * Plugin Name:       WP Consent API
+ * Plugin URI:        https://wordpress.org/plugins/wp-consent-api
+ * Description:       Consent Level API to read and register the current consent level for cookie management and improving compliance with privacy laws.
+ * Version:           1.0.1
+ * Author:            RogierLankhorst
+ * Author URI:        https://github.com/rlankhorst/wp-consent-level-api
+ * Requires at least: 5.0
+ * Requires PHP:      5.6
+ * License:           GPL2+
+ * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
  */
 
 // Check that the file is not accessed directly.
@@ -34,12 +39,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 
-/**
- * Checks if the plugin can safely be activated, at least php 5.6 and wp 5.0
- *
- * @since 1.0.0
- */
 if ( ! function_exists( 'wp_consent_api_activation_check' ) ) {
+	/**
+	 * Checks if the plugin can safely be activated, at least php 5.6 and wp 5.0
+	 *
+	 * @since 1.0.0
+	 */
 	function wp_consent_api_activation_check() {
 		global $wp_version;
 
@@ -56,11 +61,10 @@ if ( ! function_exists( 'wp_consent_api_activation_check' ) ) {
 }
 register_activation_hook( __FILE__, 'wp_consent_api_activation_check' );
 
-/**
- * WP_CONSENT_API class.
- *
- */
 if ( ! class_exists( 'WP_CONSENT_API' ) ) {
+	/**
+	 * WP_CONSENT_API class.
+	 */
 	class WP_CONSENT_API {
 		/**
 		 * Instance.

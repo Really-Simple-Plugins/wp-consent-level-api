@@ -6,6 +6,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'WP_CONSENT_API_CONFIG' ) ) {
+	/**
+	 * WP_CONSENT_API_CONFIG definition.
+	 *
+	 * @since 1.0.0
+	 */
 	class WP_CONSENT_API_CONFIG {
 		/**
 		 * Instance.
@@ -91,7 +96,7 @@ if ( ! class_exists( 'WP_CONSENT_API_CONFIG' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @return array $consent_values
+		 * @return int Cookie expiration in days.
 		 */
 		public function cookie_expiration_days() {
 			return apply_filters(

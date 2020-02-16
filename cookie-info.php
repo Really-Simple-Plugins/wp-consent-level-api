@@ -1,4 +1,25 @@
-<?php // phpcs:ignore -- Ignore the missing class- prefix from file & "\r\n" notice for some machines.
+<?php // phpcs:ignore WordPress.Files.Filename.InvalidClassFileName
+/**
+ * This file is part of WP Consent API.
+ *
+ * Copyright 2020 Rogier Lankhorst and the WordPress Core Privacy team.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see https://www.gnu.org/licenses/.
+ *
+ * @package wordpress/consent-api
+ * @license http://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 // Check that the file is not accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
@@ -6,7 +27,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'WP_CONSENT_API_COOKIE_INFO' ) ) {
+	/**
+	 * A class implementing the WP Consent API cookie handling.
+	 *
+	 * @since 1.0.0
+	 */
 	class WP_CONSENT_API_COOKIE_INFO {
+		/**
+		 * An array of information about registered cookies.
+		 *
+		 * @var array
+		 */
 		public $registered_cookies;
 		private static $_this;
 
@@ -24,43 +55,46 @@ if ( ! class_exists( 'WP_CONSENT_API_COOKIE_INFO' ) ) {
 		}
 
 		/**
-		 * Wrapper function for the registration of a cookie with WordPress
-		 * @param string $name
-		 * @param string $plugin_or_service //plugin or service (e.g. Google Maps) that sets cookie e.g.
-		 * @param string $category //functional, preferences, statistics-anonymous, statistics,  marketing
-		 * @param string $expires  //time until the cookie expires
-		 * @param string $function //what the cookie is meant to do. e.g. 'Store a unique User ID'
-		 * @param bool $isPersonalData //if the cookie collects personal data
-		 * @param string $collectedPersonalData //type of personal data that is collected. Only needs to be filled in if isPersonalData =true
-		 * @param bool $memberCookie //if a cookie is relevant for members of the site only
-		 * @param bool $administratorCookie //if the cookie is relevant for administrators only
-		 * @param string $type //HTTP, LOCALSTORAGE, API
-		 * @param string|bool $domain //domain on which the cookie is set. should by default be the current domain
+		 * Wrapper function for the registration of a cookie with WordPress.
+		 *
+		 * @param string $name                    The name of the cookie.
+		 * @param string $plugin_or_service       Plugin or service that sets cookie (e.g. Google Maps).
+		 * @param string $category                One of 'functional', 'preferences', 'statistics-anonymous', 'statistics', or 'marketing'.
+		 * @param string $expires                 Time until the cookie expires.
+		 * @param string $function                What the cookie is meant to do (e.g. 'Store a unique User ID').
+		 * @param bool   $is_personal_data        Whether the cookie collects personal data.
+		 * @param string $collected_personal_data Type of personal data that is collected. Only needs to be filled in if `$is_personal_data` is `true`.
+		 * @param bool   $member_cookie           Whether the cookie is relevant for members of the site only.
+		 * @param bool   $administrator_cookie    Whether the cookie is relevant for administrators only.
+		 * @param string $type                    One of 'HTTP', 'LOCALSTORAGE', or 'API'.
+		 * @param string $domain                  Optional. Domain on which the cookie is set. Defaults to the current site URL.
 		 */
+		public function add_cookie_info( $name, $plugin_or_service, $category, $expires, $function, $is_personal_data, $collected_personal_data = '', $member_cookie = false, $administrator_cookie = false, $type = 'HTTP', $domain = '' ) {
 
-		public function add_cookie_info($name, $plugin_or_service, $category, $expires, $function, $isPersonalData, $collectedPersonalData='', $memberCookie = false, $administratorCookie = false, $type = 'HTTP', $domain = false)  {
-
-			//if domain is not passed, we assume it's first party, from this domain.
-			if (!$domain) $domain = site_url();
+			// If the domain is not passed, we assume it's first party, from this domain.
+			if ( empty( $domain ) ) {
+				$domain = site_url();
+			}
 
 			$this->registered_cookies[ $name ] = array(
-				'plugin_or_service'     => sanitize_text_field($plugin_or_service),
-				'category'              => wp_validate_consent_category($category),
-				'expires'               => sanitize_text_field($expires),
-				'function'              => sanitize_text_field($function),
-				'isPersonalData'        => (bool) $isPersonalData,
-				'collectedPersonalData' => sanitize_text_field($collectedPersonalData),
-				'memberCookie'          => (bool) $memberCookie,
-				'administratorCookie'   => (bool) $administratorCookie,
-				'domain'                => esc_url_raw($domain),
-				'type'                  => sanitize_text_field($type),
+				'plugin_or_service'     => sanitize_text_field( $plugin_or_service ),
+				'category'              => wp_validate_consent_category( $category ),
+				'expires'               => sanitize_text_field( $expires ),
+				'function'              => sanitize_text_field( $function ),
+				'isPersonalData'        => (bool) $is_personal_data,
+				'collectedPersonalData' => sanitize_text_field( $collected_personal_data ),
+				'memberCookie'          => (bool) $member_cookie,
+				'administratorCookie'   => (bool) $administrator_cookie,
+				'domain'                => esc_url_raw( $domain ),
+				'type'                  => sanitize_text_field( $type ),
 			);
 		}
 
 
 		/**
 		 * Get cookie info for one specific cookie, or for all cookies registered.
-		 * @param string|bool $name
+		 *
+		 * @param string|bool $name The name of the cookie.
 		 *
 		 * @return array
 		 */
@@ -73,8 +107,5 @@ if ( ! class_exists( 'WP_CONSENT_API_COOKIE_INFO' ) ) {
 
 			return $this->registered_cookies;
 		}
-
-
-
 	}
 }

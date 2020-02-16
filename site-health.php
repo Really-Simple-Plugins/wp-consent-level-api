@@ -1,15 +1,35 @@
 <?php // phpcs:ignore -- Ignore the wrong filename (class- prefix) & "\r\n" notice for some machines.
+/**
+ * This file is part of WP Consent API.
+ *
+ * Copyright 2020 Rogier Lankhorst and the WordPress Core Privacy team.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see https://www.gnu.org/licenses/.
+ *
+ * @package wordpress/consent-api
+ * @license http://www.gnu.org/licenses/gpl-2.0.html
+ */
 
 // Check that the file is not accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	die( 'We\'re sorry, but you can not directly access this file.' );
 }
 
-/**
- * WP_CONSENT_API class.
- *
- */
 if ( ! class_exists( 'WP_CONSENT_API_SITE_HEALTH' ) ) {
+	/**
+	 * WP_CONSENT_API class.
+	 */
 	class WP_CONSENT_API_SITE_HEALTH {
 		/**
 		 * Instance.
@@ -24,8 +44,6 @@ if ( ! class_exists( 'WP_CONSENT_API_SITE_HEALTH' ) ) {
 		 * Constructor.
 		 *
 		 * @since 1.0.0
-		 *
-		 * @return void
 		 */
 		function __construct() {
 			if ( isset( self::$instance ) ) {
