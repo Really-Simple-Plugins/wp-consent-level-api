@@ -124,9 +124,9 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 			$this->includes();
 			$this->load_translation();
 
-			self::$config      = new WP_CONSENT_API_CONFIG;
-			self::$site_health = new WP_CONSENT_API_SITE_HEALTH;
-			self::$cookie_info = new WP_CONSENT_API_COOKIE_INFO;
+			self::$config      = new WP_CONSENT_API_CONFIG();
+			self::$site_health = new WP_CONSENT_API_SITE_HEALTH();
+			self::$cookie_info = new WP_CONSENT_API_COOKIE_INFO();
 		}
 
 		/**
