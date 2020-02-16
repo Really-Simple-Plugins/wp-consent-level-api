@@ -143,10 +143,11 @@ function wp_has_consent( $consent_category, $requested_by = false ) {
 	$consent_category = wp_validate_consent_category( $consent_category );
 
 	if ( ! $consent_type ) {
-		//if consent_type is not set, there's no consent management, we should return true to activate all cookies
+		// If consent_type is not set, there's no consent management, we should
+		// return true to activate all cookies.
 		$has_consent = true;
 	} elseif ( strpos( $consent_type, 'optout' ) !== false && ! isset( $_COOKIE[ "wp_consent_$consent_category" ] ) || ! $_COOKIE[ "wp_consent_$consent_category" ] ) {
-		//if it's opt out and no cookie is set or it's false, we should also return true
+		// If it's opt out and no cookie is set or it's false, we should also return true.
 		$has_consent = true;
 	} elseif ( isset( $_COOKIE[ "wp_consent_$consent_category" ] ) && 'allow' === $_COOKIE[ "wp_consent_$consent_category" ] ) {
 		// All other situations, return only true if value is allow.
@@ -198,7 +199,7 @@ function wp_set_consent( $consent_category, $value ) {
  * @return bool $registered
  */
 function consent_api_registered( $plugin ) {
-	// We consider this plugin to comply ;)
+	// We consider this plugin to comply ;).
 	if ( strpos( $plugin, 'wp-consent-api.php' ) !== false ) {
 		return true;
 	}
