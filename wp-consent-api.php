@@ -155,11 +155,11 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 		 * @return void
 		 */
 		private function includes() {
-			require_once( WP_CONSENT_API_PATH . 'config.php' );
-			require_once( WP_CONSENT_API_PATH . 'cookie-info.php' );
-			require_once( WP_CONSENT_API_PATH . 'api.php' );
-			require_once( WP_CONSENT_API_PATH . 'site-health.php' );
-			require_once( WP_CONSENT_API_PATH . 'wordpress-comments.php' );
+			require_once WP_CONSENT_API_PATH . 'config.php';
+			require_once WP_CONSENT_API_PATH . 'cookie-info.php';
+			require_once WP_CONSENT_API_PATH . 'api.php';
+			require_once WP_CONSENT_API_PATH . 'site-health.php';
+			require_once WP_CONSENT_API_PATH . 'wordpress-comments.php';
 		}
 
 		/**
