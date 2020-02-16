@@ -27,19 +27,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Enqueue scripts for the api for front-end
+ * Enqueues scripts for the API for the site frontend.
+ *
  * We need to ensure this script fires in correct order:
  * 1) all plugins, themes, etc
  * 2) this script
  * 3) consent management script
  *
- * This way we can ensure that plugins can use the javascript hooks
- * Consent management plugin should declare dependency on api js
- * API js should load as last, so we give a very high priority
+ * This way we can ensure that plugins can use the JavaScript hooks
+ * Consent management plugin should declare dependency on API js
+ * API js should load as last, so we give a very high priority.
  *
- * @param $hook
+ * @return void
  */
-function wp_consent_api_enqueue_assets( $hook ) {
+function wp_consent_api_enqueue_assets() {
 	$minified = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 	wp_enqueue_script( 'wp-consent-api', WP_CONSENT_API_URL . "assets/js/wp-consent-api$minified.js", array( 'jquery' ), WP_CONSENT_API_VERSION, true );
 
