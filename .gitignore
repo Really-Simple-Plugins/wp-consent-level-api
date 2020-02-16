@@ -1,2 +1,6 @@
-# Ignore Atom/Serenata configuration
+# Atom/Serenata configuration
 .serenata
+
+# Composer
+vendor/
+composer.lock
