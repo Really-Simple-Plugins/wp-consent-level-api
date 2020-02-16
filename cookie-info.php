@@ -39,19 +39,33 @@ if ( ! class_exists( 'WP_CONSENT_API_COOKIE_INFO' ) ) {
 		 * @var array
 		 */
 		public $registered_cookies;
-		private static $_this;
 
-		function __construct() {
-			if ( isset( self::$_this ) ) {
+		/**
+		 * The Singleton.
+		 *
+		 * @var self
+		 */
+		private static $instance;
+
+		/**
+		 * Creates a new instance.
+		 */
+		public function __construct() {
+			if ( isset( self::$instance ) ) {
 				// translators: %s the name of the PHP Class used.
 				wp_die( esc_html( sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'wp-consent-api' ), get_class( $this ) ) ) );
 			}
 
-			self::$_this = $this;
+			self::$instance = $this;
 		}
 
-		static function this() {
-			return self::$_this;
+		/**
+		 * Retrieves the current instance.
+		 *
+		 * @return self
+		 */
+		public static function this() {
+			return self::$instance;
 		}
 
 		/**
