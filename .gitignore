@@ -1,0 +1,6 @@
+# Atom/Serenata configuration
+.serenata
+
+# Composer
+vendor/
+composer.lock
