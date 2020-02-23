@@ -76,14 +76,13 @@ if ( ! class_exists( 'WP_CONSENT_API_COOKIE_INFO' ) ) {
 		 * @param string $category                One of 'functional', 'preferences', 'statistics-anonymous', 'statistics', or 'marketing'.
 		 * @param string $expires                 Time until the cookie expires.
 		 * @param string $function                What the cookie is meant to do (e.g. 'Store a unique User ID').
-		 * @param bool   $is_personal_data        Whether the cookie collects personal data.
 		 * @param string $collected_personal_data Type of personal data that is collected. Only needs to be filled in if `$is_personal_data` is `true`.
 		 * @param bool   $member_cookie           Whether the cookie is relevant for members of the site only.
 		 * @param bool   $administrator_cookie    Whether the cookie is relevant for administrators only.
 		 * @param string $type                    One of 'HTTP', 'LOCALSTORAGE', or 'API'.
 		 * @param string $domain                  Optional. Domain on which the cookie is set. Defaults to the current site URL.
 		 */
-		public function add_cookie_info( $name, $plugin_or_service, $category, $expires, $function, $is_personal_data, $collected_personal_data = '', $member_cookie = false, $administrator_cookie = false, $type = 'HTTP', $domain = '' ) {
+		public function add_cookie_info( $name, $plugin_or_service, $category, $expires, $function, $collected_personal_data = '', $member_cookie = false, $administrator_cookie = false, $type = 'HTTP', $domain = '' ) {
 
 			// If the domain is not passed, we assume it's first party, from this domain.
 			if ( empty( $domain ) ) {
@@ -95,7 +94,6 @@ if ( ! class_exists( 'WP_CONSENT_API_COOKIE_INFO' ) ) {
 				'category'              => wp_validate_consent_category( $category ),
 				'expires'               => sanitize_text_field( $expires ),
 				'function'              => sanitize_text_field( $function ),
-				'isPersonalData'        => (bool) $is_personal_data,
 				'collectedPersonalData' => sanitize_text_field( $collected_personal_data ),
 				'memberCookie'          => (bool) $member_cookie,
 				'administratorCookie'   => (bool) $administrator_cookie,

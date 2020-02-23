@@ -156,6 +156,11 @@ Preferences:
 Cookies or any other form of local storage that can not be seen as statistics, statistics-anonymous, marketing or functional, and where the technical storage or access is necessary for the legitimate purpose of storing preferences.
 
 == Changelog ==
+= 1.0.2 =
+* Styling changes to site health
+* Code structure changes
+* Removed is_personal_data property, as it's implicitly contained in the personaldata property
+
 = 1.0.1 =
 * Cookiebot added as existing integration
 * Some small improvements to comply with WordPress coding styles
