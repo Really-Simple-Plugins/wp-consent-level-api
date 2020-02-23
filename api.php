@@ -75,7 +75,7 @@ function wp_consent_api_enqueue_admin_assets( $hook ) {
 
     if ( 'site-health.php' != $hook )
         return;
-    wp_enqueue_style( 'wp-consent-api-css', CONSENT_API_URL . "assets/css/wp-consent-api.css", __FILE__ );
+    wp_enqueue_style( 'wp-consent-api-css', WP_CONSENT_API_URL . "assets/css/wp-consent-api.css", __FILE__ );
 }
 add_action('admin_enqueue_scripts', 'wp_consent_api_enqueue_admin_assets');
 
