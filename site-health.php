@@ -62,6 +62,7 @@ if ( ! class_exists( 'WP_CONSENT_API_SITE_HEALTH' ) ) {
 		 * @since 1.0.0
 		 *
 		 * @param array $tests The Site Health tests.
+		 * @return array
 		 */
 		public function consent_api_integration_check( $tests ) {
 			$tests['direct']['wp-consent-api'] = array(
@@ -88,7 +89,6 @@ if ( ! class_exists( 'WP_CONSENT_API_SITE_HEALTH' ) ) {
 				if ( ! consent_api_registered( $plugin ) ) {
 					$not_registered[]             = $plugin;
 					$plugins_without_registration = true;
-                                        
 				}
 			}
 
@@ -115,7 +115,7 @@ if ( ! class_exists( 'WP_CONSENT_API_SITE_HEALTH' ) ) {
 			}
 
 			return $result;
-                        
+
 		}
 	}
 }
