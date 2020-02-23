@@ -67,6 +67,19 @@ function wp_consent_api_enqueue_assets() {
 add_action( 'wp_enqueue_scripts', 'wp_consent_api_enqueue_assets', PHP_INT_MAX - 100 );
 
 /**
+ * Enqueue style for back-end  to show wp-consent-api unregister plugins list in a better style in site health check page.
+ *
+ * @param $hook
+ */
+function wp_consent_api_enqueue_admin_assets( $hook ) {
+
+    if ( 'site-health.php' != $hook )
+        return;
+    wp_enqueue_style( 'wp-consent-api-css', CONSENT_API_URL . "assets/css/wp-consent-api.css", __FILE__ );
+}
+add_action('admin_enqueue_scripts', 'wp_consent_api_enqueue_admin_assets');
+
+/**
  * Validates consent type.
  *
  * @since 1.0.0
