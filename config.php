@@ -6,6 +6,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'WP_CONSENT_API_CONFIG' ) ) {
+	/**
+	 * WP_CONSENT_API_CONFIG definition.
+	 *
+	 * @since 1.0.0
+	 */
 	class WP_CONSENT_API_CONFIG {
 		/**
 		 * Instance.
@@ -23,10 +28,10 @@ if ( ! class_exists( 'WP_CONSENT_API_CONFIG' ) ) {
 		 *
 		 * @return void
 		 */
-		function __construct() {
+		public function __construct() {
 			if ( isset( self::$instance ) ) {
 				// translators: %s the name of the PHP Class used.
-				wp_die( sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'wp-consent-api' ), get_class( $this ) ) );
+				wp_die( esc_html( sprintf( __( '%s is a singleton class and you cannot create a second instance.', 'wp-consent-api' ), get_class( $this ) ) ) );
 			}
 
 			self::$instance = $this;
@@ -91,13 +96,10 @@ if ( ! class_exists( 'WP_CONSENT_API_CONFIG' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @return array $consent_values
+		 * @return int Cookie expiration in days.
 		 */
 		public function cookie_expiration_days() {
-			return apply_filters(
-				'wp_cookie_expiration',
-				30
-			);
+			return apply_filters( 'wp_cookie_expiration', 30 ); // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- This is intended for Core.
 		}
 	}
 }
