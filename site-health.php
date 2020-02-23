@@ -88,6 +88,7 @@ if ( ! class_exists( 'WP_CONSENT_API_SITE_HEALTH' ) ) {
 				if ( ! consent_api_registered( $plugin ) ) {
 					$not_registered[]             = $plugin;
 					$plugins_without_registration = true;
+                                        
 				}
 			}
 
@@ -109,11 +110,12 @@ if ( ! class_exists( 'WP_CONSENT_API_SITE_HEALTH' ) ) {
 			if ( $plugins_without_registration ) {
 				$result['status']      = 'recommended';
 				$result['label']       = __( 'One or more plugins are not conforming to the Consent API.', 'wp-consent-api' );
-				$result['description'] = __( 'Not all plugins have declared to follow Consent API guidelines. Please contact the developer.', 'wp-consent-api' );
-				$result['actions']     = implode( '<br>', $not_registered );
+				$result['description'] = '<span class="title">' . __( 'Not all plugins have declared to follow Consent API guidelines. Please contact the developer.', 'wp-consent-api' ) . '</span>';
+				$result['actions']     = implode( '<p>', $not_registered );
 			}
 
 			return $result;
+                        
 		}
 	}
 }
