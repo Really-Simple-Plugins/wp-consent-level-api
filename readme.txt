@@ -58,22 +58,22 @@ Categories and most other stuff can be extended with a filter.
 - [Example plugin](https://github.com/rlankhorst/consent-api-example-plugin). The plugin basically consists of a shortcode, with a div that shows a tracking or not tracking message. No actual tracking is done :-)
 
 ## Demo site
-https://wpconsentapi.org/:
-plugins used to set this up:
+(https://wpconsentapi.org/)
+Below are the plugins used to set up the demo site:
 
 - Complianz
 - The example plugin https://github.com/rlankhorst/consent-api-example-plugin
 
-
 = javascript, consent management plugin =
+```
 //dynamically set consent type
 window.wp_consent_type = 'optin';
 
 //consent management plugin sets cookie when consent category value changes
 wp_set_consent('marketing', 'allow');
-
+```
 = javascript, tracking plugin =
-
+```
 //listen to consent change event
 document.addEventListener("wp_listen_for_consent_change", function (e) {
   var changedConsentCategory = e.detail;
@@ -93,8 +93,9 @@ if (wp_has_consent('marketing')){
 } else {
   console.log("No marketing stuff please!");
 }
-
+```
 = PHP =
+```
 //declare complianz with consent level API
 $plugin = plugin_basename( __FILE__ );
 add_filter( "wp_consent_api_registered_{$plugin}", '__return_true' );
@@ -115,8 +116,8 @@ add_action('plugins_loaded', 'my_wordpress_register_cookies');
 if (wp_has_consent('marketing')){
 //do marketing stuff
 }
-
-Any code suggestions? We're on GitHub as well!
+```
+Any code suggestions? We're on [GitHub](https://github.com/rlankhorst/wp-consent-level-api) as well!
 
 == Installation ==
 To install this plugin:
