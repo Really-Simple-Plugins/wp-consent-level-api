@@ -103,7 +103,6 @@ function wp_set_consent(category, value) {
         event = document.createEvent('Event');
         event.initEvent('wp_listen_for_consent_change', true, true);
         event.detail = changedConsentCategory;
-
     }
     // Dispatch/Trigger/Fire the event
     document.dispatchEvent(event);

@@ -234,7 +234,7 @@ function consent_api_registered( $plugin ) { // phpcs:ignore WordPress.NamingCon
  * @param bool   $member_cookie           Whether the cookie is relevant for members of the site only.
  * @param bool   $administrator_cookie    Whether the cookie is relevant for administrators only.
  * @param string $type                    One of 'HTTP', 'LOCALSTORAGE', or 'API'.
- * @param string $domain                  Optional. Domain on which the cookie is set. Defaults to the current site URL.
+ * @param string|bool $domain             Optional. Domain on which the cookie is set. Defaults to the current site URL.
  */
 function wp_add_cookie_info( $name, $plugin_or_service, $category, $expires, $function, $collected_personal_data = '', $member_cookie = false, $administrator_cookie = false, $type = 'HTTP', $domain = false ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	WP_CONSENT_API::$cookie_info->add_cookie_info( $name, $plugin_or_service, $category, $expires, $function, $collected_personal_data, $member_cookie, $administrator_cookie, $type, $domain );
