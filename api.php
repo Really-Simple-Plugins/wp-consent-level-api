@@ -233,6 +233,10 @@ function wp_setcookie( $name, $value = "", $expires = 0, $path = "", $domain = "
 		_doing_it_wrong("wp_setcookie", __("Missing consent category. A functional, preferences, statistics-anonymous, statistics or marketing category should be passed when using wp_setcookie."), '5.6');
 	}
 
+	if ( !wp_has_cookie_info( $name ) ) {
+		_doing_it_wrong("wp_setcookie", __("Not registered cookie. Each cookie using the wp_setcookie function should be registered using wp_add_cookie_info()."), '5.6');
+	}
+
 	if ( wp_has_consent( $consent_category ) ) {
 		setcookie( $name, $value, $expires, $path, $domain, $secure, $httponly );
 	}
@@ -283,4 +287,16 @@ function wp_add_cookie_info( $name, $plugin_or_service, $category, $expires, $fu
  */
 function wp_get_cookie_info( $name = false ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	return WP_CONSENT_API::$cookie_info->get_cookie_info( $name );
+}
+
+/**
+ * Wrapper function to has_cookie info for one specific cookie
+ *
+ * @param string|bool $name The cookie name.
+ *
+ * @return bool
+ */
+
+function wp_has_cookie_info( $name ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+	return WP_CONSENT_API::$cookie_info->has_cookie_info( $name );
 }

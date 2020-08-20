@@ -117,5 +117,19 @@ if ( ! class_exists( 'WP_CONSENT_API_COOKIE_INFO' ) ) {
 
 			return $this->registered_cookies;
 		}
+
+		/**
+		 * Check whether the cookie info has been added for this cookie
+		 * @param $name
+		 *
+		 * @return bool
+		 */
+		public function has_cookie_info( $name ) {
+			if ( $name && isset( $this->registered_cookies[ $name ] ) ) {
+				return true;
+			}
+
+			return false;
+		}
 	}
 }
