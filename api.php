@@ -209,21 +209,28 @@ function wp_set_consent( $category, $value ) { // phpcs:ignore WordPress.NamingC
  *
  * @param string $name
  * @param string $value
- * @param string $expiration
+ * @param int $expires
+ * @param string $path
  * @param string $domain
+ * @param bool $secure
+ * @param bool $httponly
  * @param string $consent_category: functional, preferences, statistics-anonymous, statistics, marketing
  *
  * @return void
  */
-function wp_setcookie( $name, $value, $expiration, $domain, $consent_category ){
+
+
+function wp_setcookie( $name, $value = "", $expires = 0, $path = "", $domain = "", $secure = false, $httponly = false, $consent_category = "" ){
 	$name = apply_filters( 'wp_setcookie_name', sanitize_text_field($name) );
 	$value = apply_filters( 'wp_setcookie_value', sanitize_text_field($value) );
 	$expiration = apply_filters( 'wp_setcookie_expiration', sanitize_text_field($expiration) );
 	$domain = apply_filters( 'wp_setcookie_domain', sanitize_text_field($domain) );
 	$consent_category = apply_filters( 'wp_setcookie_category',  wp_validate_consent_category( $consent_category ) );
-
+	if ( empty( $consent_category ) ) {
+		_doing_it_wrong("wp_setcookie", __("Missing consent category. A functional, preferences, statistics-anonymous, statistics or marketing category should be passed when using wp_setcookie."), '5.6');
+	}
 	if ( wp_has_consent( $consent_category ) ) {
-		setcookie($name, $value, $expiration, $domain);
+		setcookie( $name, $value, $expiration, $path, $domain, $secure, $httponly );
 	}
 }
 
