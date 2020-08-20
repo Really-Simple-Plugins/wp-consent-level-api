@@ -221,16 +221,20 @@ function wp_set_consent( $category, $value ) { // phpcs:ignore WordPress.NamingC
 
 
 function wp_setcookie( $name, $value = "", $expires = 0, $path = "", $domain = "", $secure = false, $httponly = false, $consent_category = "" ){
-	$name = apply_filters( 'wp_setcookie_name', sanitize_text_field($name) );
-	$value = apply_filters( 'wp_setcookie_value', sanitize_text_field($value) );
-	$expiration = apply_filters( 'wp_setcookie_expiration', sanitize_text_field($expiration) );
-	$domain = apply_filters( 'wp_setcookie_domain', sanitize_text_field($domain) );
-	$consent_category = apply_filters( 'wp_setcookie_category',  wp_validate_consent_category( $consent_category ) );
+	$name       = sanitize_text_field($name);
+	$value      = sanitize_text_field($value);
+
+	$expires    = apply_filters( 'wp_setcookie_expires', intval($expires), $name, $value );
+	$path       = apply_filters( 'wp_setcookie_path', sanitize_text_field($path), $name, $value );
+	$domain     = apply_filters( 'wp_setcookie_domain', sanitize_text_field($domain), $name, $value );
+
+	$consent_category = apply_filters( 'wp_setcookie_category',  wp_validate_consent_category( $consent_category ), $name, $value );
 	if ( empty( $consent_category ) ) {
 		_doing_it_wrong("wp_setcookie", __("Missing consent category. A functional, preferences, statistics-anonymous, statistics or marketing category should be passed when using wp_setcookie."), '5.6');
 	}
+
 	if ( wp_has_consent( $consent_category ) ) {
-		setcookie( $name, $value, $expiration, $path, $domain, $secure, $httponly );
+		setcookie( $name, $value, $expires, $path, $domain, $secure, $httponly );
 	}
 }
 
