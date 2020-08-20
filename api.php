@@ -154,7 +154,7 @@ function wp_get_consent_type() { // phpcs:ignore WordPress.NamingConventions.Pre
  */
 function wp_has_consent( $category, $requested_by = false ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	$consent_type     = wp_get_consent_type();
-	$consent_category = wp_validate_consent_category( $consent_category );
+	$category = wp_validate_consent_category( $category );
 	$cookie_name      = "wp_consent_{$category}";
 
 	if ( ! $consent_type ) {
@@ -202,6 +202,29 @@ function wp_set_consent( $category, $value ) { // phpcs:ignore WordPress.NamingC
 	$value      = wp_validate_consent_value( $value );
 
 	setcookie( "wp_consent_{$category}", $value, time() + $expiration, '/' );
+}
+
+/**
+ * Wrapper function to set a cookie, taking into account actual user consent, if supported by plugins
+ *
+ * @param string $name
+ * @param string $value
+ * @param string $expiration
+ * @param string $domain
+ * @param string $consent_category: functional, preferences, statistics-anonymous, statistics, marketing
+ *
+ * @return void
+ */
+function wp_setcookie( $name, $value, $expiration, $domain, $consent_category ){
+	$name = apply_filters( 'wp_setcookie_name', sanitize_text_field($name) );
+	$value = apply_filters( 'wp_setcookie_value', sanitize_text_field($value) );
+	$expiration = apply_filters( 'wp_setcookie_expiration', sanitize_text_field($expiration) );
+	$domain = apply_filters( 'wp_setcookie_domain', sanitize_text_field($domain) );
+	$consent_category = apply_filters( 'wp_setcookie_category',  wp_validate_consent_category( $consent_category ) );
+
+	if ( wp_has_consent( $consent_category ) ) {
+		setcookie($name, $value, $expiration, $domain);
+	}
 }
 
 /**
