@@ -177,7 +177,7 @@ function wp_has_consent( $category, $requested_by = false ) { // phpcs:ignore Wo
 /**
  * Retrieves cookie expiration.
  *
- * @return int Expiration in seconds.
+ * @return int Expiration in days.
  */
 function wp_consent_api_cookie_expiration() { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	return apply_filters( 'wp_consent_api_cookie_expiration', WP_CONSENT_API::$config->cookie_expiration_days() );
