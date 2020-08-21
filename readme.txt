@@ -158,6 +158,7 @@ Cookies or any other form of local storage that can not be seen as statistics, s
 
 == Changelog ==
 = 1.0.2 =
+* Fix $collected_personal_data documentation, as $is_personal_data was deprecated
 * Fix the docblock so it reflects the actual value returned (props @jazzsequence, https://github.com/rlankhorst/wp-consent-level-api/issues/52)
 * Styling changes to site health
 * Code structure changes
