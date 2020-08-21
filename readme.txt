@@ -6,7 +6,7 @@ License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tested up to: 5.3
 Requires PHP: 5.6
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 
 Simple Consent API to read and register the current consent category.
 
@@ -158,6 +158,7 @@ Cookies or any other form of local storage that can not be seen as statistics, s
 
 == Changelog ==
 = 1.0.2 =
+* Fix the docblock so it reflects the actual value returned (props @jazzsequence, https://github.com/rlankhorst/wp-consent-level-api/issues/52)
 * Styling changes to site health
 * Code structure changes
 * Removed is_personal_data property, as it's implicitly contained in the personaldata property

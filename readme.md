@@ -59,7 +59,7 @@ Categories, and most other stuff can be extended with a filter.
 
 ## Existing integrations
 
-- Complianz https://github.com/rlankhorst/complianz-gdpr/compare/consent-API-integration
+- Complianz https://github.com/really-simple-plugins/complianz-gdpr/
 - Example plugin shipped with this plugin. The plugin basically consists of a shortcode, with a div that shows 
 a tracking or not tracking message. No actual data tracking :)
 
