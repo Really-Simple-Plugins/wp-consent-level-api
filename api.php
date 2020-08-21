@@ -230,7 +230,7 @@ function consent_api_registered( $plugin ) { // phpcs:ignore WordPress.NamingCon
  * @param string $category                One of 'functional', 'preferences', 'statistics-anonymous', 'statistics', or 'marketing'.
  * @param string $expires                 Time until the cookie expires.
  * @param string $function                What the cookie is meant to do (e.g. 'Store a unique User ID').
- * @param string $collected_personal_data Type of personal data that is collected. Only needs to be filled in if `$is_personal_data` is `true`.
+ * @param string $collected_personal_data Type of personal data that is collected. If no personal data is collected, set to false
  * @param bool   $member_cookie           Whether the cookie is relevant for members of the site only.
  * @param bool   $administrator_cookie    Whether the cookie is relevant for administrators only.
  * @param string $type                    One of 'HTTP', 'LOCALSTORAGE', or 'API'.
