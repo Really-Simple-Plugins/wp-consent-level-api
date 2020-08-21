@@ -154,7 +154,7 @@ function wp_get_consent_type() { // phpcs:ignore WordPress.NamingConventions.Pre
  */
 function wp_has_consent( $category, $requested_by = false ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	$consent_type     = wp_get_consent_type();
-	$consent_category = wp_validate_consent_category( $consent_category );
+	$category = wp_validate_consent_category( $category );
 	$cookie_name      = "wp_consent_{$category}";
 
 	if ( ! $consent_type ) {
