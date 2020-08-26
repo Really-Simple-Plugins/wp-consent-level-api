@@ -42,7 +42,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function wp_consent_api_enqueue_assets() {
 	$minified = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
-	wp_enqueue_script( 'wp-consent-api', WP_CONSENT_API_URL . "assets/js/wp-consent-api$minified.js", array( 'jquery' ), WP_CONSENT_API_VERSION, true );
+	wp_enqueue_script( 'wp-consent-api', WP_CONSENT_API_URL . "assets/js/wp-consent-api$minified.js", array(), WP_CONSENT_API_VERSION, true );
 
 	// We can pass a default or static consent type to the javascript.
 	$consent_type = wp_get_consent_type();
