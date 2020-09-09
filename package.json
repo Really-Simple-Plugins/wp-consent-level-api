@@ -1,0 +1,25 @@
+{
+  "name": "wp-consent-api",
+  "version": "1.0.2",
+  "description": "Consent API to read and register the current consent category",
+  "main": "wp-consent-api.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rlankhorst/wp-consent-level-api.git"
+  },
+  "keywords": [
+    "wordpress",
+    "consent",
+    "gdpr",
+    "api"
+  ],
+  "author": "Rogier Lankhorst",
+  "license": "SEE LICENSE IN readme.txt",
+  "bugs": {
+    "url": "https://github.com/rlankhorst/wp-consent-level-api/issues"
+  },
+  "homepage": "https://github.com/rlankhorst/wp-consent-level-api#readme"
+}
