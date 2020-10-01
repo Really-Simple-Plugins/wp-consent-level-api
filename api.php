@@ -53,6 +53,7 @@ function wp_consent_api_enqueue_assets() {
 
 	// The cookie expiration for the front-end consent cookies.
 	$expiration = wp_consent_api_cookie_expiration();
+	$prefix = WP_CONSENT_API::$config->consent_cookie_prefix();
 
 	wp_localize_script(
 		'wp-consent-api',
@@ -61,6 +62,7 @@ function wp_consent_api_enqueue_assets() {
 			'consent_type'         => $consent_type,
 			'waitfor_consent_hook' => $waitfor_consent_hook,
 			'cookie_expiration'    => $expiration,
+			'cookie_prefix'        => $prefix,
 		)
 	);
 }
@@ -154,8 +156,9 @@ function wp_get_consent_type() { // phpcs:ignore WordPress.NamingConventions.Pre
  */
 function wp_has_consent( $category, $requested_by = false ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	$consent_type     = wp_get_consent_type();
-	$category = wp_validate_consent_category( $category );
-	$cookie_name      = "wp_consent_{$category}";
+	$category         = wp_validate_consent_category( $category );
+	$prefix           = WP_CONSENT_API::$config->consent_cookie_prefix();
+	$cookie_name      = "{$prefix}_{$category}";
 
 	if ( ! $consent_type ) {
 		// If consent_type is not set, there's no consent management, we should
@@ -200,8 +203,9 @@ function wp_set_consent( $category, $value ) { // phpcs:ignore WordPress.NamingC
 	$expiration = wp_consent_api_cookie_expiration() * DAY_IN_SECONDS;
 	$category   = wp_validate_consent_category( $category );
 	$value      = wp_validate_consent_value( $value );
+	$prefix     = WP_CONSENT_API::$config->consent_cookie_prefix();
 
-	setcookie( "wp_consent_{$category}", $value, time() + $expiration, '/' );
+	setcookie( "{$prefix}_{$category}", $value, time() + $expiration, '/' );
 }
 
 /**

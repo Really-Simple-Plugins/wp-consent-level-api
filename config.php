@@ -55,6 +55,20 @@ if ( ! class_exists( 'WP_CONSENT_API_CONFIG' ) ) {
 		}
 
 		/**
+		 * Get default filterable cookie prefix.
+		 *
+		 * @since 1.0.2
+		 *
+		 * @return array $consent_types
+		 */
+		public function consent_cookie_prefix() {
+			return apply_filters(
+				'wp_consent_cookie_prefix',
+				'wp_consent'
+			);
+		}
+
+		/**
 		 * Get default filterable list of active consent categories.
 		 *
 		 * @since 1.0.0
