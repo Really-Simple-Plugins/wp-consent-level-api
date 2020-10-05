@@ -28,7 +28,7 @@ function wp_has_consent(category) {
     }
 
     var has_consent_level = false;
-    var cookie_value = consent_api_get_cookie('wp_consent_' + category);
+    var cookie_value = consent_api_get_cookie(consent_api.cookie_prefix + '_' + category);
 
     if (!consent_type) {
         //if consent_type is not set, there's no consent management, we should return true to activate all cookies
@@ -92,7 +92,7 @@ function wp_set_consent(category, value) {
     var event;
     if (value !== 'allow' && value !== 'deny') return;
 
-    consent_api_set_cookie('wp_consent_' + category, value);
+    consent_api_set_cookie(consent_api.cookie_prefix + '_' + category, value);
     var changedConsentCategory = [];
     changedConsentCategory[category] = value;
     try {
