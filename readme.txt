@@ -163,6 +163,7 @@ Cookies or any other form of local storage that can not be seen as statistics, s
 * Styling changes to site health
 * Code structure changes
 * Removed is_personal_data property, as it's implicitly contained in the personaldata property
+* Made cookie prefix filterable
 
 = 1.0.1 =
 * Cookiebot added as existing integration
