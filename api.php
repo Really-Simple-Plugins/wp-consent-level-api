@@ -254,3 +254,52 @@ function wp_add_cookie_info( $name, $plugin_or_service, $category, $expires, $fu
 function wp_get_cookie_info( $name = false ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	return WP_CONSENT_API::$cookie_info->get_cookie_info( $name );
 }
+
+/**
+ * Wrapper function to set a cookie, taking into account actual user consent, if supported by plugins
+ *
+ * @param string $name
+ * @param string $value
+ * @param string $consent_category: functional, preferences, statistics-anonymous, statistics, marketing
+ * @param int $expires
+ * @param string $path
+ * @param string $domain
+ * @param bool $secure
+ * @param bool $httponly
+ *
+ * @return void
+ */
+
+function wp_set_cookie( $name, $value = "", $consent_category = "", $expires = 0, $path = "", $domain = "", $secure = false, $httponly = false ){ // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+	$name       = sanitize_text_field($name);
+	$value      = sanitize_text_field($value);
+
+	$expires    = apply_filters( 'wp_setcookie_expires', intval($expires), $name, $value );
+	$path       = apply_filters( 'wp_setcookie_path', sanitize_text_field($path), $name, $value );
+	$domain     = apply_filters( 'wp_setcookie_domain', sanitize_text_field($domain), $name, $value );
+
+	$consent_category = apply_filters( 'wp_setcookie_category',  wp_validate_consent_category( $consent_category ), $name, $value );
+	if ( empty( $consent_category ) ) {
+		_doing_it_wrong("wp_setcookie", __("Missing consent category. A functional, preferences, statistics-anonymous, statistics or marketing category should be passed when using wp_setcookie."), '5.6');
+	}
+
+	if ( !wp_has_cookie_info( $name ) ) {
+		_doing_it_wrong("wp_setcookie", __("Not registered cookie. Each cookie using the wp_setcookie function should be registered using wp_add_cookie_info()."), '5.6');
+	}
+
+	if ( wp_has_consent( $consent_category ) ) {
+		setcookie( $name, $value, $expires, $path, $domain, $secure, $httponly );
+	}
+}
+
+/**
+ * Wrapper function to has_cookie info for one specific cookie
+ *
+ * @param string|bool $name The cookie name.
+ *
+ * @return bool
+ */
+
+function wp_has_cookie_info( $name ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+	return WP_CONSENT_API::$cookie_info->has_cookie_info( $name );
+}
