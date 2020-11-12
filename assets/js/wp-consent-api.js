@@ -16,9 +16,10 @@ window.wp_fallback_consent_type = consent_api.consent_type;
 window.waitfor_consent_hook = consent_api.waitfor_consent_hook;
 
 /**
- * to retrieve consent directly
+ * Check if a user has given consent for a specific category.
+ *
+ * @param {string} category The category to check consent against.
  */
-
 function wp_has_consent(category) {
     var consent_type;
     if (typeof (window.wp_consent_type) !== "undefined"){
@@ -47,10 +48,11 @@ function wp_has_consent(category) {
 }
 
 /**
- * Set cookie by consent type
- * @param name
+ * Set cookie by consent type.
+ *
+ * @param {string} name The cookie name to set.
+ * @param {string} value The cookie value to set.
  */
-
 function consent_api_set_cookie(name, value) {
     var secure = ";secure";
     var days = consent_api.cookie_expiration;
@@ -64,10 +66,10 @@ function consent_api_set_cookie(name, value) {
 }
 
 /**
- * Get cookie by consent type
- * @param name
+ * Retrieve a cookie by name.
+ *
+ * @param {string} name The name of the cookie to get data from.
  */
-
 function consent_api_get_cookie(name) {
     name = name + "=";
     var cookies = window.document.cookie.split(';');
@@ -83,11 +85,11 @@ function consent_api_get_cookie(name) {
 }
 
 /**
- * Set a new consent category value
- * @param category
- * @param value
+ * Set a new consent category value.
+ *
+ * @param {string} category The consent category to update.
+ * @param {string} value The value to update the consent category to.
  */
-
 function wp_set_consent(category, value) {
     var event;
     if (value !== 'allow' && value !== 'deny') return;
