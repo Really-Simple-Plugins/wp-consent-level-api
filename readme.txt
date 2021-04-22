@@ -6,7 +6,7 @@ License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tested up to: 5.5
 Requires PHP: 5.6
-Stable tag: 1.0.2
+Stable tag: 1.0.3
 
 Simple Consent API to read and register the current consent category.
 
@@ -157,6 +157,9 @@ Preferences:
 Cookies or any other form of local storage that can not be seen as statistics, statistics-anonymous, marketing or functional, and where the technical storage or access is necessary for the legitimate purpose of storing preferences.
 
 == Changelog ==
+= 1.0.3 =
+* Fix: wp_has_consent function contained a condition which caused it to always return true on serverside optin consent checks.
+
 = 1.0.2 =
 * Fix $collected_personal_data documentation, as $is_personal_data was deprecated (props @jazzsequence, https://github.com/rlankhorst/wp-consent-level-api/issues/54)
 * Fix the docblock so it reflects the actual value returned (props @jazzsequence, https://github.com/rlankhorst/wp-consent-level-api/issues/52)
