@@ -164,7 +164,7 @@ function wp_has_consent( $category, $requested_by = false ) { // phpcs:ignore Wo
 		// If consent_type is not set, there's no consent management, we should
 		// return true to activate all cookies.
 		$has_consent = true;
-	} elseif ( strpos( $consent_type, 'optout' ) !== false && (! isset( $_COOKIE[ $cookie_name ] ) || empty( $_COOKIE[ $cookie_name ] )) ) {
+	} elseif ( strpos( $consent_type, 'optout' ) !== false && (! isset( $_COOKIE[ $cookie_name ] )) ) {
 		// If it's opt out and no cookie is set or it's false, we should also return true.
 		$has_consent = true;
 	} elseif ( isset( $_COOKIE[ $cookie_name ] ) && 'allow' === $_COOKIE[ $cookie_name ] ) {
