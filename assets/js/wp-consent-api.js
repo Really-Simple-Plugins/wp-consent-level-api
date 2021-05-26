@@ -93,8 +93,12 @@ function consent_api_get_cookie(name) {
 function wp_set_consent(category, value) {
     var event;
     if (value !== 'allow' && value !== 'deny') return;
-
+	var previous_value = consent_api_get_cookie(consent_api.cookie_prefix + '_' + category);
     consent_api_set_cookie(consent_api.cookie_prefix + '_' + category, value);
+
+    //do not trigger a change event if nothing has changed.
+    if ( previous_value === value ) return;
+
     var changedConsentCategory = [];
     changedConsentCategory[category] = value;
     try {
