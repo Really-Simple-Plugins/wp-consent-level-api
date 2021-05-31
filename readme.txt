@@ -6,7 +6,7 @@ License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tested up to: 5.5
 Requires PHP: 5.6
-Stable tag: 1.0.3
+Stable tag: 1.0.4
 
 Simple Consent API to read and register the current consent category.
 
@@ -157,6 +157,9 @@ Preferences:
 Cookies or any other form of local storage that can not be seen as statistics, statistics-anonymous, marketing or functional, and where the technical storage or access is necessary for the legitimate purpose of storing preferences.
 
 == Changelog ==
+= 1.0.4 =
+* Improvement: only fire on change event if an actual change was detected on the consent.
+
 = 1.0.3 =
 * Fix: wp_has_consent function contained a condition which caused it to always return true on serverside optin consent checks.
 
