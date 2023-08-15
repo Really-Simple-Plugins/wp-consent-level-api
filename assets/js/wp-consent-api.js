@@ -21,16 +21,17 @@ window.waitfor_consent_hook = consent_api.waitfor_consent_hook;
  * @param {string} category The category to check consent against.
  */
 function wp_has_consent(category) {
+console.log("has consent check for "+category);
     var consent_type;
     if (typeof (window.wp_consent_type) !== "undefined"){
         consent_type = window.wp_consent_type;
     }  else {
         consent_type = window.wp_fallback_consent_type
     }
-
+console.log(consent_type);
     var has_consent_level = false;
     var cookie_value = consent_api_get_cookie(consent_api.cookie_prefix + '_' + category);
-
+console.log(cookie_value);
     if (!consent_type) {
         //if consent_type is not set, there's no consent management, we should return true to activate all cookies
         has_consent_level = true;

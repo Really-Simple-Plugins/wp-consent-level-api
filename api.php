@@ -75,7 +75,7 @@ add_action( 'wp_enqueue_scripts', 'wp_consent_api_enqueue_assets', PHP_INT_MAX -
  */
 function wp_consent_api_enqueue_admin_assets( $hook ) {
 
-    if ( 'site-health.php' != $hook )
+    if ( 'site-health.php' !== $hook )
         return;
     wp_enqueue_style( 'wp-consent-api-css', WP_CONSENT_API_URL . "assets/css/wp-consent-api.css", __FILE__ );
 }
@@ -130,7 +130,18 @@ function wp_validate_consent_category( $category ) { // phpcs:ignore WordPress.N
 
 	return false;
 }
-
+/**
+ * Validates consent service.
+ *
+ * @since 1.0.0
+ *
+ * @param string $service A consent service.
+ *
+ * @return bool|string The validated service
+ */
+function wp_validate_consent_service( $service ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+	return sanitize_text_field($service);
+}
 /**
  * Retrieves active consent type.
  *
