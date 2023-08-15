@@ -4,9 +4,9 @@ Tags: consent, privacy, cookies, api, compliance
 Requires at least: 5.0
 License: GPL2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Tested up to: 6.1
+Tested up to: 6.3
 Requires PHP: 7.2
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 
 Simple Consent API to read and register the current consent category.
 
@@ -157,6 +157,9 @@ Preferences:
 Cookies or any other form of local storage that can not be seen as statistics, statistics-anonymous, marketing or functional, and where the technical storage or access is necessary for the legitimate purpose of storing preferences.
 
 == Changelog ==
+= 1.0.7 =
+* Tested up to
+
 = 1.0.6 =
 * Tested up to
 
