@@ -53,6 +53,7 @@ A plugin can use a hook to listen for changes or check the value of a given cate
 Categories and most other stuff can be extended with a filter.
 
 = Existing integrations =
+- [AFL UTM Tracker Plugin](https://www.appfromlab.com/product/woocommerce-utm-tracker-plugin/).
 - [Pixel Manager for WooCommerce](https://wordpress.org/plugins/woocommerce-google-adwords-conversion-tracking-tag/).
 - [AddToAny](https://wordpress.org/plugins/add-to-any/).
 - [Complianz GDPR/CCPA](https://wordpress.org/plugins/complianz-gdpr/).
