@@ -102,6 +102,62 @@ if ( ! class_exists( 'WP_CONSENT_API_COOKIE_INFO' ) ) {
 			);
 		}
 
+		/**
+		 * Get list of registered services
+		 *
+		 * @return array
+		 */
+		public function get_services( $skip_admin_cookies = false ) {
+			$services = array();
+			$cookies = $this->registered_cookies;
+
+			//filter out all administratorCookie cookies
+			if ( $skip_admin_cookies ) {
+				$cookies = array_filter( $cookies, static function ( $cookie ) {
+					return ! $cookie['administratorCookie'];
+				} );
+			}
+
+			foreach ( $cookies as $cookie ) {
+				$services[] = $cookie['plugin_or_service'] ?? 'general';
+			}
+			return array_unique( $services );
+		}
+
+		/**
+		 * Get the category for this service
+		 * As each service can have cookies with different categories, we check all categories, and return the one with most privacy impact
+		 * e.g. if it has marketing and functional, we return marketing
+		 *
+		 * @param string $service
+		 *
+		 * @return string
+		 */
+		public function get_service_category( $service ) {
+			$categories = [];
+			foreach ( $this->registered_cookies as $cookie ) {
+				if ( $cookie['plugin_or_service'] === $service ) {
+					$categories[] = $cookie['category'] ?? 'marketing';
+				}
+			}
+			$categories = array_unique( $categories );
+			$available_categories = WP_CONTENT_API::$config->consent_categories();
+			//reverse order of $available_categories
+			$available_categories = array_reverse( $available_categories );
+
+			//find the first category that is in the list of categories for this service.
+			error_log("check marketing first ");
+			foreach ( $available_categories as $available_category ) {
+				error_log("check  $available_category");
+				if ( in_array( $available_category, $categories, true ) ) {
+					return $available_category;
+				}
+			}
+
+			//nothing found, assume the worst.
+			return 'marketing';
+		}
+
 
 		/**
 		 * Get cookie info for one specific cookie, or for all cookies registered.
@@ -116,6 +172,25 @@ if ( ! class_exists( 'WP_CONSENT_API_COOKIE_INFO' ) ) {
 			}
 
 			return $this->registered_cookies;
+		}
+
+		/**
+		 * List of services for use in clientside javascript part
+		 *
+		 * @return array
+		 */
+		public function get_service_info(){
+			$services = $this->get_services( true );
+
+			$js_array = [];
+			foreach ( $services as $service ) {
+				$js_array[] = [
+					'name' => $service,
+					'category' => $this->get_service_category( $service )
+				];
+			}
+
+			return $js_array;
 		}
 	}
 }

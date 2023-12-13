@@ -59,7 +59,7 @@ if ( ! class_exists( 'WP_CONSENT_API_CONFIG' ) ) {
 		 *
 		 * @since 1.0.2
 		 *
-		 * @return array $consent_types
+		 * @return string prefix
 		 */
 		public function consent_cookie_prefix() {
 			return apply_filters(

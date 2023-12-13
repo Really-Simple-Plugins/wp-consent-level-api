@@ -5,7 +5,7 @@
  *
  *
  * Edit: chronologically it seems difficult to create a sort of filter for the consent type.
- * Let's change it so cookiebanners are just required to set it, it it's not available, we use a default, as defined here.
+ * Let's change it so cookiebanners are just required to set it, if it's not available, we use a default, as defined here.
  *
  * This way, if a consent management plugin does not define a consenttype, the one passed here will be used, and it will still work.
  *
@@ -18,34 +18,57 @@ window.waitfor_consent_hook = consent_api.waitfor_consent_hook;
 /**
  * Check if a user has given consent for a specific category.
  *
- * @param {string} category The category to check consent against.
+ * @param {string} item The item to check consent against.
+ * @param {string} type category or service
  */
-function wp_has_consent(category) {
-console.log("has consent check for "+category);
-    var consent_type;
-    if (typeof (window.wp_consent_type) !== "undefined"){
+function wp_has_consent(item, type= 'category') {
+	console.log("has consent check for "+item);
+	//for service consent, we start checking if the service's category already has consent. If so, return true and bail.
+	if ( 'service' === type ) {
+		let category = wp_get_service_category( item );
+		if ( wp_has_consent(category) ) {
+			return true;
+		}
+	}
+
+    let consent_type;
+    if ( typeof (window.wp_consent_type) !== "undefined" ){
         consent_type = window.wp_consent_type;
     }  else {
         consent_type = window.wp_fallback_consent_type
     }
-console.log(consent_type);
-    var has_consent_level = false;
-    var cookie_value = consent_api_get_cookie(consent_api.cookie_prefix + '_' + category);
-console.log(cookie_value);
-    if (!consent_type) {
-        //if consent_type is not set, there's no consent management, we should return true to activate all cookies
-        has_consent_level = true;
 
+    let has_consent = false;
+    var cookie_value = consent_api_get_cookie(consent_api.cookie_prefix + '_' + item);
+
+    if ( !consent_type ) {
+        //if consent_type is not set, there's no consent management, we should return true to activate all cookies
+        has_consent = true;
     } else if (consent_type.indexOf('optout') !== -1 && cookie_value === '') {
         //if it's opt out and no cookie is set we should also return true
-        has_consent_level = true;
-
+		has_consent = true;
     } else {
         //all other situations, return only true if value is allow
-        has_consent_level = (cookie_value === 'allow');
+		has_consent = (cookie_value === 'allow');
     }
 
-    return has_consent_level;
+    return has_consent;
+}
+
+/**
+ * Retrieve the category of a registered service
+ *
+ * @param service
+ * @returns {string}
+ */
+function wp_get_service_category( service ) {
+	let services = consent_api.services;
+	services.forEach(function(service) {
+		if ( service.name === service ) {
+			return service.category;
+		}
+	});
+	return 'marketing';
 }
 
 /**
@@ -55,11 +78,11 @@ console.log(cookie_value);
  * @param {string} value The cookie value to set.
  */
 function consent_api_set_cookie(name, value) {
-    var secure = ";secure";
-    var days = consent_api.cookie_expiration;
-    var date = new Date();
+    let secure = ";secure";
+	let days = consent_api.cookie_expiration;
+	let date = new Date();
     date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-    var expires = ";expires=" + date.toGMTString();
+	let expires = ";expires=" + date.toGMTString();
 
     if (window.location.protocol !== "https:") secure = '';
 
