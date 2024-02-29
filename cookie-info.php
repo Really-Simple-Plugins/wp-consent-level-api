@@ -110,7 +110,9 @@ if ( ! class_exists( 'WP_CONSENT_API_COOKIE_INFO' ) ) {
 		public function get_services( $skip_admin_cookies = false ) {
 			$services = array();
 			$cookies = $this->registered_cookies;
-
+			if ( !is_array($cookies) ) {
+				$cookies = [];
+			}
 			//filter out all administratorCookie cookies
 			if ( $skip_admin_cookies ) {
 				$cookies = array_filter( $cookies, static function ( $cookie ) {
