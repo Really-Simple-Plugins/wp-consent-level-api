@@ -79,6 +79,10 @@ If you have any other code suggestions, please PR them on GitHub!
 //dynamically set consent type
 window.wp_consent_type = 'optin';
 
+//dispatch event when consent type is defined
+let event = new CustomEvent('wp_consent_type_defined');
+document.dispatchEvent( event );
+
 //consent management plugin sets cookie when consent category value changes
 wp_set_consent('marketing', 'allow');
 ```
