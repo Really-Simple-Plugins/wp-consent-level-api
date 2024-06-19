@@ -52,29 +52,38 @@ A plugin can use a hook to listen for changes or check the value of a given cate
 
 Categories and most other stuff can be extended with a filter.
 
-= Existing integrations =
-- [Google Site Kit](https://wordpress.org/plugins/google-site-kit/).
-- [Woo](https://wordpress.org/plugins/woocommerce/).
-- [AFL UTM Tracker Plugin](https://www.appfromlab.com/product/woocommerce-utm-tracker-plugin/).
-- [Pixel Manager for WooCommerce](https://wordpress.org/plugins/woocommerce-google-adwords-conversion-tracking-tag/).
-- [AddToAny](https://wordpress.org/plugins/add-to-any/).
-- [Complianz GDPR/CCPA](https://wordpress.org/plugins/complianz-gdpr/).
-- [Cookiebot](https://wordpress.org/plugins/cookiebot) integrates the API.
+## Existing integrations
+Categorized, and sorted alphabeticaly
+
+= Example plugin =
 - [Example plugin](https://github.com/rlankhorst/consent-api-example-plugin). The plugin basically consists of a shortcode, with a div that shows a tracking or not tracking message. No actual tracking is done :-)
 
+= Consent Management Providers =
+- [Complianz GDPR/CCPA](https://wordpress.org/plugins/complianz-gdpr/).
+- [Cookiebot](https://wordpress.org/plugins/cookiebot).
+- [GDPR Cookie Compliance](https://wordpress.org/plugins/gdpr-cookie-compliance/).
+
+= Consent Requiring Plugins =
+- [AddToAny](https://wordpress.org/plugins/add-to-any/).
+- [AFL UTM Tracker Plugin](https://www.appfromlab.com/product/woocommerce-utm-tracker-plugin/).
+- [Google Site Kit](https://wordpress.org/plugins/google-site-kit/).
+- [Pixel Manager for WooCommerce](https://wordpress.org/plugins/woocommerce-google-adwords-conversion-tracking-tag/).
+- [Woo](https://wordpress.org/plugins/woocommerce/).
+- [WP Statistics](https://wordpress.org/plugins/wp-statistics/).
+
 ## Demo site
-(https://wpconsentapi.org/)
+[wpconsentapi.org](https://wpconsentapi.org/)
 Below are the plugins used to set up the demo site:
 
 - Complianz
-- The example plugin https://github.com/rlankhorst/consent-api-example-plugin
+- [The example plugin](https://github.com/rlankhorst/consent-api-example-plugin)
 
 = javascript, consent management plugin =
 `
-//dynamically set consent type
+//set consent type
 window.wp_consent_type = 'optin'
 
-//dispatch event when consent type is defined
+//dispatch event when consent type is defined. This is useful if the region is detected server side, so the consent type is defined later during the pageload
 let event = new CustomEvent('wp_consent_type_defined');
 document.dispatchEvent( event );
 
