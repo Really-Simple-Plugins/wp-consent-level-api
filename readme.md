@@ -111,7 +111,7 @@ if (wp_has_consent('marketing')){
 ```
 ### PHP
 ```php
-//declare complianz with consent level API
+//declare compliance with consent level API
 $plugin = plugin_basename( __FILE__ );
 add_filter( "wp_consent_api_registered_{$plugin}", '__return_true' );
 
