@@ -61,8 +61,8 @@ Categorized, and sorted alphabeticaly
 = Consent Management Providers =
 - [Complianz GDPR/CCPA](https://wordpress.org/plugins/complianz-gdpr/).
 - [Cookiebot](https://wordpress.org/plugins/cookiebot).
-- [GDPR Cookie Compliance](https://wordpress.org/plugins/gdpr-cookie-compliance/).
 - [CookieYes – Cookie Banner for Cookie Consent](https://wordpress.org/plugins/cookie-law-info/).
+- [GDPR Cookie Compliance](https://wordpress.org/plugins/gdpr-cookie-compliance/).
 
 = Consent Requiring Plugins =
 - [AddToAny](https://wordpress.org/plugins/add-to-any/).
