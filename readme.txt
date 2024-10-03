@@ -67,6 +67,7 @@ Categorized, and sorted alphabeticaly
 = Consent Requiring Plugins =
 - [AddToAny](https://wordpress.org/plugins/add-to-any/).
 - [AFL UTM Tracker Plugin](https://www.appfromlab.com/product/woocommerce-utm-tracker-plugin/).
+- [Burst Statistics](https://wordpress.org/plugins/burst-statistics/).
 - [Google Site Kit](https://wordpress.org/plugins/google-site-kit/).
 - [Pixel Manager for WooCommerce](https://wordpress.org/plugins/woocommerce-google-adwords-conversion-tracking-tag/).
 - [Woo](https://wordpress.org/plugins/woocommerce/).
