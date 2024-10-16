@@ -111,7 +111,7 @@ if ( ! class_exists( 'WP_CONSENT_API_SITE_HEALTH' ) ) {
 				$result['status']      = 'recommended';
 				$result['label']       = __( 'One or more plugins are not conforming to the Consent API.', 'wp-consent-api' );
 				$result['description'] = '<span class="title">' . __( 'Not all plugins have declared to follow Consent API guidelines. Please contact the developer.', 'wp-consent-api' ) . '</span>';
-				$result['actions']     = '<p>'.implode( '<p>', $not_registered );
+				$result['actions']     = '<p>' . implode( '<p>', $not_registered );
 			}
 
 			return $result;
