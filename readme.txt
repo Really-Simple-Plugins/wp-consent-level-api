@@ -53,7 +53,7 @@ A plugin can use a hook to listen for changes or check the value of a given cate
 Categories and most other stuff can be extended with a filter.
 
 ## Existing integrations
-Categorized, and sorted alphabeticaly
+Categorized, and sorted alphabetically
 
 = Example plugin =
 - [Example plugin](https://github.com/rlankhorst/consent-api-example-plugin). The plugin basically consists of a shortcode, with a div that shows a tracking or not tracking message. No actual tracking is done :-)
@@ -164,7 +164,7 @@ Statistics-anonymous:
 Cookies or any other form of local storage that are used exclusively for anonymous statistical purposes (Anonymous Analytics Cookies), that are placed on a first party domain, and that do not allow identification of particular individuals.
 
 Marketing:
-Cookies or any other form of local storage required to create user profiles to send advertising or to track the user on a website or across websites for simular marketing purposes.
+Cookies or any other form of local storage required to create user profiles to send advertising or to track the user on a website or across websites for similar marketing purposes.
 
 Functional:
 The cookie or any other form of local storage is used for the sole purpose of carrying out the transmission of a communication over an electronic communications network;

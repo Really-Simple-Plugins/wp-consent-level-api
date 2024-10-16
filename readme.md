@@ -165,7 +165,7 @@ The plugin requires both a consent management plugin for consent management, and
 
 **How should I go about integrating my plugin?**
 
-Cookies or any other form of local storage can have a function and a purpose. A function is the particular task a cookie has. So a function can be "store the IP adres". Purpose can be seen as the **Why** behind the function. So maybe the IP adres is stored because it is needed for Statistics; or it is stored because it is used for marketing/tracking purposes; or it is needed for functional purposes.
+Cookies or any other form of local storage can have a function and a purpose. A function is the particular task a cookie has. So a function can be "store the IP address". Purpose can be seen as the **Why** behind the function. So maybe the IP address is stored because it is needed for Statistics; or it is stored because it is used for marketing/tracking purposes; or it is needed for functional purposes.
 
 For each function you should consider what the purpose of that function is. There are 5 purpose categories:
 functional, statistics-anonymous, statistics, preferences, marketing. These are explained below. Your code should check if consent has been given for the applicable category. If no cookie banner plugin is active, 
@@ -184,7 +184,7 @@ Cookies or any other form of local storage that are used exclusively for anonymo
 
 - marketing:
 
-Cookies or any other form of local storage required to create user profiles to send advertising or to track the user on a website or across websites for simular marketing purposes.
+Cookies or any other form of local storage required to create user profiles to send advertising or to track the user on a website or across websites for similar marketing purposes.
 
 - functional:
 
