@@ -17,7 +17,7 @@ if ( ! class_exists( 'WP_CONSENT_API_CONFIG' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @var $instance
+		 * @var WP_CONSENT_API_CONFIG
 		 */
 		private static $instance;
 
@@ -42,7 +42,7 @@ if ( ! class_exists( 'WP_CONSENT_API_CONFIG' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @return array $consent_types
+		 * @return array
 		 */
 		public function consent_types() {
 			return apply_filters(
@@ -59,7 +59,7 @@ if ( ! class_exists( 'WP_CONSENT_API_CONFIG' ) ) {
 		 *
 		 * @since 1.0.2
 		 *
-		 * @return array $consent_types
+		 * @return string
 		 */
 		public function consent_cookie_prefix() {
 			return apply_filters(
@@ -73,7 +73,7 @@ if ( ! class_exists( 'WP_CONSENT_API_CONFIG' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @return array $consent_categories
+		 * @return array
 		 */
 		public function consent_categories() {
 			return apply_filters(

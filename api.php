@@ -293,7 +293,7 @@ function wp_set_cookie( $name, $value = "", $consent_category = "", $expires = 0
 }
 
 /**
- * Wrapper function to has_cookie info for one specific cookie
+ * Wrapper function to has_cookie_info for one specific cookie
  *
  * @param string|bool $name The cookie name.
  *
