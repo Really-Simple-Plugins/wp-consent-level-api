@@ -291,15 +291,3 @@ function wp_set_cookie( $name, $value = "", $consent_category = "", $expires = 0
 		setcookie( $name, $value, $expires, $path, $domain, $secure, $httponly );
 	}
 }
-
-/**
- * Wrapper function to has_cookie info for one specific cookie
- *
- * @param string|bool $name The cookie name.
- *
- * @return bool
- */
-
-function wp_has_cookie_info( $name ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
-	return WP_CONSENT_API::$cookie_info->has_cookie_info( $name );
-}
