@@ -71,14 +71,14 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @var $instance
+		 * @var WP_CONSENT_API
 		 */
 		private static $instance;
 
 		/**
 		 * Config.
 		 *
-		 * @var $config
+		 * @var WP_CONSENT_API_CONFIG
 		 */
 		public static $config;
 
@@ -86,14 +86,14 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 		/**
 		 * Site Health Checks.
 		 *
-		 * @var $site_health
+		 * @var WP_CONSENT_API_SITE_HEALTH
 		 */
 		public static $site_health;
 
 		/**
 		 * Cookie info
 		 *
-		 * @var $cookie_info
+		 * @var WP_CONSENT_API_COOKIE_INFO
 		 */
 		public static $cookie_info;
 
