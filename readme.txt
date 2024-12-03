@@ -178,7 +178,9 @@ Cookies or any other form of local storage that can not be seen as statistics, s
 
 == Changelog ==
 = 1.0.8 =
-* Dropped loading of translations, and loading of plugin_data, to prevent translation loading notices by WordPress 6.7
+* Updated tested up to
+* Dropped loading of translations, and loading of plugin_data, to prevent translation loading notices by WordPress 6.7, props @mujuonly
+* Dropped obsolete function wp_has_cookie_info, props @szepeviktor
 
 = 1.0.7 =
 * Tested up to
