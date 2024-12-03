@@ -26,13 +26,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'We\'re sorry, but you can not directly access this file.' );
 }
 
-if ( ! class_exists( 'WP_CONSENT_API_COOKIE_INFO' ) ) {
+if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 	/**
 	 * A class implementing the WP Consent API cookie handling.
 	 *
 	 * @since 1.0.0
 	 */
-	class WP_CONSENT_API_COOKIE_INFO {
+	class WP_Consent_API_Cookie_Info {
 		/**
 		 * An array of information about registered cookies.
 		 *

@@ -61,24 +61,24 @@ if ( ! function_exists( 'wp_consent_api_activation_check' ) ) {
 }
 register_activation_hook( __FILE__, 'wp_consent_api_activation_check' );
 
-if ( ! class_exists( 'WP_CONSENT_API' ) ) {
+if ( ! class_exists( 'WP_Consent_API' ) ) {
 	/**
-	 * WP_CONSENT_API class.
+	 * WP_Consent_API class.
 	 */
-	class WP_CONSENT_API {
+	class WP_Consent_API {
 		/**
 		 * Instance.
 		 *
 		 * @since 1.0.0
 		 *
-		 * @var WP_CONSENT_API|null
+		 * @var WP_Consent_API|null
 		 */
 		private static $instance;
 
 		/**
 		 * Config.
 		 *
-		 * @var WP_CONSENT_API_CONFIG
+		 * @var WP_Consent_API_Config
 		 */
 		public static $config;
 
@@ -86,14 +86,14 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 		/**
 		 * Site Health Checks.
 		 *
-		 * @var WP_CONSENT_API_SITE_HEALTH
+		 * @var WP_Consent_API_Site_Health
 		 */
 		public static $site_health;
 
 		/**
 		 * Cookie info
 		 *
-		 * @var WP_CONSENT_API_COOKIE_INFO
+		 * @var WP_Consent_API_Cookie_Info
 		 */
 		public static $cookie_info;
 
@@ -102,7 +102,7 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @return WP_CONSENT_API
+		 * @return WP_Consent_API
 		 */
 		public static function get_instance() {
 			if ( ! isset( self::$instance ) ) {
@@ -122,9 +122,9 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 			$this->setup_constants();
 			$this->includes();
 
-			self::$config      = new WP_CONSENT_API_CONFIG();
-			self::$site_health = new WP_CONSENT_API_SITE_HEALTH();
-			self::$cookie_info = new WP_CONSENT_API_COOKIE_INFO();
+			self::$config      = new WP_Consent_API_Config();
+			self::$site_health = new WP_Consent_API_Site_Health();
+			self::$cookie_info = new WP_Consent_API_Cookie_Info();
 		}
 
 		/**
@@ -150,16 +150,16 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 		 * @return void
 		 */
 		private function includes() {
-			require_once WP_CONSENT_API_PATH . 'config.php';
-			require_once WP_CONSENT_API_PATH . 'cookie-info.php';
-			require_once WP_CONSENT_API_PATH . 'api.php';
-			require_once WP_CONSENT_API_PATH . 'site-health.php';
-			require_once WP_CONSENT_API_PATH . 'wordpress-comments.php';
+			require_once WP_CONSENT_API_PATH . 'inc/class-wp-consent-api-config.php';
+			require_once WP_CONSENT_API_PATH . 'inc/class-wp-consent-api-cookie-info.php';
+			require_once WP_CONSENT_API_PATH . 'inc/class-wp-consent-api-site-health.php';
+			require_once WP_CONSENT_API_PATH . 'inc/api-functions.php';
+			require_once WP_CONSENT_API_PATH . 'inc/wordpress-comments-functions.php';
 		}
 	}
 
 	/**
 	 * Load the plugins main class.
 	 */
-	add_action( 'plugins_loaded', array( WP_CONSENT_API::class, 'get_instance' ), 9 );
+	add_action( 'plugins_loaded', array( WP_Consent_API::class, 'get_instance' ), 9 );
 }
