@@ -43,7 +43,7 @@ if ( ! class_exists( 'WP_CONSENT_API_COOKIE_INFO' ) ) {
 		/**
 		 * The Singleton.
 		 *
-		 * @var self
+		 * @var self|null
 		 */
 		private static $instance;
 

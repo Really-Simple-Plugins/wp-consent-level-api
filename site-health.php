@@ -36,7 +36,7 @@ if ( ! class_exists( 'WP_CONSENT_API_SITE_HEALTH' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @var WP_CONSENT_API_SITE_HEALTH
+		 * @var WP_CONSENT_API_SITE_HEALTH|null
 		 */
 		private static $instance;
 
