@@ -24,7 +24,7 @@
  * Plugin Name:       WP Consent API
  * Plugin URI:        https://wordpress.org/plugins/wp-consent-api
  * Description:       Consent Level API to read and register the current consent level for cookie management and improving compliance with privacy laws.
- * Version:           1.0.7
+ * Version:           1.0.8
  * Author:            RogierLankhorst
  * Author URI:        https://github.com/rlankhorst/wp-consent-level-api
  * Requires at least: 5.0
@@ -108,7 +108,6 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof WP_CONSENT_API ) ) {
 				self::$instance = new self();
 			}
-
 			return self::$instance;
 		}
 
@@ -122,7 +121,6 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 		private function __construct() {
 			$this->setup_constants();
 			$this->includes();
-			$this->load_translation();
 
 			self::$config      = new WP_CONSENT_API_CONFIG();
 			self::$site_health = new WP_CONSENT_API_SITE_HEALTH();
@@ -137,13 +135,10 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 		 * @return void
 		 */
 		private function setup_constants() {
-			$plugin_data = get_file_data( __FILE__, array( 'Version' => 'Version' ), false );
-			$debug       = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? time() : '';
-
 			define( 'WP_CONSENT_API_URL', plugin_dir_url( __FILE__ ) );
 			define( 'WP_CONSENT_API_PATH', plugin_dir_path( __FILE__ ) );
 			define( 'WP_CONSENT_API_PLUGIN', plugin_basename( __FILE__ ) );
-			define( 'WP_CONSENT_API_VERSION', $plugin_data['Version'] . $debug );
+			define( 'WP_CONSENT_API_VERSION', '1.0.8' );
 			define( 'WP_CONSENT_API_PLUGIN_FILE', __FILE__ );
 		}
 
@@ -160,17 +155,6 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 			require_once WP_CONSENT_API_PATH . 'api.php';
 			require_once WP_CONSENT_API_PATH . 'site-health.php';
 			require_once WP_CONSENT_API_PATH . 'wordpress-comments.php';
-		}
-
-		/**
-		 * Load plugin translations.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @return void
-		 */
-		private function load_translation() {
-			load_plugin_textdomain( 'wp-consent-api', false, WP_CONSENT_API_PATH . '/config/languages/' );
 		}
 	}
 
