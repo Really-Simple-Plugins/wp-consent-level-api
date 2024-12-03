@@ -24,7 +24,7 @@
  * Plugin Name:       WP Consent API
  * Plugin URI:        https://wordpress.org/plugins/wp-consent-api
  * Description:       Consent Level API to read and register the current consent level for cookie management and improving compliance with privacy laws.
- * Version:           1.0.7
+ * Version:           1.0.8
  * Author:            RogierLankhorst
  * Author URI:        https://github.com/rlankhorst/wp-consent-level-api
  * Requires at least: 5.0
@@ -122,7 +122,9 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 		private function __construct() {
 			$this->setup_constants();
 			$this->includes();
-			$this->load_translation();
+			if( get_bloginfo( 'version' ) < 6.7 ){
+			    $this->load_translation();
+			}
 
 			self::$config      = new WP_CONSENT_API_CONFIG();
 			self::$site_health = new WP_CONSENT_API_SITE_HEALTH();
