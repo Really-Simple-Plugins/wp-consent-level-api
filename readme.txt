@@ -177,7 +177,7 @@ Preferences:
 Cookies or any other form of local storage that can not be seen as statistics, statistics-anonymous, marketing or functional, and where the technical storage or access is necessary for the legitimate purpose of storing preferences.
 
 == Changelog ==
-= 1.0.7 =
+= 1.0.8 =
 * Tested up to
 
 = 1.0.7 =
@@ -213,5 +213,8 @@ Cookies or any other form of local storage that can not be seen as statistics, s
 * removed duplicate statistics category, props @phpgeek
 
 == Upgrade notice ==
+
+= 1.0.8 =
+* Tested Ok with WP 6.7
 
 == Screenshots ==
