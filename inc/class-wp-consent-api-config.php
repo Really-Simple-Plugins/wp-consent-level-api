@@ -5,19 +5,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( 'We\'re sorry, but you can not directly access this file.' );
 }
 
-if ( ! class_exists( 'WP_CONSENT_API_CONFIG' ) ) {
+if ( ! class_exists( 'WP_Consent_API_Config' ) ) {
 	/**
-	 * WP_CONSENT_API_CONFIG definition.
+	 * WP_Consent_API_Config definition.
 	 *
 	 * @since 1.0.0
 	 */
-	class WP_CONSENT_API_CONFIG {
+	class WP_Consent_API_Config {
 		/**
 		 * Instance.
 		 *
 		 * @since 1.0.0
 		 *
-		 * @var WP_CONSENT_API_CONFIG|null
+		 * @var WP_Consent_API_Config|null
 		 */
 		private static $instance;
 
