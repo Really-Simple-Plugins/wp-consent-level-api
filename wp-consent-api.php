@@ -122,7 +122,7 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 		private function __construct() {
 			$this->setup_constants();
 			$this->includes();
-			if( get_bloginfo( 'version' ) < 6.7 ){
+			if ( version_compare( get_bloginfo( 'version' ), '6.7', '<' ) ) {
 			    $this->load_translation();
 			}
 
