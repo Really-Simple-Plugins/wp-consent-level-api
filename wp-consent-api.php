@@ -71,7 +71,7 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @var WP_CONSENT_API
+		 * @var WP_CONSENT_API|null
 		 */
 		private static $instance;
 
@@ -105,7 +105,7 @@ if ( ! class_exists( 'WP_CONSENT_API' ) ) {
 		 * @return WP_CONSENT_API
 		 */
 		public static function get_instance() {
-			if ( ! isset( self::$instance ) && ! ( self::$instance instanceof WP_CONSENT_API ) ) {
+			if ( ! isset( self::$instance ) ) {
 				self::$instance = new self();
 			}
 			return self::$instance;

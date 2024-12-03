@@ -1,0 +1,15 @@
+includes:
+    - vendor/szepeviktor/phpstan-wordpress/extension.neon
+parameters:
+    bootstrapFiles:
+        - tests/phpstan/bootstrap.php
+    paths:
+        - api.php
+        - config.php
+        - cookie-info.php
+        - site-health.php
+        - wordpress-comments.php
+        - wp-consent-api.php
+    level: 5
+    ignoreErrors:
+        #- '#^Unsafe usage of new static#'

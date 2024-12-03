@@ -17,7 +17,7 @@ if ( ! class_exists( 'WP_CONSENT_API_CONFIG' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @var WP_CONSENT_API_CONFIG
+		 * @var WP_CONSENT_API_CONFIG|null
 		 */
 		private static $instance;
 

@@ -283,10 +283,6 @@ function wp_set_cookie( $name, $value = '', $consent_category = '', $expires = 0
 		_doing_it_wrong( 'wp_setcookie', __( 'Missing consent category. A functional, preferences, statistics-anonymous, statistics or marketing category should be passed when using wp_setcookie.', 'wp-consent-api' ), '5.6' );
 	}
 
-	if ( ! wp_has_cookie_info( $name ) ) {
-		_doing_it_wrong( 'wp_setcookie', __( 'Not registered cookie. Each cookie using the wp_setcookie function should be registered using wp_add_cookie_info().', 'wp-consent-api' ), '5.6' );
-	}
-
 	if ( wp_has_consent( $consent_category ) ) {
 		setcookie( $name, $value, $expires, $path, $domain, $secure, $httponly );
 	}
