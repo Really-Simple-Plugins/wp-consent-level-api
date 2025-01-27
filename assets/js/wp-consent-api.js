@@ -22,25 +22,24 @@ window.waitfor_consent_hook = consent_api.waitfor_consent_hook;
  * @param {string} type category or service
  */
 function wp_has_consent(item, type= 'category') {
+	let has_consent = false;
 	console.log("has consent check for "+item);
 	//for service consent, we start checking if the service's category already has consent. If so, return true and bail.
 	if ( 'service' === type ) {
 		let category = wp_get_service_category( item );
 		if ( wp_has_consent(category) ) {
-			return true;
+			has_consent = true;
 		}
 	}
 
-    let consent_type;
+	let consent_type;
     if ( typeof (window.wp_consent_type) !== "undefined" ){
         consent_type = window.wp_consent_type;
     }  else {
         consent_type = window.wp_fallback_consent_type
     }
 
-    let has_consent = false;
-    var cookie_value = consent_api_get_cookie(consent_api.cookie_prefix + '_' + item);
-
+    let cookie_value = consent_api_get_cookie(consent_api.cookie_prefix + '_' + item);
     if ( !consent_type ) {
         //if consent_type is not set, there's no consent management, we should return true to activate all cookies
         has_consent = true;
@@ -111,20 +110,20 @@ function consent_api_get_cookie(name) {
 /**
  * Set a new consent category value.
  *
- * @param {string} category The consent category to update.
- * @param {string} value The value to update the consent category to.
+ * @param {string} name The consent category or service to update.
+ * @param {string} value The value to update the consent category or service to.
  */
-function wp_set_consent(category, value) {
-    var event;
+function wp_set_consent(name, value) {
+    let event;
     if (value !== 'allow' && value !== 'deny') return;
-	var previous_value = consent_api_get_cookie(consent_api.cookie_prefix + '_' + category);
-    consent_api_set_cookie(consent_api.cookie_prefix + '_' + category, value);
+	let previous_value = consent_api_get_cookie(consent_api.cookie_prefix + '_' + name);
+    consent_api_set_cookie(consent_api.cookie_prefix + '_' + name, value);
 
     //do not trigger a change event if nothing has changed.
     if ( previous_value === value ) return;
 
-    var changedConsentCategory = [];
-    changedConsentCategory[category] = value;
+    let changedConsentCategory = [];
+    changedConsentCategory[name] = value;
     try {
         // For modern browsers except IE:
         event = new CustomEvent('wp_listen_for_consent_change', {detail: changedConsentCategory});
@@ -137,11 +136,6 @@ function wp_set_consent(category, value) {
     // Dispatch/Trigger/Fire the event
     document.dispatchEvent(event);
 }
-
-
-
-
-
 
 
 
