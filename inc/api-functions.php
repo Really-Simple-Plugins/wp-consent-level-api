@@ -63,7 +63,7 @@ function wp_consent_api_enqueue_assets() {
 			'waitfor_consent_hook' => $waitfor_consent_hook,
 			'cookie_expiration'    => $expiration,
 			'cookie_prefix'        => $prefix,
-			'services'             => WP_CONSENT_API::$cookie_info->get_service_info(),
+			'services'             => WP_Consent_API::$cookie_info->get_service_info(),
 		)
 	);
 }
@@ -79,9 +79,6 @@ function wp_consent_api_enqueue_admin_assets( $hook ) {
 	    return;
     }
 
-	if ( 'site-health.php' !== $hook ) {
-		return;
-	}
 	wp_enqueue_style( 'wp-consent-api-css', WP_CONSENT_API_URL . 'assets/css/wp-consent-api.css', array(), WP_CONSENT_API_VERSION );
 
 }
@@ -139,16 +136,20 @@ function wp_validate_consent_category( $category ) { // phpcs:ignore WordPress.N
 /**
  * Validates consent service.
  *
- * @since 1.0.0
- *
  * @param string $service A consent service.
  *
  * @return string The validated service
+ * @since 1.0.8
+ *
  */
-function wp_validate_consent_service( $service ) { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
+function wp_validate_consent_service( string $service ): string { // phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedFunctionFound -- This is intended for Core.
 	//check if this service is listed in the registered services list
-	$services = WP_CONSENT_API::$cookie_info->get_services();
-	return in_array($service, $services, true );
+	$services = WP_Consent_API::$cookie_info->get_services();
+	if ( in_array($service, $services, true ) ) {
+		return $service;
+	}
+
+	return '';
 }
 
 /**
@@ -182,7 +183,7 @@ function wp_has_consent( $item, $requested_by = false, $type='category' ) { // p
 
 	//for service consent, we start checking if the service's category already has consent. If so, return true and bail.
 	if ( 'service' === $type ) {
-		$category = WP_CONSENT_API::$cookie_info->get_service_category( $item );
+		$category = WP_Consent_API::$cookie_info->get_service_category( $item );
 		if ( wp_has_consent( $category, $requested_by, 'category' ) ) {
 			return true;
 		}

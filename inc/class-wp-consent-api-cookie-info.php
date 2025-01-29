@@ -38,7 +38,7 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 		 *
 		 * @var array
 		 */
-		public $registered_cookies;
+		public array $registered_cookies;
 
 		/**
 		 * The Singleton.
@@ -105,14 +105,14 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 		/**
 		 * Get list of registered services
 		 *
+		 * @param bool $skip_admin_cookies
+		 *
 		 * @return array
 		 */
-		public function get_services( $skip_admin_cookies = false ) {
+		public function get_services( bool $skip_admin_cookies = false ): array {
 			$services = array();
 			$cookies = $this->registered_cookies;
-			if ( !is_array($cookies) ) {
-				$cookies = [];
-			}
+
 			//filter out all administratorCookie cookies
 			if ( $skip_admin_cookies ) {
 				$cookies = array_filter( $cookies, static function ( $cookie ) {
@@ -135,7 +135,7 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 		 *
 		 * @return string
 		 */
-		public function get_service_category( $service ) {
+		public function get_service_category( string $service ): string {
 			$categories = [];
 			foreach ( $this->registered_cookies as $cookie ) {
 				if ( $cookie['plugin_or_service'] === $service ) {
@@ -143,7 +143,7 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 				}
 			}
 			$categories = array_unique( $categories );
-			$available_categories = WP_CONTENT_API::$config->consent_categories();
+			$available_categories = WP_Consent_API::$config->consent_categories();
 			//reverse order of $available_categories
 			$available_categories = array_reverse( $available_categories );
 
@@ -168,7 +168,7 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 		 *
 		 * @return array
 		 */
-		public function get_cookie_info( $name = false ) {
+		public function get_cookie_info( $name = false ): array {
 			if ( $name && isset( $this->registered_cookies[ $name ] ) ) {
 				return $this->registered_cookies[ $name ];
 			}
@@ -181,7 +181,7 @@ if ( ! class_exists( 'WP_Consent_API_Cookie_Info' ) ) {
 		 *
 		 * @return array
 		 */
-		public function get_service_info(){
+		public function get_service_info(): array {
 			$services = $this->get_services( true );
 
 			$js_array = [];
