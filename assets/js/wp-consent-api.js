@@ -62,9 +62,9 @@ function wp_has_consent(item, type= 'category') {
  */
 function wp_get_service_category( service ) {
 	let services = consent_api.services;
-	services.forEach(function(service) {
-		if ( service.name === service ) {
-			return service.category;
+	services.forEach(function(service_item) {
+		if ( service_item.name === service ) {
+			return service_item.category;
 		}
 	});
 	return 'marketing';
