@@ -64,6 +64,7 @@ Categorized, and sorted alphabetically
 - [CookieHub](https://wordpress.org/plugins/cookiehub/).
 - [CookieYes – Cookie Banner for Cookie Consent](https://wordpress.org/plugins/cookie-law-info/).
 - [GDPR Cookie Compliance](https://wordpress.org/plugins/gdpr-cookie-compliance/).
+- [GDPR Cookie Consent Plugin - CCPA Ready](https://www.webtoffee.com/product/gdpr-cookie-consent/).
 
 = Consent Requiring Plugins =
 - [AddToAny](https://wordpress.org/plugins/add-to-any/).
