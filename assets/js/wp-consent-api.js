@@ -57,7 +57,7 @@ function wp_has_consent(item, type= 'category') {
 /**
  * Retrieve the category of a registered service
  *
- * @param service
+ * @param {string} service
  * @returns {string}
  */
 function wp_get_service_category( service ) {
