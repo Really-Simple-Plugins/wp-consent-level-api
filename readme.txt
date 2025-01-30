@@ -139,7 +139,7 @@ if (wp_has_consent('marketing')){
 //do marketing stuff
 }
 `
-Any code suggestions? We're on [GitHub](https://github.com/rlankhorst/wp-consent-level-api) as well!
+Any code suggestions? We're on [GitHub](https://github.com/WordPress/wp-consent-level-api) as well!
 
 == Installation ==
 To install this plugin:
