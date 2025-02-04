@@ -26,7 +26,7 @@
  * Author:            WordPress Contributors
  * Author URI:        https://github.com/rlankhorst/wp-consent-level-api
  * Requires at least: 5.0
- * Requires PHP:      5.6
+ * Requires PHP:      7.2
  * License:           GPL2+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.html
  */
